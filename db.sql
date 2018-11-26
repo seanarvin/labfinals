@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 26, 2018 at 06:54 AM
+-- Generation Time: Nov 26, 2018 at 07:07 AM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -35,6 +35,14 @@ CREATE TABLE IF NOT EXISTS `facilities` (
   PRIMARY KEY (`service_type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `facilities`
+--
+
+INSERT INTO `facilities` (`service_type`, `rate`) VALUES
+('Plumber', 100),
+('Carpenter', 500);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +55,14 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `pay_date` date DEFAULT NULL,
   PRIMARY KEY (`pay_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`pay_id`, `pay_date`) VALUES
+(101, '2018-11-26'),
+(102, '2018-11-28');
 
 -- --------------------------------------------------------
 
@@ -63,6 +79,14 @@ CREATE TABLE IF NOT EXISTS `service_provider` (
   PRIMARY KEY (`sp_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `service_provider`
+--
+
+INSERT INTO `service_provider` (`sp_id`, `user_id`, `order_id`, `phone_no`) VALUES
+(11, '01', '1A', 912345698),
+(12, '02', '1B', 1234577921);
+
 -- --------------------------------------------------------
 
 --
@@ -76,6 +100,14 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `pay_id` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`reservation_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`reservation_date`, `amount`, `pay_id`) VALUES
+('2018-11-26 09:17:15', 100, '101'),
+('2018-11-28 15:17:12', 500, '102');
 
 -- --------------------------------------------------------
 
@@ -96,6 +128,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `password`, `user_fname`, `user_lname`, `contact_no`, `address`, `user_role`, `user_name`, `email`) VALUES
+(1, 'password', 'faye', 'lampa', '09123456789', 'Baguio City', 'Client', 'fayelampa', 'fayelampa@yahoo.com'),
+(2, 'password', 'camille', 'poyaoan', '09123456798', 'Baguio City', 'Admin', 'camileru', 'camille@yahoo.com');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
