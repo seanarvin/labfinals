@@ -549,7 +549,9 @@ input.input100 {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-
+.col-2{
+    padding: 10px, 10px, 10px, 10px
+}
 .col-2 {
   width: -webkit-calc((100% - 30px) / 2);
   width: -moz-calc((100% - 30px) / 2);
