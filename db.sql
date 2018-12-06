@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 26, 2018 at 07:07 AM
+-- Generation Time: Dec 06, 2018 at 06:50 AM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -126,6 +126,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_role` varchar(45) DEFAULT NULL,
   `user_name` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
+  `status` varchar(20) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -133,9 +134,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `password`, `user_fname`, `user_lname`, `contact_no`, `address`, `user_role`, `user_name`, `email`) VALUES
-(1, 'password', 'faye', 'lampa', '09123456789', 'Baguio City', 'Client', 'fayelampa', 'fayelampa@yahoo.com'),
-(2, 'password', 'camille', 'poyaoan', '09123456798', 'Baguio City', 'Admin', 'camileru', 'camille@yahoo.com');
+INSERT INTO `user` (`user_id`, `password`, `user_fname`, `user_lname`, `contact_no`, `address`, `user_role`, `user_name`, `email`, `status`) VALUES
+(1, 'password', 'faye', 'lampa', '09123456789', 'Baguio City', 'Client', 'fayelampa', 'fayelampa@yahoo.com', ''),
+(2, 'password', 'camille', 'poyaoan', '09123456798', 'Baguio City', 'Admin', 'camileru', 'camille@yahoo.com', '');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
