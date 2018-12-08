@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 06, 2018 at 06:50 AM
--- Server version: 5.7.21
--- PHP Version: 5.6.35
+-- Generation Time: Dec 08, 2018 at 03:31 PM
+-- Server version: 5.7.23
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -117,26 +117,32 @@ INSERT INTO `transaction` (`reservation_date`, `amount`, `pay_id`) VALUES
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `user_fname` varchar(45) DEFAULT NULL,
-  `user_lname` varchar(45) DEFAULT NULL,
-  `contact_no` varchar(45) DEFAULT NULL,
-  `address` varchar(45) DEFAULT NULL,
-  `user_role` varchar(45) DEFAULT NULL,
-  `user_name` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `status` varchar(20) NOT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `user_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_Name` varchar(50) NOT NULL,
+  `last_Name` varchar(50) NOT NULL,
+  `address` varchar(50) NOT NULL,
+  `contact_No` int(50) NOT NULL,
+  `acc_Type` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  PRIMARY KEY (`user_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `password`, `user_fname`, `user_lname`, `contact_no`, `address`, `user_role`, `user_name`, `email`, `status`) VALUES
-(1, 'password', 'faye', 'lampa', '09123456789', 'Baguio City', 'Client', 'fayelampa', 'fayelampa@yahoo.com', ''),
-(2, 'password', 'camille', 'poyaoan', '09123456798', 'Baguio City', 'Admin', 'camileru', 'camille@yahoo.com', '');
+INSERT INTO `user` (`user_Id`, `first_Name`, `last_Name`, `address`, `contact_No`, `acc_Type`, `username`, `password`, `status`) VALUES
+(14, 'Carl', 'Dumo', 'dumo st.', 2147483647, 'client', 'dumo', 'dumo123', 'approved'),
+(15, 'Admin', 'admin', 'admin st.', 912345123, 'admin', 'admin', 'admin', 'pending'),
+(16, 'Faye', 'Lampa', 'faye st.', 912387123, 'Client', 'faye', 'faye123', 'deactivated'),
+(17, 'Camille', 'Poyaoan', 'poyaoan st.', 2147483647, 'Client', 'camille', 'camille123', 'approved'),
+(18, 'Bill', 'Hilarion', 'cacas st.', 2147483647, 'Admin', 'Bill', 'hilarion123', 'pending'),
+(19, 'Bryn', 'Edades', 'cerezo st.', 2147483647, 'Client', 'bryn', 'bryn123', 'deactivated'),
+(20, 'Mikka', 'Tuguinay', 'laos angeles', 98765627, 'client', 'mikka', 'mikka123', 'declined'),
+(21, 'Rico', 'Pangan', 'cleveland', 19238271, 'client', 'rico', 'rico123', 'approved'),
+(22, 'Kieffer', 'Ballesteros', 'boston', 192837123, 'client', 'kieffer', 'kieffer123', 'declined');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

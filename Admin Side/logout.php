@@ -1,7 +1,8 @@
 <?php
-    session_start();
-    session_destroy();
-    unset($_SESSION['username']);
-    unset($_SESSION['password']);  
-    header("Location: ../register.php")
-?>
+
+
+session_start();
+session_destroy();
+
+header('Location:index.php');
+
