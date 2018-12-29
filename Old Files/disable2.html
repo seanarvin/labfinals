@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button id="myBtn" onclick="disableBtn()">My Button</button>
+<br><br>
+
+<button onclick = enableBtn()">Cancel</button>
+
+<script>
+function disableBtn() {
+    document.getElementById("myBtn").disabled = true;
+}	
+function enableBtn() {
+    document.getElementById("myBtn").disabled = false;
+	alert('are you sure you want to cancel');
+}
+
+</script>
+
+</body>
+</html>
