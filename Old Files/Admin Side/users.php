@@ -127,7 +127,7 @@ if(!isset($_SESSION['username'])){
                                     <?php
                                     require 'db.php';
 
-                                    $sql = "SELECT * FROM user WHERE status = 'pending' and acc_Type != 'Admin'";
+                                    $sql = "SELECT * FROM user WHERE status = 'pending' and acc_Type != aadmintestest";
                                     $res = $conn->query($sql);
                                     while ($row = $res->fetch_assoc()){
                                         echo "<tr><td>" . $row['username']  ."</td>" .

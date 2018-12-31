@@ -12,7 +12,7 @@
 //         ";
 //    }
 //
-//    if($_SESSION['userType'] != 'Admin' ){
+//    if($_SESSION['userType'] != 'admintest' ){
 //        $m = "Unauthorize Success!";
 //        echo "
 //                <script type = 'text/javascript'>

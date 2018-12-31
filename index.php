@@ -5,12 +5,12 @@ if (isset($_SESSION['full'])) {
     $ty = $_SESSION['userType'];
     if ($ty == "admin") {
         header('Location:Admin/dashboard.php');
-    } elseif ($ty == "superadmin") {
-        header('Location:Admin/dashboard.php');
+    } elseif ($ty == "sp") {
+        header('Location:ServiceProvider/dashboard.php');
     }elseif ($ty == "user") {
         header('Location:../user/delivery.php');
     } else {
-       echo $_SESSION['userType'];
+
     }
 }
 ?>
@@ -42,7 +42,7 @@ if (isset($_SESSION['full'])) {
             <a class="hiddenanchor" id="tologin"></a>
             <div id="wrapper">
                 <div id="login" class="animate form">
-                    <form action="Admin/backend/login.php" method="post">
+                    <form action="php/login.php" method="post">
                         <h1>Log in</h1>
                         <p>
                             <label for="username" class="uname" data-icon="u"> Username </label>
@@ -63,7 +63,7 @@ if (isset($_SESSION['full'])) {
                 </div>
 
                 <div id="register" class="animate form">
-                    <form action="register.php" autocomplete="on" method="post">
+                    <form action="ServiceProvider/backend/register.php" autocomplete="on" method="post">
                         <h1> Sign up </h1>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">First Name</label>
@@ -83,6 +83,10 @@ if (isset($_SESSION['full'])) {
                             <input id="usernamesignup" name="num" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
+                            <label for="usernamesignup" class="uname" data-icon="u">Email</label>
+                            <input id="usernamesignup" name="email" required="required" type="email" placeholder=""/>
+                        </p>
+                        <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Username</label>
                             <input id="usernamesignup" name="username" required="required" type="text" placeholder=""/>
                         </p>
@@ -99,8 +103,8 @@ if (isset($_SESSION['full'])) {
                         </p>
                         <div class="styled-select slate">
                             <select name="type" class="form-control">
-                                <option value="Admin">Service Provider</option>
-                                <option value="SuperAdmin">Client</option>
+                                <option value="sp">Service Provider</option>
+                                <option value="client">Client</option>
                             </select>
                         </div>
                         <p class="signin button">
