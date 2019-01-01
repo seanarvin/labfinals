@@ -25,6 +25,7 @@ if (isset($_SESSION['full'])) {
     <link rel="stylesheet" type="text/css" href="css/style2.css"/>
     <link rel="stylesheet" type="text/css" href="css/animate-custom.css"/>
 </head>
+<html>
 <body>
 <div class="container">
     <header>
@@ -67,40 +68,41 @@ if (isset($_SESSION['full'])) {
                         <h1> Sign up </h1>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">First Name</label>
-                            <input id="usernamesignup" name="first_name" required="required" type="text"
+                            <input  name="first_name" required="required" type="text"
                                    placeholder=""/>
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Last Name</label>
-                            <input id="usernamesignup" name="last_name" required="required" type="text" placeholder=""/>
+                            <input  name="last_name" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Address</label>
-                            <input id="usernamesignup" name="address" required="required" type="text" placeholder=""/>
+                            <input  name="address" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Contact No</label>
-                            <input id="usernamesignup" name="num" required="required" type="text" placeholder=""/>
+                            <input  name="num" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Email</label>
-                            <input id="usernamesignup" name="email" required="required" type="email" placeholder=""/>
+                            <input  name="email" required="required" type="email" placeholder=""/>
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Username</label>
-                            <input id="usernamesignup" name="username" required="required" type="text" placeholder=""/>
+                            <input  name="username" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
-                            <label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
-                            <input id="passwordsignup" name="password" required="required" type="password"
+                            <label for="pass" class="youpasswd" data-icon="p">Your password </label>
+                            <input id="pass" name="password" required="required" type="password"
                                    placeholder=""/>
                         </p>
                         <p>
-                            <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your
+                            <label for="pass2" class="youpasswd" data-icon="p">Please confirm your
                                 password </label>
-                            <input id="passwordsignup_confirm" name="password2" required="required" type="password"
+                            <input id="pass2" name="password2"  required="required" type="password"
                                    placeholder=""/>
                         </p>
+                        <span id="msg"></span>
                         <div class="styled-select slate">
                             <select name="type" class="form-control">
                                 <option value="sp">Service Provider</option>
@@ -122,4 +124,5 @@ if (isset($_SESSION['full'])) {
     </section>
 </div>
 </body>
+
 </html>

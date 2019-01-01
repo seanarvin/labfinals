@@ -124,7 +124,7 @@ if (isset($_SESSION['full'])) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="users.php">
+            <a class="nav-link" href="transactions.php">
               <i class="ni ni-bullet-list-67 text-red"></i> Transactions
             </a>
           </li>
