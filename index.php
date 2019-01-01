@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION['full'])) {
     $ty = $_SESSION['userType'];
     if ($ty == "admin") {
-        header('Location:Admin/dashboard.php');
+        header('Location:Admin/index.php');
     } elseif ($ty == "sp") {
         header('Location:ServiceProvider/dashboard.php');
     }elseif ($ty == "user") {

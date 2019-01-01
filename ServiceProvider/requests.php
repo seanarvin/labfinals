@@ -63,15 +63,9 @@ if (isset($_SESSION['full'])) {
         </div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">
-                        <i class="material-icons">dashboard</i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="requests.php">
-                        <i class="material-icons">person</i>
+                        <i class="material-icons">dashboard</i>
                         <p>Requests</p>
                     </a>
                 </li>
@@ -141,23 +135,23 @@ if (isset($_SESSION['full'])) {
                                     <div class="card-header card-header-tabs card-header-primary">
                                         <div class="nav-tabs-navigation">
                                             <div class="nav-tabs-wrapper">
-                                                <span class="nav-tabs-title">ACCOUNTS</span>
+                                                <span class="nav-tabs-title">Requests</span>
                                                 <ul class="nav nav-tabs" data-tabs="tabs">
                                                     <li class="nav-item">
                                                         <a class="nav-link active" href="#requests" data-toggle="tab">
-                                                            <i class="material-icons">apps</i> Requests
+                                                            <i class="material-icons">apps</i> Pending Requests
                                                             <div class="ripple-container"></div>
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" href="#active" data-toggle="tab">
-                                                            <i class="material-icons">check</i> Active
+                                                            <i class="material-icons">check</i> Ongoing Requests
                                                             <div class="ripple-container"></div>
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" href="#disabled" data-toggle="tab">
-                                                            <i class="material-icons">close</i> Disabled
+                                                            <i class="material-icons">close</i>
                                                             <div class="ripple-container"></div>
                                                         </a>
                                                     </li>

@@ -5,7 +5,7 @@ $num = $_GET['num'];
 
 $sql = "UPDATE user SET status = 'disabled' WHERE user_id = '$num'";
 if($conn->query($sql)){
-    header('Location:../requests.php');
+    header('Location:../users.php');
 }else {
 
 

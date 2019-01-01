@@ -4,7 +4,7 @@ require 'db.php';
 session_start();
 $user = $_POST['username'];
 $pass = $_POST['password'];
-$sql = "SELECT user_fname,user_lname,password,type,status FROM user WHERE user_fname = ? && password = ?";
+$sql = "SELECT user_fname,user_lname,password,type,status,user_id FROM user WHERE user_fname = ? && password = ?";
 
 
 $st = $conn->prepare($sql);
@@ -17,15 +17,18 @@ if ($res->num_rows > 0 && $r[4] == 'active') {
     if ($r[3] == "admin") {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];
+        $_SESSION['ayd'] =  $r[5];
         header('Location:../dashboard.php');
     } elseif ($r[3] == "sp") {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];
-        header('Location:../dashboard.php');
-    }elseif ($r[3] == "client") {
+        $_SESSION['ayd'] =  $r[5];
+        header('Location:../../Admin/services.php');
+    }elseif ($r[3] == "user") {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];
-        header('Location: //0.0.0.0:3000/index/' . $_SESSION['userID']);
+        $_SESSION['ayd'] =  $r[5];
+        header('Location:../user/delivery.php');
     } else {
         $m = "Error login, Unknown user type! Contact Administrator";
         echo "

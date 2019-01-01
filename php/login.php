@@ -18,12 +18,12 @@ if ($res->num_rows > 0 && $r[4] == 'active') {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];
         $_SESSION['ayd'] =  $r[5];
-        header('Location:../dashboard.php');
+        header('Location:../Admin/index.php');
     } elseif ($r[3] == "sp") {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];
         $_SESSION['ayd'] =  $r[5];
-        header('Location:../ServiceProvider/dashboard.php');
+        header('Location:../ServiceProvider/requests.php');
     }elseif ($r[3] == "client") {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];

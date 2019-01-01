@@ -64,14 +64,8 @@ if (isset($_SESSION['full'])) {
         <div class="sidebar-wrapper">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">
-                        <i class="material-icons">dashboard</i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
                     <a class="nav-link" href="requests.php">
-                        <i class="material-icons">person</i>
+                        <i class="material-icons">dashboard</i>
                         <p>Requests</p>
                     </a>
                 </li>
@@ -159,12 +153,25 @@ if (isset($_SESSION['full'])) {
                                                     <thead>
                                                     <th><b>Category</b></th>
                                                     <th><b>Work</b></th>
-                                                    <th><b>Specifics</b></th>
                                                     <th><b>Price</b></th>
                                                     <th class="text-center"><b>Actions</b></th>
                                                     </thead>
                                                     <tbody>
-                                                    <!--                                                    -->
+                                                    <?php
+                                                    $ayd = $_SESSION['ayd'];
+                                                    $sql = "SELECT service_name,work,price FROM spservices JOIN services JOIN spwork WHERE sp_id = '$ayd' AND service_id = spservices.id AND spservice_id = spservices.id";
+
+                                                    $res = $conn->query($sql);
+
+                                                    while ($row = $res->fetch_assoc()){
+                                                        echo "<tr>";
+                                                        echo "<td>" . $row['service_name'] . "</td>";
+                                                        echo "<td>" . $row['work'] . "</td>";
+                                                        echo "<td>" . $row['price'] . "</td>";
+                                                        echo "</tr>";
+                                                    }
+
+                                                    ?>
                                                     </tbody>
 
                                                 </table>
@@ -288,10 +295,15 @@ if (isset($_SESSION['full'])) {
                                     <tr>
                                         <td>
                                             <select name="category" id="cat" class="form-control">
-                                                <option value="1">Electrician</option>
-                                                <option value="2">Plumbing</option>
-                                                <option value="3">Carpentry</option>
-                                                <option value="4">AC Repair</option>
+
+                                                <?php
+                                                $sql = "SELECT * FROM services";
+                                                $res = $conn->query($sql);
+
+                                                while ($row = $res->fetch_assoc()){
+                                                    echo "<option value=" . $row['service_id'] . ">" . $row['service_name'] . "</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </td>
                                         <td>
