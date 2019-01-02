@@ -4,7 +4,7 @@ require 'db.php';
 session_start();
 $user = $_POST['username'];
 $pass = $_POST['password'];
-$sql = "SELECT user_fname,user_lname,password,type,status,user_id FROM user WHERE user_fname = ? && password = ?";
+$sql = "SELECT user_fname,user_lname,password,type,status,user_id FROM user WHERE user_name = ? && password = ?";
 
 
 $st = $conn->prepare($sql);
@@ -18,17 +18,17 @@ if ($res->num_rows > 0 && $r[4] == 'active') {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];
         $_SESSION['ayd'] =  $r[5];
-        header('Location:../Admin/index.php');
+        header('Location:../source_ad/Admin/index.php');
     } elseif ($r[3] == "sp") {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];
         $_SESSION['ayd'] =  $r[5];
-        header('Location:../ServiceProvider/requests.php');
+        header('Location:../source_ad/ServiceProvider/requests.php');
     }elseif ($r[3] == "client") {
         $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
         $_SESSION['userType'] =  $r[3];
         $_SESSION['ayd'] =  $r[5];
-        header('Location: //0.0.0.0:3000/index/' . $_SESSION['userID']);
+        header('Location:../source_cli/localhost:3000/index/' . $_SESSION['userID']);
     } else {
         $m = "Error login, Unknown user type! Contact Administrator";
         echo "

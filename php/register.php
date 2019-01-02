@@ -18,7 +18,7 @@ if ($password == $password2) {
     $sql = "INSERT INTO user(password, user_fname, user_lname, contact_no, address, user_name, email, status, type) VALUES('$password','$first','$last','$num','$address','$username','$email','pending','$type')";
     if ($conn->query($sql)) {
 
-        header('Location:../../index.php');
+        header('Location:../index.php');
     } else {
 
 
@@ -35,7 +35,7 @@ if ($password == $password2) {
     echo "<script type='text/javascript'>
 
             alert('$m');
-            window.location.replace('../../index.php#toregister');
+            window.location.replace('../index.php#toregister');
         </script>";
 
 }

@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`user_id`, `password`, `user_fname`, `user_lname`, `contact_no`, `address`, `user_role`, `user_name`, `email`, `status`) VALUES
-(1, 'password', 'faye', 'lampa', '09123456789', 'Baguio City', 'Client', 'fayelampa', 'fayelampa@yahoo.com', ''),
+(1, 'password', 'faye', 'lampa', '09123456789', 'Baguio City', 'source_cli', 'fayelampa', 'fayelampa@yahoo.com', ''),
 (2, 'password', 'camille', 'poyaoan', '09123456798', 'Baguio City', 'admintest', 'camileru', 'camille@yahoo.com', '');
 COMMIT;
 

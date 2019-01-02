@@ -4,9 +4,9 @@ session_start();
 if (isset($_SESSION['full'])) {
     $ty = $_SESSION['userType'];
     if ($ty == "admin") {
-        header('Location:Admin/index.php');
+        header('Location:source_ad/Admin/index.php');
     } elseif ($ty == "sp") {
-        header('Location:ServiceProvider/dashboard.php');
+        header('Location:source_ad/ServiceProvider/requests.php');
     }elseif ($ty == "user") {
         header('Location:../user/delivery.php');
     } else {
@@ -64,7 +64,7 @@ if (isset($_SESSION['full'])) {
                 </div>
 
                 <div id="register" class="animate form">
-                    <form action="ServiceProvider/backend/register.php" autocomplete="on" method="post">
+                    <form action="php/register.php" autocomplete="on" method="post">
                         <h1> Sign up </h1>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">First Name</label>

@@ -18,7 +18,7 @@ if (isset($_SESSION['full'])) {
     echo "
             <script type = 'text/javascript'>
                 alert('$m');
-                window.location.replace('../../index.php');
+                window.location.replace('../index.php');
             </script>
          ";
 }
@@ -163,7 +163,7 @@ if (isset($_SESSION['full'])) {
             <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
 
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
+              <a href="backend/logout.php" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>

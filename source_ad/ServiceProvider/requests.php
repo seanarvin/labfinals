@@ -164,36 +164,36 @@ if (isset($_SESSION['full'])) {
                                             <div class="tab-pane active" id="requests">
                                                 <table class="table">
                                                     <thead>
-                                                    <th><b>Name</b></th>
-                                                    <th><b>Address</b></th>
-                                                    <th><b>Number</b></th>
-                                                    <th><b>Email</b></th>
-                                                    <th><b>Type</b></th>
-                                                    <th><b>Status</b></th>
+                                                    <th><b>Service Provider</b></th>
+                                                    <th><b>Date/Time</b></th>
+                                                    <th><b>Category</b></th>
+                                                    <th><b>Work</b></th>
+                                                    <th><b>Specifics</b></th>
+                                                    <th><b>Price</b></th>
                                                     <th class="text-center"><b>Actions</b></th>
                                                     </thead>
                                                     <tbody>
-                                                    <?php
-                                                    $qu = "SELECT * FROM user WHERE type !='admin' AND status = 'pending'";
-                                                    $res = $conn->query($qu);
-
-                                                    if ($res->num_rows > 0) {
-                                                        while ($row = $res->fetch_assoc()) {
-                                                            echo "<tr>";
-                                                            echo "<td>" . strtoupper($row['user_fname'] . " " . $row['user_lname']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['address']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['contact_no']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['email']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['type']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['status']) . "</td>";
-                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/disableUser.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/disableUser.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
-                                                            echo "</tr>";
-                                                        }
-                                                    } else {
-                                                        echo "<td>No account requests</td>";
-                                                    }
-
-                                                    ?>
+<!--                                                    --><?php
+//                                                    $qu = "SELECT * FROM user WHERE type !='admin' AND status = 'pending'";
+//                                                    $res = $conn->query($qu);
+//
+//                                                    if ($res->num_rows > 0) {
+//                                                        while ($row = $res->fetch_assoc()) {
+//                                                            echo "<tr>";
+//                                                            echo "<td>" . strtoupper($row['user_fname'] . " " . $row['user_lname']) . "</td>";
+//                                                            echo "<td>" . strtoupper($row['address']) . "</td>";
+//                                                            echo "<td>" . strtoupper($row['contact_no']) . "</td>";
+//                                                            echo "<td>" . strtoupper($row['email']) . "</td>";
+//                                                            echo "<td>" . strtoupper($row['type']) . "</td>";
+//                                                            echo "<td>" . strtoupper($row['status']) . "</td>";
+//                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/disableUser.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/disableUser.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
+//                                                            echo "</tr>";
+//                                                        }
+//                                                    } else {
+//                                                        echo "<td>No account requests</td>";
+//                                                    }
+//
+//                                                    ?>
                                                     </tbody>
                                                 </table>
                                             </div>

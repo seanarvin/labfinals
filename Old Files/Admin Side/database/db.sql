@@ -136,10 +136,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`user_Id`, `first_Name`, `last_Name`, `address`, `contact_No`, `acc_Type`, `username`, `password`, `status`) VALUES
 (14, 'Carl', 'Dumo', 'dumo st.', 2147483647, 'client', 'dumo', 'dumo123', 'approved'),
 (15, 'admintest', 'admin', 'admin st.', 912345123, 'admin', 'admin', 'admin', 'pending'),
-(16, 'Faye', 'Lampa', 'faye st.', 912387123, 'Client', 'faye', 'faye123', 'deactivated'),
-(17, 'Camille', 'Poyaoan', 'poyaoan st.', 2147483647, 'Client', 'camille', 'camille123', 'approved'),
+(16, 'Faye', 'Lampa', 'faye st.', 912387123, 'source_cli', 'faye', 'faye123', 'deactivated'),
+(17, 'Camille', 'Poyaoan', 'poyaoan st.', 2147483647, 'source_cli', 'camille', 'camille123', 'approved'),
 (18, 'Bill', 'Hilarion', 'cacas st.', 2147483647, 'admintest', 'Bill', 'hilarion123', 'pending'),
-(19, 'Bryn', 'Edades', 'cerezo st.', 2147483647, 'Client', 'bryn', 'bryn123', 'deactivated'),
+(19, 'Bryn', 'Edades', 'cerezo st.', 2147483647, 'source_cli', 'bryn', 'bryn123', 'deactivated'),
 (20, 'Mikka', 'Tuguinay', 'laos angeles', 98765627, 'client', 'mikka', 'mikka123', 'declined'),
 (21, 'Rico', 'Pangan', 'cleveland', 19238271, 'client', 'rico', 'rico123', 'approved'),
 (22, 'Kieffer', 'Ballesteros', 'boston', 192837123, 'client', 'kieffer', 'kieffer123', 'declined');
