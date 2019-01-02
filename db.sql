@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 02, 2019 at 10:27 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Jan 02, 2019 at 03:00 PM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -42,7 +42,7 @@ CREATE TABLE `requests` (
   `note` text,
   `client_id` int(11) NOT NULL,
   `specifics_id` int(11) NOT NULL,
-  `status` enum('pending','rejected','ongoing','completed') NOT NULL DEFAULT 'pending'
+  `status` enum('pending','rejected','ongoing','completed','canceled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -50,7 +50,7 @@ CREATE TABLE `requests` (
 --
 
 INSERT INTO `requests` (`req_id`, `date_requested`, `work_id`, `sp_id`, `date`, `from`, `to`, `note`, `client_id`, `specifics_id`, `status`) VALUES
-(1, '2019-01-01 18:12:30', 2, 12, '2019-01-02', '01:00:00', '02:10:00', NULL, 9, 1, 'pending');
+(6, '2019-01-02 12:14:38', 2, 14, '2019-01-02', '00:00:00', '03:00:00', NULL, 13, 1, 'ongoing');
 
 -- --------------------------------------------------------
 
@@ -103,26 +103,6 @@ INSERT INTO `specifics` (`specifics_id`, `specifics`, `service_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `spservice`
---
-
-DROP TABLE IF EXISTS `spservice`;
-CREATE TABLE `spservice` (
-  `sp_id` int(11) NOT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `uid` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `spservice`
---
-
-INSERT INTO `spservice` (`sp_id`, `service_id`, `uid`) VALUES
-(1, 1, 12);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `spservices`
 --
 
@@ -138,7 +118,11 @@ CREATE TABLE `spservices` (
 --
 
 INSERT INTO `spservices` (`id`, `category`, `sp_id`) VALUES
-(1, '4', 8);
+(6, '1', 14),
+(7, '1', 14),
+(8, '4', 14),
+(9, '2', 14),
+(10, '1', 14);
 
 -- --------------------------------------------------------
 
@@ -151,16 +135,31 @@ CREATE TABLE `spwork` (
   `id` int(11) NOT NULL,
   `work` varchar(20) NOT NULL,
   `spservice_id` int(20) NOT NULL,
-  `price` int(10) NOT NULL
+  `price` int(10) NOT NULL,
+  `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `spwork`
 --
 
-INSERT INTO `spwork` (`id`, `work`, `spservice_id`, `price`) VALUES
-(1, 'Not Cold/Not working', 1, 10),
-(2, 'asdasd', 2, 10);
+INSERT INTO `spwork` (`id`, `work`, `spservice_id`, `price`, `status`) VALUES
+(10, '7', 9, 100, 'disabled'),
+(11, '2', 10, 100, 'disabled');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE `transactions` (
+  `transactions_id` int(100) NOT NULL,
+  `sp_id` int(100) NOT NULL,
+  `client_id` int(100) NOT NULL,
+  `history` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -189,7 +188,9 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `address`, `contact_no`, `email`, `type`, `status`) VALUES
 (12, 'Amanda ', 'Lee', 'sp1', '1234', 'Baguio City', '0989424221', 'sp1@gmail.com', 'sp', 'active'),
 (11, 'admin', 'admin', 'admin', 'admin', 'Baguio City', '0987232321', 'admin@gmail.com', 'admin', 'active'),
-(13, 'Japper', 'Li', 'japper', '1234', 'Camp 7, Baguio City', '0982727291', 'japper@gmail.com', 'client', 'active');
+(13, 'Japper', 'Li', 'japper', '1234', 'Camp 7, Baguio City', '0982727291', 'japper@gmail.com', 'client', 'active'),
+(14, 'roger', 'li', 'roger', 'li', 'taiwan', '1290381872', 'roger@gmail.com', 'sp', 'active'),
+(15, 'Hsinta', 'Chen', 'hsinta', '1234', 'Thailand', '92183617127', 'hsinta@gmail.com', 'sp', 'active');
 
 -- --------------------------------------------------------
 
@@ -247,12 +248,6 @@ ALTER TABLE `specifics`
   ADD PRIMARY KEY (`specifics_id`,`service_id`);
 
 --
--- Indexes for table `spservice`
---
-ALTER TABLE `spservice`
-  ADD PRIMARY KEY (`sp_id`);
-
---
 -- Indexes for table `spservices`
 --
 ALTER TABLE `spservices`
@@ -263,6 +258,12 @@ ALTER TABLE `spservices`
 --
 ALTER TABLE `spwork`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`transactions_id`);
 
 --
 -- Indexes for table `user`
@@ -284,7 +285,7 @@ ALTER TABLE `work`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -299,28 +300,28 @@ ALTER TABLE `specifics`
   MODIFY `specifics_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `spservice`
---
-ALTER TABLE `spservice`
-  MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `spservices`
 --
 ALTER TABLE `spservices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `spwork`
 --
 ALTER TABLE `spwork`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `transactions_id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `work`
