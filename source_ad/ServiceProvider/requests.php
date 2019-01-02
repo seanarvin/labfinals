@@ -185,7 +185,7 @@ if (isset($_SESSION['full'])) {
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
                                                             echo "<td>" . strtoupper($row['pr']) . "</td>";
-                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/acceptJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "</td>";
+                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/acceptJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" .  "</td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {
@@ -226,7 +226,8 @@ if (isset($_SESSION['full'])) {
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
                                                             echo "<td>" . strtoupper($row['pr']) . "</td>";
-                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Complete Request' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "</td>";
+                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Complete Request' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Cancel Request' href='#' data-toggle='modal' data-id='" .$row['ayyd'] . "' data-target='#exampleModal1'
+                                 class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {
@@ -374,6 +375,41 @@ if (isset($_SESSION['full'])) {
                             </div>
 
 
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form>
+                <div class="modal-body ">
+                    <div class="card">
+                        <div class="card-header card-header-primary text-center">
+                            <h4 class="card-title">Edit Profile</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="">Reason for canceling</label>
+                                    <input name="note" type='text' class='form-control'>;
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button type="button"
+                                        class="btn btn-secondary btn-info"
+                                        data-dismiss="modal">Close
+                                </button>
+                                <button type="button"
+                                        class="btn btn-primary">Submit
+                                    changes
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
