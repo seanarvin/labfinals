@@ -13,7 +13,10 @@ if (isset($_SESSION['full'])) {
 
     }
 }
+
 ?>
+
+
 
 <!DOCTYPE html>
 <head>

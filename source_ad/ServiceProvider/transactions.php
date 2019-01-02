@@ -141,103 +141,56 @@ if (isset($_SESSION['full'])) {
                                     <table class="table" id="example" width="100%">
                                         <thead class=" text-primary">
                                         <th>
-                                            Name
+                                            Service Provider
                                         </th>
                                         <th>
-                                            Country
+                                            Date/Time
                                         </th>
                                         <th>
-                                            City
+                                            Category
                                         </th>
                                         <th>
-                                            Salary
+                                            Work
+                                        </th>
+                                        <th>
+                                            Address
+                                        </th>
+                                        <th>
+                                            Number
+                                        </th>
+                                        <th>
+                                            Specifics
+                                        </th>
+                                        <th>
+                                            Price
                                         </th>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                Dakota Rice
-                                            </td>
-                                            <td>
-                                                Niger
-                                            </td>
-                                            <td>
-                                                Oud-Turnhout
-                                            </td>
-                                            <td class="text-primary">
-                                                $36,738
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Minerva Hooper
-                                            </td>
-                                            <td>
-                                                Curaçao
-                                            </td>
-                                            <td>
-                                                Sinaai-Waas
-                                            </td>
-                                            <td class="text-primary">
-                                                $23,789
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Sage Rodriguez
-                                            </td>
-                                            <td>
-                                                Netherlands
-                                            </td>
-                                            <td>
-                                                Baileux
-                                            </td>
-                                            <td class="text-primary">
-                                                $56,142
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Philip Chaney
-                                            </td>
-                                            <td>
-                                                Korea, South
-                                            </td>
-                                            <td>
-                                                Overland Park
-                                            </td>
-                                            <td class="text-primary">
-                                                $38,735
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Doris Greene
-                                            </td>
-                                            <td>
-                                                Malawi
-                                            </td>
-                                            <td>
-                                                Feldkirchen in Kärnten
-                                            </td>
-                                            <td class="text-primary">
-                                                $63,542
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Mason Porter
-                                            </td>
-                                            <td>
-                                                Chile
-                                            </td>
-                                            <td>
-                                                Gloucester
-                                            </td>
-                                            <td class="text-primary">
-                                                $78,615
-                                            </td>
-                                        </tr>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $qu = "SELECT spwork.price AS pr,specifics.specifics AS spe,services.service_name AS sn,requests.date_requested AS datee,requests.req_id AS ayyd,user.user_fname AS fname,user.user_lname AS lname,user.address AS address,user.contact_no AS num,user.email AS email,requests.status AS stat,work.description AS wo,services.service_name AS cat FROM requests JOIN user ON user.user_id = requests.client_id JOIN work on work.work_id = requests.work_id JOIN specifics on specifics.specifics_id = requests.specifics_id JOIN services on services.service_id = work.service_id JOIN spwork on spwork.work = work.work_id WHERE sp_id = '$ayd' AND requests.status = 'completed'";
+                                        $res = $conn->query($qu);
+
+                                        if ($res->num_rows > 0) {
+                                            while ($row = $res->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . strtoupper($row['fname'] . " " . $row['lname']) . "</td>";
+                                                echo "<td>" . strtoupper($row['datee']) . "</td>";
+                                                echo "<td>" . strtoupper($row['sn']) . "</td>";
+                                                echo "<td>" . strtoupper($row['wo']) . "</td>";
+                                                echo "<td>" . strtoupper($row['address']) . "</td>";
+                                                echo "<td>" . strtoupper($row['num']) . "</td>";
+                                                echo "<td>" . strtoupper($row['spe']) . "</td>";
+                                                echo "<td>" . strtoupper($row['pr']) . "</td>";
+
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<td>No active accounts</td>";
+                                        }
+
+                                        ?>
+
                                         </tbody>
                                     </table>
                                 </div>

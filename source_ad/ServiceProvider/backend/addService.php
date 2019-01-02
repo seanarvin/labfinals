@@ -24,10 +24,10 @@ if($conn->query($sql)){
 
 
 
-$sql = "INSERT INTO spwork(work, spservice_id, price) VALUES ('$work','$lid','$price')";
+$sql = "INSERT INTO spwork(work, spservice_id, price,status) VALUES ('$work','$lid','$price','enabled')";
 
 if($conn->query($sql)){
-    header('Location:../requests.php');
+    header('Location:../services.php');
 }else {
     var_dump($conn->error);
 }

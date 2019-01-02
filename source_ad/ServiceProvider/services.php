@@ -154,20 +154,21 @@ if (isset($_SESSION['full'])) {
                                                     <th><b>Category</b></th>
                                                     <th><b>Work</b></th>
                                                     <th><b>Price</b></th>
-                                                    <th class="text-center"><b>Actions</b></th>
+                                                    <th ><b>Actions</b></th>
                                                     </thead>
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $sql = "SELECT service_name,work,price FROM spservices JOIN services JOIN spwork WHERE sp_id = '$ayd' AND service_id = spservices.id AND spservice_id = spservices.id";
+                                                    $sql = "SELECT spwork.id AS pp,services.service_name,work.description,spwork.price,spwork.id AS workayd FROM spservices JOIN services JOIN spwork JOIN work on spwork.work = work.work_id WHERE spservices.sp_id = '$ayd' AND category = services.service_id AND status = 'enabled'  GROUP BY pp";
 
                                                     $res = $conn->query($sql);
 
                                                     while ($row = $res->fetch_assoc()){
                                                         echo "<tr>";
                                                         echo "<td>" . $row['service_name'] . "</td>";
-                                                        echo "<td>" . $row['work'] . "</td>";
+                                                        echo "<td>" . $row['description'] . "</td>";
                                                         echo "<td>" . $row['price'] . "</td>";
+                                                        echo "<td>" . "<a  rel='tooltip' title='Delete Work' href=" . 'backend/disableWork.php?num=' . $row['pp'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>maximize</i></a>" . "</td>";
                                                         echo "</tr>";
                                                     }
 
@@ -176,7 +177,7 @@ if (isset($_SESSION['full'])) {
 
                                                 </table>
                                                 <div class="pull-right">
-                                                    <button class="btn btn-info" rel='tooltip' title='Add Service'
+                                                    <button id="addservice" class="btn btn-info" rel='tooltip' title='Add Service'
                                                             data-toggle="modal" data-target="#exampleModal1"><i
                                                                 class="material-icons">library_add</i></button>
                                                 </div>
@@ -336,6 +337,7 @@ if (isset($_SESSION['full'])) {
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.min.js"></script>
 <script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/core/bootstrap-material-design.min.js"></script>
 <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Plugin for the momentJs  -->
@@ -376,8 +378,22 @@ if (isset($_SESSION['full'])) {
 <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
 
 <script>
-    $('#cat').on("change", function () {
-        $id = $(this).val();
+
+
+
+    $(document).ready(function () {
+
+        $('#addservice').click(function () {
+            category();
+        });
+
+        $('#cat').on("change", function () {
+           category();
+        });
+    });
+
+    function category() {
+        $id = $('#cat').val();
         $.ajax({
             url: 'workGet.php',
             data: {ayd: $id},
@@ -387,12 +403,15 @@ if (isset($_SESSION['full'])) {
                 let a = '';
 
                 for (let i = 0; i < data.length; i++) {
-                    a += '<option value' + data[i][1] + '>' + data[i][0] + '</option>';
+                    a += '<option value=' + data[i][1] + '>' + data[i][0] + '</option>';
                 }
                 $('#work').html(a);
             }
         });
-    });
+    }
+
+
+
 </script>
 
 </body>

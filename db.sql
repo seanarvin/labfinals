@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2019 at 06:58 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.11
+-- Generation Time: Jan 02, 2019 at 10:27 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -45,6 +45,13 @@ CREATE TABLE `requests` (
   `status` enum('pending','rejected','ongoing','completed') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `requests`
+--
+
+INSERT INTO `requests` (`req_id`, `date_requested`, `work_id`, `sp_id`, `date`, `from`, `to`, `note`, `client_id`, `specifics_id`, `status`) VALUES
+(1, '2019-01-01 18:12:30', 2, 12, '2019-01-02', '01:00:00', '02:10:00', NULL, 9, 1, 'pending');
+
 -- --------------------------------------------------------
 
 --
@@ -80,6 +87,19 @@ CREATE TABLE `specifics` (
   `service_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `specifics`
+--
+
+INSERT INTO `specifics` (`specifics_id`, `specifics`, `service_id`) VALUES
+(1, 'Lighting', 1),
+(2, 'Fan', 1),
+(3, 'Water Heater', 1),
+(4, 'Window Type', 4),
+(5, 'Tower/ Floor Standing Type', 4),
+(6, 'Split Type', 4),
+(7, 'Ceiling/ Cassette Type', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -92,6 +112,13 @@ CREATE TABLE `spservice` (
   `service_id` int(11) DEFAULT NULL,
   `uid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `spservice`
+--
+
+INSERT INTO `spservice` (`sp_id`, `service_id`, `uid`) VALUES
+(1, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -144,14 +171,14 @@ INSERT INTO `spwork` (`id`, `work`, `spservice_id`, `price`) VALUES
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
-  `type` varchar(10) NOT NULL,
   `user_fname` varchar(45) NOT NULL,
   `user_lname` varchar(45) NOT NULL,
   `user_name` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `contact_no` varchar(45) NOT NULL,
   `address` varchar(45) NOT NULL,
+  `contact_no` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
+  `type` varchar(10) NOT NULL,
   `status` varchar(20) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -159,10 +186,10 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `type`, `user_fname`, `user_lname`, `user_name`, `password`, `contact_no`, `address`, `email`, `status`) VALUES
-(8, 'sp', 'cam', 'cam', 'cam', '123', '09098080680', 'Dita lang', 'cam@gmail.com', 'disabled'),
-(9, 'admin', 'qwe', 'qwe', '123', '123', '12312', 'asda', 'asdasdasd@gmail.com', 'active'),
-(10, 'sp', 'a', 'b', 'q', 'q', '123123', 'asd', 'asdasdsfg@gmail.com', 'disabled');
+INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `address`, `contact_no`, `email`, `type`, `status`) VALUES
+(12, 'Amanda ', 'Lee', 'sp1', '1234', 'Baguio City', '0989424221', 'sp1@gmail.com', 'sp', 'active'),
+(11, 'admin', 'admin', 'admin', 'admin', 'Baguio City', '0987232321', 'admin@gmail.com', 'admin', 'active'),
+(13, 'Japper', 'Li', 'japper', '1234', 'Camp 7, Baguio City', '0982727291', 'japper@gmail.com', 'client', 'active');
 
 -- --------------------------------------------------------
 
@@ -182,7 +209,20 @@ CREATE TABLE `work` (
 --
 
 INSERT INTO `work` (`work_id`, `service_id`, `description`) VALUES
-(1, '4', 'Not Cold/Not working optimally');
+(2, '1', 'Install'),
+(3, '1', 'Repair/ Replace'),
+(4, '1', 'Relocate/ Move'),
+(5, '1', 'Inspection'),
+(6, '2', 'Plumbing Repair'),
+(7, '2', 'Plumbing Installation'),
+(8, '2', 'Declogging'),
+(9, '3', 'Repair Furniture'),
+(10, '3', 'Door Installation'),
+(11, '3', 'Repair Door Hinges'),
+(12, '4', 'Not cold/ Not working optimally'),
+(13, '4', 'Air not blowing/ Not blowing optimallhy'),
+(14, '4', 'Leaking'),
+(15, '4', 'Control/ Sensor Problem');
 
 --
 -- Indexes for dumped tables
@@ -244,7 +284,7 @@ ALTER TABLE `work`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -256,13 +296,13 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `specifics`
 --
 ALTER TABLE `specifics`
-  MODIFY `specifics_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `specifics_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `spservice`
 --
 ALTER TABLE `spservice`
-  MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `spservices`
@@ -280,13 +320,13 @@ ALTER TABLE `spwork`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `work`
 --
 ALTER TABLE `work`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
