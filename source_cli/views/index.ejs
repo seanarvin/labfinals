@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500"> 
+  <link rel="stylesheet" href="/assets/fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="/assets/css/jquery-ui.css">
+  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="/assets/css/mediaelementplayer.css">
+  <link rel="stylesheet" href="/assets/css/animate.css">
+  <link rel="stylesheet" href="/assets/fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="/assets/css/fl-bigmug-line.css">
+
+  
+  <link rel="stylesheet" href="/assets/css/aos.css">
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/modal.css">
+  <script src="/assets/js/jquery-3.3.1.min.js"></script>
+
+</head>
+<body>
+  <div class="site-wrap">
+
+    <div class="site-navbar mt-4">
+      <div  class="container py-1">
+        <div class="row align-items-center">
+          <div class="col-8 col-md-8 col-lg-4">
+            <h1 class="mb-0"><a href="/" class="text-white h2 mb-0"><strong>Traba<span class="text-primary">Who</span></strong></a></h1>
+          </div>
+          <div class="col-4 col-md-4 col-lg-8">
+            <!-- Include navigation -->
+            <% include partials/nav.ejs %>
+          </div>
+
+
+        </div>
+      </div>
+
+  </div>
+
+  <div class="site-mobile-menu">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close mt-3">
+        <span class="icon-close2 js-menu-toggle"></span>
+      </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+  </div> <!-- .site-mobile-menu -->
+
+  <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url('/assets/images/hero_bg_3.jpg');" data-aos="fade" data-stellar-background-ratio="0.5" data-aos="fade">
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-7 text-center" data-aos="fade-up" data-aos-delay="400">
+
+          <h2 class="text-white h1"></h2>
+          <p>What <span class="text-primary">service</span> can we help you with? </p>
+          <form action="#" method="post" class="site-block-subscribe">
+            <div class="input-group mb-3">
+              <input id ="searchinput" type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Search for services" aria-label="Enter Email" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                <button id="searchsp" class="btn btn-primary" type="button" id="button-addon2">Search</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!--  -->
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <div id="spdiv" class="site-section bg-light">
+
+    <div class="container">
+      <div class="row align-items-left justify-content-left">
+        <div class="col-md-6 text-left" data-aos="fade-up" data-aos-delay="400">
+          <h1>Search for professionals</h1>
+        </div>
+      </div>
+    </div>
+    <div class="container" data-aos="fade-up">
+      <div id="servicep-list" class="row">
+        <!-- Include service providers -->
+        <% include partials/tabs.ejs %>
+
+      </div>
+    </div>
+    <!-- Include service providers -->
+    <% include modals/request.ejs %>
+
+  </div>
+
+</div>
+
+
+
+<div class="bg-primary" data-aos="fade">
+
+
+<% include partials/footer.ejs %>
+ 
+
+</div>
+
+
+
+
+<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/assets/js/jquery-ui.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/owl.carousel.min.js"></script>
+<script src="/assets/js/mediaelement-and-player.min.js"></script>
+<script src="/assets/js/jquery.stellar.min.js"></script>
+<script src="/assets/js/jquery.countdown.min.js"></script>
+<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/bootstrap-datepicker.min.js"></script>
+<script src="/assets/js/aos.js"></script>
+<script src="/assets/js/circleaudioplayer.js"></script>
+
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/modal.js"></script>
+<script src="/assets/js/custom.js"></script>
+<script type="text/javascript" src='/assets/js/steps.js'></script>
+</body>
+</html>

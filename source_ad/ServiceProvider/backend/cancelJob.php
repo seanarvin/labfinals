@@ -8,9 +8,11 @@
 require 'db.php';
 
 
-$num = $_GET['num'];
+$note = $_POST['note'];
+$ayd = $_POST['ayd'];
 
-$sql = "UPDATE requests SET status = 'canceled' WHERE req_id = '$num'";
+
+$sql = "UPDATE requests SET status = 'cancelled',note = '$note' WHERE req_id = '$ayd'";
 
 if($conn->query($sql)){
     header('Location:../requests.php');

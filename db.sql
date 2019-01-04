@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 02, 2019 at 03:00 PM
+-- Generation Time: Jan 04, 2019 at 01:35 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -42,7 +42,7 @@ CREATE TABLE `requests` (
   `note` text,
   `client_id` int(11) NOT NULL,
   `specifics_id` int(11) NOT NULL,
-  `status` enum('pending','rejected','ongoing','completed','canceled') NOT NULL DEFAULT 'pending'
+  `status` enum('pending','rejected','ongoing','completed','cancelled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -50,7 +50,8 @@ CREATE TABLE `requests` (
 --
 
 INSERT INTO `requests` (`req_id`, `date_requested`, `work_id`, `sp_id`, `date`, `from`, `to`, `note`, `client_id`, `specifics_id`, `status`) VALUES
-(6, '2019-01-02 12:14:38', 2, 14, '2019-01-02', '00:00:00', '03:00:00', NULL, 13, 1, 'ongoing');
+(8, '2019-01-04 11:57:37', 5, 21, '2019-01-08', '00:12:00', '12:21:00', NULL, 23, 1, 'rejected'),
+(9, '2019-01-04 11:58:54', 5, 21, '2019-01-16', '00:12:00', '12:12:00', NULL, 23, 1, 'ongoing');
 
 -- --------------------------------------------------------
 
@@ -113,17 +114,6 @@ CREATE TABLE `spservices` (
   `sp_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `spservices`
---
-
-INSERT INTO `spservices` (`id`, `category`, `sp_id`) VALUES
-(6, '1', 14),
-(7, '1', 14),
-(8, '4', 14),
-(9, '2', 14),
-(10, '1', 14);
-
 -- --------------------------------------------------------
 
 --
@@ -138,14 +128,6 @@ CREATE TABLE `spwork` (
   `price` int(10) NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `spwork`
---
-
-INSERT INTO `spwork` (`id`, `work`, `spservice_id`, `price`, `status`) VALUES
-(10, '7', 9, 100, 'disabled'),
-(11, '2', 10, 100, 'disabled');
 
 -- --------------------------------------------------------
 
@@ -186,11 +168,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `address`, `contact_no`, `email`, `type`, `status`) VALUES
-(12, 'Amanda ', 'Lee', 'sp1', '1234', 'Baguio City', '0989424221', 'sp1@gmail.com', 'sp', 'active'),
-(11, 'admin', 'admin', 'admin', 'admin', 'Baguio City', '0987232321', 'admin@gmail.com', 'admin', 'active'),
-(13, 'Japper', 'Li', 'japper', '1234', 'Camp 7, Baguio City', '0982727291', 'japper@gmail.com', 'client', 'active'),
-(14, 'roger', 'li', 'roger', 'li', 'taiwan', '1290381872', 'roger@gmail.com', 'sp', 'active'),
-(15, 'Hsinta', 'Chen', 'hsinta', '1234', 'Thailand', '92183617127', 'hsinta@gmail.com', 'sp', 'active');
+(20, 'Admin', 'Admin', 'admin', 'admin', 'Dita Laeng', '12345678901', 'admin@gmail.com', 'admin', 'active');
 
 -- --------------------------------------------------------
 
@@ -285,7 +263,7 @@ ALTER TABLE `work`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -303,13 +281,13 @@ ALTER TABLE `specifics`
 -- AUTO_INCREMENT for table `spservices`
 --
 ALTER TABLE `spservices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `spwork`
 --
 ALTER TABLE `spwork`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -321,7 +299,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `work`

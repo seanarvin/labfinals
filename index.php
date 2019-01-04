@@ -2,7 +2,6 @@
 session_start();
 
 if (isset($_SESSION['full'])) {
-    $ty = $_SESSION['userType'];
     if ($ty == "admin") {
         header('Location:source_ad/Admin/index.php');
     } elseif ($ty == "sp") {

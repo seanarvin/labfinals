@@ -185,7 +185,7 @@ if (isset($_SESSION['full'])) {
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
                                                             echo "<td>" . strtoupper($row['pr']) . "</td>";
-                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/acceptJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" .  "</td>";
+                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/acceptJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/rejectJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" .  "</td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {
@@ -387,7 +387,7 @@ if (isset($_SESSION['full'])) {
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form>
+            <form action="backend/cancelJob.php" method="post">
                 <div class="modal-body ">
                     <div class="card">
                         <div class="card-header card-header-primary text-center">
@@ -397,7 +397,7 @@ if (isset($_SESSION['full'])) {
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="">Reason for canceling</label>
-                                    <input name="note" type='text' class='form-control'>;
+                                    <input name="note" type='text' class='form-control'>
                                 </div>
                             </div>
                             <div class="pull-right">
@@ -405,11 +405,7 @@ if (isset($_SESSION['full'])) {
                                         class="btn btn-secondary btn-info"
                                         data-dismiss="modal">Close
                                 </button>
-                                <button type="button"
-                                        class="btn btn-primary">Submit
-                                    changes
-                                </button>
-                            </div>
+                                <button id="req_id" name="ayd" value="" type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -461,6 +457,17 @@ if (isset($_SESSION['full'])) {
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="assets/js/material-dashboard.js?v=2.1.1"
         type="text/javascript"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#exampleModal1').on("show.bs.modal",function (ev) {
+            let id = $(ev.relatedTarget).data('id');
+            $('#req_id').val(id);
+
+        })
+    });
+
+</script>
 
 
 </body>
