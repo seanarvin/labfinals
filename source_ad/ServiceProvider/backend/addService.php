@@ -15,11 +15,19 @@ $work = $_POST['work'];
 $price = $_POST['price'];
 
 
-$sql = "INSERT INTO spservices(category, sp_id) VALUES ('$cat','$ayd')";
-if($conn->query($sql)){
-    $lid = $conn->insert_id;
+$sp_services = "SELECT id FROM `spservices` WHERE category = '$cat' and sp_id = '$ayd'";
+$res = $conn->query($sp_services);
+
+if ($res->num_rows > 0) {
+	$row = $res->fetch_assoc();
+	$lid = $row["id"];
 }else{
-    var_dump($conn->error);
+	$sql = "INSERT INTO spservices(category, sp_id) VALUES ('$cat','$ayd')";
+	if($conn->query($sql)){
+		$lid = $conn->insert_id;
+	}else{
+		var_dump($conn->error);
+	}
 }
 
 
@@ -27,7 +35,7 @@ if($conn->query($sql)){
 $sql = "INSERT INTO spwork(work, spservice_id, price,status) VALUES ('$work','$lid','$price','enabled')";
 
 if($conn->query($sql)){
-    header('Location:../services.php');
+	header('Location:../services.php');
 }else {
-    var_dump($conn->error);
+	var_dump($conn->error);
 }

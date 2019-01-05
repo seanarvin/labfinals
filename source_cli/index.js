@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql')
 const hash = require('random-hash');
-const session = require('express-session')
+const session = require('express-session');
+const password_hash = require('password_hash');
 const app = express();
 
 
@@ -65,7 +66,7 @@ app.get('/',(req,res) => {
 app.get('/serviceworks/:id',(req,res) =>{
 	db.query(`SELECT * FROM spwork 
 		inner join work on work.work_id = spwork.work
-		WHERE spservice_id = ?`,
+		WHERE spservice_id = ? AND status != "disabled"`,
 		[req.params.id],(error, results, fields) => {
 			if (error) throw error;
 			res.json(results)
@@ -84,7 +85,7 @@ app.get('/specifics/:id',(req,res) =>{
 //#search
 app.get('/search/:value',(req,res) => {
 	let where = ``;
-	if (req.params.value){
+	if (req.params.value !== 'all'){
 		where = `where s.service_name = "`+req.params.value+`"`;
 	}
 	db.query(`SELECT sps.id,user.user_id,s.service_id,address,service_name,CONCAT(user_fname,' ',user_lname) as user from user
@@ -92,7 +93,11 @@ app.get('/search/:value',(req,res) => {
 			inner join services s on sps.category = s.service_id ${where}`,
 		(error, results, fields) => {
 			if (error) throw error;
-			res.json(results)
+			if(results.length > 0){
+				res.json(results);
+			}else{
+				res.json("No results found.");
+			}
 		});
 });
 // #transactions
@@ -111,7 +116,6 @@ app.get('/transactions',(req,res) =>{
 			And r.status not in ("rejected","completed","cancelled")`
 			,[client_id],(error, results, fields) => {
 				if (error) throw error;
-				console.log(results[0]);
 				res.render('transaction', data = results);
 
 			});
@@ -149,7 +153,7 @@ app.get('/history',(req,res) =>{
 app.get('/viewprofile',(req,res) =>{
 	if(req.session.uid){
 
-		let user_id = 12;
+		let user_id = req.session.uid;
 		db.query(`SELECT user_id,user_fname,user_lname,address,contact_no,email,user_name,password from user
 			where user_id = ?`
 			,[user_id],(error, results, fields) => {

@@ -9,6 +9,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "mysql": "^2.16.0",
+    "password_hash": "^1.1.0",
     "random-hash": "^4.0.1"
   },
   "devDependencies": {},

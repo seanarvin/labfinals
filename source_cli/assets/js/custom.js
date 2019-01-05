@@ -17,11 +17,11 @@ $(document).ready(function () {
                 let html = "";
                 result.forEach(function (work) {
                     html +=
-                        `<div class="custom-control custom-radio">
-					<input id=work"${work.work_id}" value="${work.work_id}" type="radio" 
-					class="custom-control-input" name="work">
-					<label for=work"${work.work_id}"  class="custom-control-label">${work.description}</label>
-					</div>`;
+                    `<div class="custom-control custom-radio">
+                    <input id=work"${work.work_id}" value="${work.work_id}" type="radio" 
+                    class="custom-control-input" name="work">
+                    <label for=work"${work.work_id}"  class="custom-control-label">${work.description}</label>
+                    </div>`;
                 });
                 $('#workitems').html(html);
                 step += '<span class="step"></span>';
@@ -36,11 +36,11 @@ $(document).ready(function () {
                 if (result.length > 0) {
                     result.forEach(function (specifics) {
                         list +=
-                            `<div class="custom-control custom-radio">
-						<input id=specifics"${specifics.specifics_id}" value="${specifics.specifics_id}" type="radio" 
-						class="custom-control-input" name="specifics">
-						<label for=specifics"${specifics.specifics_id}"  class="custom-control-label">${specifics.specifics}</label>
-						</div></div>`;
+                        `<div class="custom-control custom-radio">
+                        <input id=specifics"${specifics.specifics_id}" value="${specifics.specifics_id}" type="radio" 
+                        class="custom-control-input" name="specifics">
+                        <label for=specifics"${specifics.specifics_id}"  class="custom-control-label">${specifics.specifics}</label>
+                        </div></div>`;
 
                     });
 
@@ -64,8 +64,11 @@ $(document).ready(function () {
     });
 
     //search for service provider
-    $('#searchsp').click(function () {
+
+    $('#searchsp').on("click",function (event) {
+        event.preventDefault();
         let searchval = $('#searchinput').val();
+
         window.location.href = "#spdiv";
 
         let tabs = "";
@@ -74,21 +77,38 @@ $(document).ready(function () {
             $.ajax({
                 url: "/search/" + searchval,
                 success: function (result) {
-                    if (result.length > 0) {
+                    if (result !== "No results found.") {
                         result.forEach(function (user) {
                             tabs += `<div class="card">
-                                     <div class="card-header">${user.user}</div><div class="card-body">
-                                     <h5 class="card-title">${user.service_name}</h5>
-                                     <p class="card-text">Address:  ${user.address}</p>
-                                    <button data-uid = "${user.user_id}" data-servicename = "${user.service_name}"
-                                    data-sid = "${user.id}" data-servid = "${user.service_id}" type="button" 
-                                    class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
-                                    </div></div></div>`;
+                            <div class="card-header">${user.user}</div><div class="card-body">
+                            <h5 class="card-title">${user.service_name}</h5>
+                            <p class="card-text">Address:  ${user.address}</p>
+                            <button data-uid = "${user.user_id}" data-servicename = "${user.service_name}"
+                            data-sid = "${user.id}" data-servid = "${user.service_id}" type="button" 
+                            class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
+                            </div></div>`;
                         });
                         $('#servicep-list').html(tabs);
                     } else {
                         $('#servicep-list').html("No results found.");
                     }
+                }
+            });
+        }else{
+            $.ajax({
+                url: "/search/all",
+                success: function (result) {
+                    result.forEach(function (user) {
+                        tabs += `<div class="card">
+                        <div class="card-header">${user.user}</div><div class="card-body">
+                        <h5 class="card-title">${user.service_name}</h5>
+                        <p class="card-text">Address:  ${user.address}</p>
+                        <button data-uid = "${user.user_id}" data-servicename = "${user.service_name}"
+                        data-sid = "${user.id}" data-servid = "${user.service_id}" type="button" 
+                        class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
+                        </div></div>`;
+                    });
+                    $('#servicep-list').html(tabs);
                 }
             });
         }
