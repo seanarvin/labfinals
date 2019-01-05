@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2019 at 01:35 PM
+-- Generation Time: Jan 05, 2019 at 01:12 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -44,14 +44,6 @@ CREATE TABLE `requests` (
   `specifics_id` int(11) NOT NULL,
   `status` enum('pending','rejected','ongoing','completed','cancelled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `requests`
---
-
-INSERT INTO `requests` (`req_id`, `date_requested`, `work_id`, `sp_id`, `date`, `from`, `to`, `note`, `client_id`, `specifics_id`, `status`) VALUES
-(8, '2019-01-04 11:57:37', 5, 21, '2019-01-08', '00:12:00', '12:21:00', NULL, 23, 1, 'rejected'),
-(9, '2019-01-04 11:58:54', 5, 21, '2019-01-16', '00:12:00', '12:12:00', NULL, 23, 1, 'ongoing');
 
 -- --------------------------------------------------------
 
@@ -155,7 +147,7 @@ CREATE TABLE `user` (
   `user_fname` varchar(45) NOT NULL,
   `user_lname` varchar(45) NOT NULL,
   `user_name` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `address` varchar(45) NOT NULL,
   `contact_no` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
@@ -168,7 +160,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `address`, `contact_no`, `email`, `type`, `status`) VALUES
-(20, 'Admin', 'Admin', 'admin', 'admin', 'Dita Laeng', '12345678901', 'admin@gmail.com', 'admin', 'active');
+(30, 'Admin', 'Admin', 'admin', '$2y$10$jZdBqAsT2659OOyl5ZTTxu7IShNLWqXCieXIp3jLpzagj/ruUudha', 'Admin Boss, Admin', '09123456789', 'admin@gmail.com', 'admin', 'active');
 
 -- --------------------------------------------------------
 
@@ -281,13 +273,13 @@ ALTER TABLE `specifics`
 -- AUTO_INCREMENT for table `spservices`
 --
 ALTER TABLE `spservices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `spwork`
 --
 ALTER TABLE `spwork`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -299,7 +291,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `work`

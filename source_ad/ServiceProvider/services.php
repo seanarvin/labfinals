@@ -159,7 +159,7 @@ if (isset($_SESSION['full'])) {
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $sql = "SELECT services.service_id AS pp,services.service_name,spwork.price,work.description FROM `spservices` JOIN services on spservices.category = services.service_id JOIN spwork on spservices.id = spwork.spservice_id JOIN work ON spwork.work = work.work_id WHERE spservices.sp_id = '$ayd'";
+                                                    $sql = "SELECT spwork.id AS pp,services.service_name,spwork.price,work.description FROM `spservices` JOIN services on spservices.category = services.service_id JOIN spwork on spservices.id = spwork.spservice_id JOIN work ON spwork.work = work.work_id WHERE spservices.sp_id = '$ayd' AND spwork.status = 'enabled'";
 
                                                     $res = $conn->query($sql);
 
