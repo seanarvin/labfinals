@@ -57,7 +57,7 @@ if (isset($_SESSION['full'])) {
           Tip 2: you can also add an image using data-image tag
       -->
         <div class="logo">
-            <a href="dashboard.php" class="simple-text logo-normal">
+            <a href="requests.php" class="simple-text logo-normal">
                 <?php
                 echo strtoupper($_SESSION['userType']);
                 ?>
@@ -140,30 +140,14 @@ if (isset($_SESSION['full'])) {
                                 <div class="table-responsive">
                                     <table class="table" id="example" width="100%">
                                         <thead class=" text-primary">
-                                        <th>
-                                            Service Provider
-                                        </th>
-                                        <th>
-                                            Date/Time
-                                        </th>
-                                        <th>
-                                            Category
-                                        </th>
-                                        <th>
-                                            Work
-                                        </th>
-                                        <th>
-                                            Specifics
-                                        </th>
-                                        <th>
-                                            Price
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <th>
-                                            Note
-                                        </th>
+                                            <th>Service Provider</th>
+                                            <th>Date/Time</th>
+                                            <th>Category</th>
+                                            <th>Work</th>
+                                            <th>Specifics</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                            <th>Note</th>
                                         </thead>
                                         <tbody>
                                         <?php

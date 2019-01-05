@@ -55,7 +55,7 @@ if (isset($_SESSION['full'])) {
           Tip 2: you can also add an image using data-image tag
       -->
         <div class="logo">
-            <a href="dashboard.php" class="simple-text logo-normal">
+            <a href="requests.php" class="simple-text logo-normal">
                 <?php
                 echo strtoupper($_SESSION['userType']);
                 ?>

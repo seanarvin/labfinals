@@ -18,7 +18,7 @@ window.location.replace('../../index.php');
     echo "
   <script type = 'text/javascript'>
           alert('$m');
-  window.location.replace('../index.php');
+  window.location.replace(' ../index.php');
         </script>
 ";
 }
@@ -158,39 +158,48 @@ window.location.replace('../../index.php');
                         <h3 class="mb-0 text-center">Pending Account Request</h3>
                     </div>
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Contact #</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
-                            </tr>
+                        <table class="table" id="example" width="100%">
+                            <thead class=" text-primary">
+                            <th>Service Provider</th>
+                            <th>Date/Time</th>
+                            <th>Category</th>
+                            <th>Work</th>
+                            <th>Specifics</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Note</th>
                             </thead>
                             <tbody>
                             <?php
-                            $sql = "SELECT * FROM user WHERE type != 'admin' AND status = 'pending'";
-                            $res = $conn->query($sql);
+                            $ayd = $_SESSION['ayd'];
+                            $qu = "SELECT requests.note AS nt,spwork.price AS pr,specifics.specifics AS spe,services.service_name AS sn,requests.date_requested AS datee,requests.req_id AS ayyd,user.user_fname AS fname,user.user_lname AS lname,user.address AS address,user.contact_no AS num,user.email AS email,requests.status AS stat,work.description AS wo,services.service_name AS cat FROM requests JOIN user ON user.user_id = requests.client_id JOIN work on work.work_id = requests.work_id JOIN specifics on specifics.specifics_id = requests.specifics_id JOIN services on services.service_id = work.service_id JOIN spwork on spwork.work = work.work_id WHERE sp_id = '$ayd' ";
+                            $res = $conn->query($qu);
 
                             if ($res->num_rows > 0) {
                                 while ($row = $res->fetch_assoc()) {
                                     echo "<tr>";
-                                    echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
-                                    echo "<td>" . $row['address'] . "</td>";
-                                    echo "<td>" . $row['contact_no'] . "</td>";
-                                    echo "<td>" . $row['email'] . "</td>";
-                                    echo "<td>" . $row['type'] . "</td>";
-                                    echo "<td>" . $row['status'] . "</td>";
-                                    echo "<td>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/acceptRequest.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'>Accept</a>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/rejectRequest.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'>Reject</a>" . "</td>";
+                                    echo "<td>" . strtoupper($row['fname'] . " " . $row['lname']) . "</td>";
+                                    echo "<td>" . strtoupper($row['datee']) . "</td>";
+                                    echo "<td>" . strtoupper($row['sn']) . "</td>";
+                                    echo "<td>" . strtoupper($row['wo']) . "</td>";
+                                    echo "<td>" . strtoupper($row['spe']) . "</td>";
+                                    echo "<td>" . strtoupper($row['pr']) . "</td>";
+                                    echo "<td>" . strtoupper($row['stat']) . "</td>";
+                                    if($row['nt'] == ""){
+                                        echo "<td>N/A</td>";
+                                    }else{
+                                        echo "<td>" . strtoupper($row['nt']) . "</td>";
+                                    }
+
+
                                     echo "</tr>";
                                 }
                             } else {
-                                echo "<tr><td>No Requests</td></tr>";
+                                echo "<td>No History</td>";
                             }
+
                             ?>
+
                             </tbody>
                         </table>
                     </div>
@@ -202,110 +211,8 @@ window.location.replace('../../index.php');
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-header border-0">
-                        <h3 class="mb-0 text-center">Active Users</h3>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Contact #</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            $sql = "SELECT * FROM user WHERE type != 'admin' AND status = 'active'";
-                            $res = $conn->query($sql);
 
-                            if ($res->num_rows > 0) {
-                                while ($row = $res->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
-                                    echo "<td>" . $row['address'] . "</td>";
-                                    echo "<td>" . $row['contact_no'] . "</td>";
-                                    echo "<td>" . $row['email'] . "</td>";
-                                    echo "<td>" . $row['type'] . "</td>";
-                                    echo "<td>" . $row['status'] . "</td>";
-                                    echo "<td>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/disableUser.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'>Disable</a>" . "</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td>No Requests</td></tr>";
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer py-4">
-                        <nav aria-label="...">
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-header border-0">
-                        <h3 class="mb-0 text-center">Disabled Users</h3>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Contact #</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            $sql = "SELECT * FROM user WHERE type != 'admin' AND status = 'disabled'";
-                            $res = $conn->query($sql);
-
-                            if ($res->num_rows > 0) {
-                                while ($row = $res->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
-                                    echo "<td>" . $row['address'] . "</td>";
-                                    echo "<td>" . $row['contact_no'] . "</td>";
-                                    echo "<td>" . $row['email'] . "</td>";
-                                    echo "<td>" . $row['type'] . "</td>";
-                                    echo "<td>" . $row['status'] . "</td>";
-                                    echo "<td>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/enableUser.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'>Enable</a>" . "</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td>No Requests</td></tr>";
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer py-4">
-                        <nav aria-label="...">
-
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Dark table -->
 
         <!-- Footer -->
@@ -320,8 +227,15 @@ window.location.replace('../../index.php');
 <!-- Core -->
 <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+
+
 <!-- Argon JS -->
 <script src="assets/js/argon.js?v=1.0.0"></script>
+
+
 </body>
 
 </html>

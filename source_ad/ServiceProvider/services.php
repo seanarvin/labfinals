@@ -55,7 +55,7 @@ if (isset($_SESSION['full'])) {
           Tip 2: you can also add an image using data-image tag
       -->
         <div class="logo">
-            <a href="dashboard.php" class="simple-text logo-normal">
+            <a href="requests.php" class="simple-text logo-normal">
                 <?php
                 echo strtoupper($_SESSION['userType']);
                 ?>
@@ -159,13 +159,15 @@ if (isset($_SESSION['full'])) {
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $sql = "SELECT spwork.id AS pp,services.service_name,work.description,spwork.price,spwork.id AS workayd FROM spservices JOIN services JOIN spwork JOIN work on spwork.work = work.work_id WHERE spservices.sp_id = '$ayd' AND category = services.service_id AND status = 'enabled'  GROUP BY pp";
+                                                    $sql = "SELECT services.service_id AS pp,services.service_name,spwork.price,work.description FROM `spservices` JOIN services on spservices.category = services.service_id JOIN spwork on spservices.id = spwork.spservice_id JOIN work ON spwork.work = work.work_id WHERE spservices.sp_id = '$ayd'";
 
                                                     $res = $conn->query($sql);
 
+
+
                                                     while ($row = $res->fetch_assoc()){
                                                         echo "<tr>";
-                                                        echo "<td>" . $row['service_name'] . "</td>";
+                                                        echo "<td>" . $row['service_name']  . "</td>";
                                                         echo "<td>" . $row['description'] . "</td>";
                                                         echo "<td>" . $row['price'] . "</td>";
                                                         echo "<td>" . "<a  rel='tooltip' title='Delete Work' href=" . 'backend/disableWork.php?num=' . $row['pp'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>maximize</i></a>" . "</td>";

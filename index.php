@@ -49,11 +49,11 @@ if (isset($_SESSION['full'])) {
                         <h1>Log in</h1>
                         <p>
                             <label for="username" class="uname" data-icon="u"> Username </label>
-                            <input id="username" name="username" required="required" type="text" placeholder=""/>
+                            <input id="username" name="username" required="required" type="text" />
                         </p>
                         <p>
                             <label for="password" class="youpasswd" data-icon="p"> Your password </label>
-                            <input id="password" name="password" required="required" type="password" placeholder=""/>
+                            <input id="password" name="password" required="required" type="password" />
                         </p>
                         <p class="login button">
                             <input type="submit" value="Login"/>
