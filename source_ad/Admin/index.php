@@ -338,7 +338,7 @@ if (isset($_SESSION['full'])) {
                                     echo "</tr>";
                                 }
                             } else {
-                                echo "<td>No active accounts</td>";
+                                echo "<td> No Transactions</td>";
                             }
 
                             ?>

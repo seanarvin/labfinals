@@ -83,7 +83,7 @@ if (isset($_SESSION['full'])) {
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Contact No</label>
-                            <input  name="num" required="required" type="text" placeholder=""/>
+                            <input  name="num" required="required" type="number" placeholder=""/>
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Email</label>
@@ -95,13 +95,13 @@ if (isset($_SESSION['full'])) {
                         </p>
                         <p>
                             <label for="pass" class="youpasswd" data-icon="p">Your password </label>
-                            <input id="pass" name="password" required="required" type="password"
+                            <input id="pass" name="password" min="4" required="required" type="password"
                                    placeholder=""/>
                         </p>
                         <p>
                             <label for="pass2" class="youpasswd" data-icon="p">Please confirm your
                                 password </label>
-                            <input id="pass2" name="password2"  required="required" type="password"
+                            <input id="pass2" name="password2" min="4"  required="required" type="password"
                                    placeholder=""/>
                         </p>
                         <span id="msg"></span>
