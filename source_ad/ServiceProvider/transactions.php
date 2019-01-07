@@ -133,14 +133,13 @@ if (isset($_SESSION['full'])) {
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title ">Simple Table</h4>
-                                <p class="card-category"> Here is a subtitle for this table</p>
+                                <h4 class="card-title ">Transactions</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table" id="example" width="100%">
                                         <thead class=" text-primary">
-                                            <th>Service Provider</th>
+                                            <th>Client</th>
                                             <th>Date/Time</th>
                                             <th>Category</th>
                                             <th>Work</th>
@@ -191,76 +190,123 @@ if (isset($_SESSION['full'])) {
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <form>
+                    <form action="backend/editProfile.php" method="post">
                         <div class="modal-body ">
                             <div class="card">
                                 <div class="card-header card-header-primary text-center">
                                     <h4 class="card-title">Edit Profile</h4>
                                 </div>
                                 <div class="card-body">
-
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="bmd-label-floating">Fist Name</label>
-                                                <input type="text" class="form-control">
+                                                <label class="">Fist
+                                                    Name</label>
+
+
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='fname' class='form-control' placeholder='" . $r['user_fname'] . "'>";
+
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="bmd-label-floating">Last Name</label>
-                                                <input type="text" class="form-control">
+                                                <label class="">Last
+                                                    Name</label>
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='lname' class='form-control' placeholder='" . $r['user_lname'] . "'>";
+
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="bmd-label-floating">Adress</label>
-                                                <input type="text" class="form-control">
+                                                <label class="">Adress</label>
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='addr' class='form-control' placeholder='" . $r['address'] . "'>";
+
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="bmd-label-floating">Number</label>
-                                                <input type="text" class="form-control">
+                                                <label class="">Number</label>
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='num' class='form-control' placeholder='" . $r['contact_no'] . "'>";
+
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label class="bmd-label-floating">Email</label>
-                                                <input type="text" class="form-control">
+                                                <label class="">Email</label>
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='email' class='form-control' placeholder='" . $r['email'] . "'>";
+
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="bmd-label-floating">Password</label>
-                                                <input type="text" class="form-control">
+                                                <label class="">Password</label>
+                                                <input type="password" class="form-control" name="pass" min="4">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="bmd-label-floating">Confirm Password</label>
-                                                <input type="text" class="form-control">
+                                                <label class="">Confirm
+                                                    Password</label>
+                                                <input type="password" min="4"
+                                                       class="form-control" name="pass2">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-secondary btn-info" data-dismiss="modal">
-                                            Close
+                                        <button type="button"
+                                                class="btn btn-secondary btn-info"
+                                                data-dismiss="modal">Close
                                         </button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <button type="submit" id="us_id" value=""
+                                                class="btn btn-primary">Save
+                                            changes
+                                        </button>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
