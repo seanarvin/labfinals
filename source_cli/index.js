@@ -1,9 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql')
-const hash = require('random-hash');
 const session = require('express-session');
-const password_hash = require('password_hash');
+const bcrypt = require('bcryptjs');
 const app = express();
 
 
@@ -89,8 +88,8 @@ app.get('/search/:value',(req,res) => {
 		where = `where s.service_name = "`+req.params.value+`"`;
 	}
 	db.query(`SELECT sps.id,user.user_id,s.service_id,address,service_name,CONCAT(user_fname,' ',user_lname) as user from user
-			inner join spservices sps on sps.sp_id = user.user_id
-			inner join services s on sps.category = s.service_id ${where}`,
+		inner join spservices sps on sps.sp_id = user.user_id
+		inner join services s on sps.category = s.service_id ${where}`,
 		(error, results, fields) => {
 			if (error) throw error;
 			if(results.length > 0){
@@ -166,25 +165,34 @@ app.get('/viewprofile',(req,res) =>{
 });
 // #updateprofile
 app.post('/updateprofile',(req,res) => {
+
 	if(req.session.uid){
+		let userid = req.session.uid;
+		let data = {};
 
-		let {firstname} = req.body;
-		let {lastname} = req.body;
-		let {email} = req.body;
-		let {address} = req.body;
-		let {contact} = req.body;
-		let {username} = req.body;
-		let {password} = req.body;
-		let {userid} = req.body;
+		if(req.body.password){
+			let {password} = req.body;
+			var hash = bcrypt.hashSync(password, 10);
+			data =  {
+				"password": hash
+			};
+		}else{
 
-		let data = {
-			"user_fname": firstname,
-			"user_lname": lastname,
-			"email": email,
-			"address": address,
-			"contact_no": contact,
-			"user_name": username,
-			"password": password,
+			let {firstname} = req.body;
+			let {lastname} = req.body;
+			let {email} = req.body;
+			let {address} = req.body;
+			let {contact} = req.body;
+			let {username} = req.body;
+
+			data = {
+				"user_fname": firstname,
+				"user_lname": lastname,
+				"email": email,
+				"address": address,
+				"contact_no": contact,
+				"user_name": username,
+			}
 		}
 
 		db.query('UPDATE user SET ? WHERE user_id = ?', [data, userid], function (error, results, fields) {
@@ -202,6 +210,7 @@ app.post('/client/request',(req,res)=> {
 
 		let client_id = req.session.uid; 
 		let data = req.body;
+		console.log(data);
  	// client will do request
  	db.query('INSERT INTO requests SET ? , client_id = ? ',[data,client_id], (error, results, fields) => {
  		if (error) throw error;
@@ -213,6 +222,25 @@ app.post('/client/request',(req,res)=> {
 
 });
 
+
+//#validate password
+app.post('/validatepassword',(req,res)=> {
+	if(req.session.uid){
+		let user_id = req.session.uid;
+		let hash = "default-hash";
+		let {oldpass} = req.body;
+
+		db.query(`SELECT password from user where user_id = ?`
+			,[user_id],(error, results, fields) => {
+				if (error) throw error;
+				hash = results[0]["password"];
+				res.json(bcrypt.compareSync(oldpass, hash));
+			});
+	}else{
+		res.redirect('/logout');
+	}
+
+});
 
 //#logout
 app.get('/logout',(req,res)=>{

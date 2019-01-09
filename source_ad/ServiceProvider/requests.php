@@ -199,7 +199,7 @@ if (isset($_SESSION['full'])) {
                                             <div class="tab-pane" id="ongoing">
                                                 <table class="table">
                                                     <thead>
-                                                    <th><b>Service Provider</b></th>
+                                                    <th><b>Client</b></th>
                                                     <th><b>Date/Time</b></th>
                                                     <th><b>Category</b></th>
                                                     <th><b>Work</b></th>
@@ -212,14 +212,14 @@ if (isset($_SESSION['full'])) {
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $qu = "SELECT spwork.price AS pr,specifics.specifics AS spe,services.service_name AS sn,requests.date_requested AS datee,requests.req_id AS ayyd,user.user_fname AS fname,user.user_lname AS lname,user.address AS address,user.contact_no AS num,user.email AS email,requests.status AS stat,work.description AS wo,services.service_name AS cat FROM requests JOIN user ON user.user_id = requests.client_id JOIN work on work.work_id = requests.work_id JOIN specifics on specifics.specifics_id = requests.specifics_id JOIN services on services.service_id = work.service_id JOIN spwork on spwork.work = work.work_id WHERE sp_id = '$ayd' AND requests.status = 'ongoing'";
+                                                    $qu = "SELECT spwork.price AS pr,specifics.specifics AS spe,services.service_name AS sn,requests.date AS datee,requests.from AS fr,requests.to AS to,requests.req_id AS ayyd,user.user_fname AS fname,user.user_lname AS lname,user.address AS address,user.contact_no AS num,user.email AS email,requests.status AS stat,work.description AS wo,services.service_name AS cat FROM requests JOIN user ON user.user_id = requests.client_id JOIN work on work.work_id = requests.work_id JOIN specifics on specifics.specifics_id = requests.specifics_id JOIN services on services.service_id = work.service_id JOIN spwork on spwork.work = work.work_id WHERE sp_id = '$ayd' AND requests.status = 'ongoing'";
                                                     $res = $conn->query($qu);
 
                                                     if ($res->num_rows > 0) {
                                                         while ($row = $res->fetch_assoc()) {
                                                             echo "<tr>";
                                                             echo "<td>" . strtoupper($row['fname'] . " " . $row['lname']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['datee']) . "</td>";
+                                                            echo "<td>" . strtoupper($row['datee']) . " " . strtoupper($row['fr']) ."-" . strtoupper($row['to']) . "</td>";
                                                             echo "<td>" . strtoupper($row['sn']) . "</td>";
                                                             echo "<td>" . strtoupper($row['wo']) . "</td>";
                                                             echo "<td>" . strtoupper($row['address']) . "</td>";

@@ -139,7 +139,7 @@ if (isset($_SESSION['full'])) {
                                 <div class="table-responsive">
                                     <table class="table" id="example" width="100%">
                                         <thead class=" text-primary">
-                                            <th>Service Provider</th>
+                                            <th>Client</th>
                                             <th>Date/Time</th>
                                             <th>Category</th>
                                             <th>Work</th>
