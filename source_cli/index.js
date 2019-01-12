@@ -35,9 +35,13 @@ app.set('view engine','ejs');
 
 // #save id to session
 app.get('/index/:id',(req,res)=>{
-
-	req.session.uid = req.params.id;
-	res.redirect('/');
+	db.query(`SELECT  user_id,CONCAT(user_fname,' ',user_lname) as fullname from user
+		where user_id = ?`
+		,[req.params.id],(error, user, fields) => {
+			if (error) throw error;
+			req.session.userdata = user[0];
+			res.redirect('/');
+		});
 
 });
 
@@ -45,21 +49,20 @@ app.get('/index/:id',(req,res)=>{
 //#index page
 app.get('/',(req,res) => {
 	let ip = req.get('host').split(":")[0];
-
-
-	if(req.session.uid){
+	let userdata = req.session.userdata;
+	if(userdata){
 		db.query(`SELECT sps.id,user.user_id,s.service_id,address,service_name,CONCAT(user_fname,' ',user_lname) as user from user
 			inner join spservices sps on sps.sp_id = user.user_id
 			inner join services s on sps.category = s.service_id`, (error, results, fields) => {
 				if (error) throw error;
-				res.render('index', data = results);
+				res.render('index', {data: results, userdata});
 			});
+
 	}else{
 		req.session.destroy(function(err) {
 			res.redirect("http://"+ip+":8080/labfinals");
 		});
 	}
-	
 });
 // #serviceworks
 app.get('/serviceworks/:id',(req,res) =>{
@@ -101,8 +104,9 @@ app.get('/search/:value',(req,res) => {
 });
 // #transactions
 app.get('/transactions',(req,res) =>{
-	if(req.session.uid){
-		let client_id = req.session.uid;
+	if(req.session.userdata){
+		let userdata = req.session.userdata;
+		let client_id = userdata.user_id;
 		db.query(`SELECT r.note,r.status,r.req_id, w.description, service_name, specifics,
 			CONCAT(u.user_fname,' ',u.user_lname) as serviceprovider,
 			DATE_FORMAT(r.date_requested, "%a, %b %d %Y") as date_requested,
@@ -111,53 +115,26 @@ app.get('/transactions',(req,res) =>{
 			FROM requests r inner join user u on u.user_id = r.sp_id
 			inner join work w on w.work_id = r.work_id
 			inner join services s on s.service_id = w.service_id
-			left join specifics spc on spc.specifics_id = r.specifics_id where client_id = ?
-			And r.status not in ("rejected","completed","cancelled")`
+			left join specifics spc on spc.specifics_id = r.specifics_id where client_id = ?`
 			,[client_id],(error, results, fields) => {
 				if (error) throw error;
-				res.render('transaction', data = results);
+				res.render('transaction', {data: results,userdata});
 
 			});
 	}else{
 		res.redirect('/logout');
 	}
 });
-// #history
-app.get('/history',(req,res) =>{
-	if(req.session.uid){
-
-		let client_id = req.session.uid;
-
-		db.query(`SELECT r.note,r.status,r.req_id, w.description, service_name, specifics,
-			CONCAT(u.user_fname,' ',u.user_lname) as serviceprovider,
-			DATE_FORMAT(r.date_requested, "%a, %b %d %Y") as date_requested,
-			DATE_FORMAT(r.date, "%a, %b %d %Y") as date, 
-			CONCAT(TIME_FORMAT(r.from, "%h %i %p"),'-',TIME_FORMAT(r.to, "%h %i %p")) as time 
-			FROM requests r inner join user u on u.user_id = r.sp_id
-			inner join work w on w.work_id = r.work_id
-			inner join services s on s.service_id = w.service_id
-			left join specifics spc on spc.specifics_id = r.specifics_id where client_id = ?
-			And r.status in ("rejected","completed","cancelled")`
-			,[client_id],(error, results, fields) => {
-				if (error) throw error;
-				res.render('history', data = results);
-
-			});
-	}else{
-		res.redirect('/logout');
-	}
-});
-
 // #view profile
 app.get('/viewprofile',(req,res) =>{
-	if(req.session.uid){
+	if(req.session.userdata){
 
-		let user_id = req.session.uid;
+		let user_id = req.session.userdata.user_id;
 		db.query(`SELECT user_id,user_fname,user_lname,address,contact_no,email,user_name,password from user
 			where user_id = ?`
 			,[user_id],(error, results, fields) => {
 				if (error) throw error;
-				res.render('profile', data = results[0]);
+				res.render('profile', data = results[0],fullname=req.session.userfullname);
 			});
 	}else{
 		res.redirect('/logout');
@@ -248,7 +225,7 @@ app.get('/logout',(req,res)=>{
 
 	req.session.destroy(function(err) {
 		if (err) console.log(err);
-		res.redirect("http://"+ip+":80/trabawho/php/logout.php");
+		res.redirect("http://"+ip+":8080/labfinals/php/logout.php");
 	});
 });
 
@@ -257,3 +234,4 @@ let server = app.listen(3000, (err)=>{
 	if(err) console.log('Error connecting to port 3000');
 	console.log('Connected to Port 3000');
 });
+

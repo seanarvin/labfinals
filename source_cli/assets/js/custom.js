@@ -65,17 +65,9 @@ $(document).ready(function () {
 
     //search for service provider
 
-    $('#searchsp').on("click",function (event) {
+    $('#searchsp').on("submit",function (event) {
         event.preventDefault();
         search();
-    });
-
-    $('#searchinput').keypress(function(event){
-        event.preventDefault();
-        let keycode = (event.keyCode ? event.keyCode : event.which);
-        if(keycode == '13'){
-         search();
-        }
     });
 
     $('#passwordsubmit').on("click",function(event){
