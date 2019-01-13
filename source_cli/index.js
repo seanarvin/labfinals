@@ -181,6 +181,14 @@ app.post('/updateprofile',(req,res) => {
 	}
 
 });
+//#cancel
+app.post('/cancel',(req,res) => {
+	let {id} = req.body;
+	db.query(`UPDATE requests set status="cancelled" where req_id=?`,[id],(error,results)=>{
+		if(error) throw error;
+		res.redirect('/transactions');
+	});
+});
 // #request
 app.post('/client/request',(req,res)=> {
 	if(req.session.userdata){

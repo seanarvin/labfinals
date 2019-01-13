@@ -46,87 +46,94 @@
         </div>
       </div>
     </div>
-  <div class="site-mobile-menu">
-    <div class="site-mobile-menu-header">
-      <div class="site-mobile-menu-close mt-3">
-        <span class="icon-close2 js-menu-toggle"></span>
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
       </div>
-    </div>
-    <div class="site-mobile-menu-body"></div>
-  </div> <!-- .site-mobile-menu -->
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
 
 
-  <div id="trans" class="site-section bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-              <table table class="display" style="width:100%" id="dataTables-example">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Service</th>
-                    <th>Service Provider</th>
-                    <th>Description</th>
-                    <th>Specifics</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Date Requested</th>
-                    <th>Note</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% let count = 0  %>
-                  <% if(data.length) { %>
-                  <% data.forEach(function(transaction){ %>
-                  <% count +=1 %>
-                  <tr>
-                    <td><%= count %></td>
-                    <td><%= transaction.service_name %></td>
-                    <td><%= transaction.serviceprovider %></td>
-                    <td><%= transaction.description %></td>
-                    <td><%= transaction.specifics %></td>
-                    <td><%= transaction.date %></td>
-                    <td><%= transaction.time %></td>
-                    <td><%= transaction.date_requested %></td>
-                    <td><%= transaction.note %></td>
-                    <td><%= transaction.status %></td>
-                  </tr>
-                  <% }); %>
-                  <% }else{ %>
-                  <tr>
-                   <td>No data found.</td>
-                   <td></td>
-                   <td></td>
-                   <td></td>
-                   <td></td>
-                   <td></td>
-                   <td></td>
-                   <td></td>
-                   <td></td>
-                   <td></td>
-                 </tr>
-                 <% } %>
-               </tbody>
-             </table>
+    <div id="trans" class="site-section bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+              </div>
+              <!-- /.panel-heading -->
+              <div class="panel-body">
+                <table table class="display" style="width:100%" id="dataTables-example">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Service</th>
+                      <th>Service Provider</th>
+                      <th>Description</th>
+                      <th>Specifics</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% let count = 0  %>
+                    <% if(data.length) { %>
+                    <% data.forEach(function(transaction){ %>
+                    <% count +=1 %>
+                    <tr>
+                      <td><%= count %></td>
+                      <td><%= transaction.service_name %></td>
+                      <td><%= transaction.serviceprovider %></td>
+                      <td><%= transaction.description %></td>
+                      <td><%= transaction.specifics %></td>
+                      <td><%= transaction.date %></td>
+                      <td><%= transaction.time %></td>
+                      <% status = transaction.status %>
+
+
+                      <td>
+                        <% if(status === "ongoing" || status === "pending") {%>
+                        <button type="button" data-toggle="modal" data-target="#confirmation" class="btn btn-danger" data-id="<%= transaction.req_id %>">Cancel</button>
+                        <%} else{ %>
+                        <%= status %>
+                        <%}%>
+                      </td>
+                    </tr>
+                    <% }); %>
+                    <% }else{ %>
+                    <tr>
+                     <td>No data found.</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                   </tr>
+                   <% } %>
+                 </tbody>
+               </table>
+              <% include modals/confirmation.ejs %>
+
+             </div>
            </div>
          </div>
        </div>
      </div>
    </div>
- </div>
- <div class="bg-primary" data-aos="fade">
-<% include partials/footer.ejs %>
+   <div class="bg-primary" data-aos="fade">
+    <% include partials/footer.ejs %>
+
+  </div>
+</div>
 
 </div>
-</div>
-
- </div>
 
 
 

@@ -57,6 +57,11 @@ $(document).ready(function () {
         });
     });
 
+    $('#confirmation').on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id');
+        $('#confirm').val(id);
+    });
+
     // on close of modal go to service provider list
     $('.modal').on('hidden.bs.modal', function () {
         window.location.hash = '#spdiv';
