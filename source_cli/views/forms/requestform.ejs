@@ -15,18 +15,26 @@
   </div>
   <div class="tab">
     <h1>Schedule: </h1>
+    <small>Note*</small>
+    <small><ul>
+      <li>Date must not be less than today's date.</li>
+      <li>Appointments can only be done 1 week in advance.</li>
+      <li>Start time can only be set 1 hour from now so that the service provider can prepare.</li>
+      <li>End Time must not be less than an hour from the start time.</li>
+      <li>Maximum time is at 6 PM for End time and 5 PM for Start time.</li>
+    </ul></small>
     <div class="row">
       <div class="form-group col">
         <label class="font-weight-bold" for="fullname">Preffered Date</label>
-        <input name="date" id="date" type="date" class="form-control" required>
+        <input name="date" min="getDateToday()" id="date" type="date" class="form-control" required>
       </div>
       <div class="form-group col">
         <label class="font-weight-bold" for="email">Start Time</label>
-        <input name="from" id="time" type="time" class="form-control" required>
+        <input name="from" id="from" max="17:00" type="time" class="form-control" required>
       </div>
       <div class="form-group col">
         <label class="font-weight-bold" for="email">End Time</label>
-        <input name="to" id="time" type="time" class="form-control" required>
+        <input name="to" id="to" max="18:00" type="time" class="form-control" required>
       </div>
     </div>
   </div>
