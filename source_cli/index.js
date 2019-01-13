@@ -104,8 +104,8 @@ app.get('/search/:value',(req,res) => {
 });
 // #transactions
 app.get('/transactions',(req,res) =>{
-	if(req.session.userdata){
-		let userdata = req.session.userdata;
+	let userdata = req.session.userdata;
+	if(userdata){
 		let client_id = userdata.user_id;
 		db.query(`SELECT r.note,r.status,r.req_id, w.description, service_name, specifics,
 			CONCAT(u.user_fname,' ',u.user_lname) as serviceprovider,
@@ -127,14 +127,14 @@ app.get('/transactions',(req,res) =>{
 });
 // #view profile
 app.get('/viewprofile',(req,res) =>{
-	if(req.session.userdata){
-
-		let user_id = req.session.userdata.user_id;
+	let userdata = req.session.userdata;
+	if(userdata){
+		let user_id = userdata.user_id;
 		db.query(`SELECT user_id,user_fname,user_lname,address,contact_no,email,user_name,password from user
 			where user_id = ?`
 			,[user_id],(error, results, fields) => {
 				if (error) throw error;
-				res.render('profile', data = results[0],fullname=req.session.userfullname);
+				res.render('profile', {data:results[0],userdata});
 			});
 	}else{
 		res.redirect('/logout');
@@ -143,8 +143,8 @@ app.get('/viewprofile',(req,res) =>{
 // #updateprofile
 app.post('/updateprofile',(req,res) => {
 
-	if(req.session.uid){
-		let userid = req.session.uid;
+	if(req.session.userdata){
+		let userid = req.session.userdata.user_id;
 		let data = {};
 
 		if(req.body.password){
@@ -183,9 +183,9 @@ app.post('/updateprofile',(req,res) => {
 });
 // #request
 app.post('/client/request',(req,res)=> {
-	if(req.session.uid){
+	if(req.session.userdata){
 
-		let client_id = req.session.uid; 
+		let client_id = req.session.userdata.user_id; 
 		let data = req.body;
 		console.log(data);
  	// client will do request
@@ -202,8 +202,8 @@ app.post('/client/request',(req,res)=> {
 
 //#validate password
 app.post('/validatepassword',(req,res)=> {
-	if(req.session.uid){
-		let user_id = req.session.uid;
+	if(req.session.userdata){
+		let user_id = req.session.userdata.user_id;
 		let hash = "default-hash";
 		let {oldpass} = req.body;
 

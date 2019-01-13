@@ -108,6 +108,10 @@ $(document).ready(function () {
         });
     });
 
+     $('#dataTables-example').DataTable({
+        "order": [[ 5, "desc" ]],
+     });
+
 
 
 });
