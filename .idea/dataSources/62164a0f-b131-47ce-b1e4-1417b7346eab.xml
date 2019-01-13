@@ -1042,7 +1042,7 @@
     </column>
     <column id="262" parent="244" name="status">
       <Position>11</Position>
-      <DataType>enum(&apos;pending&apos;, &apos;rejected&apos;, &apos;ongoing&apos;, &apos;completed&apos;)|0e</DataType>
+      <DataType>enum(&apos;pending&apos;, &apos;rejected&apos;, &apos;ongoing&apos;, &apos;completed&apos;, &apos;cancelled&apos;)|0e</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;pending&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
@@ -1212,64 +1212,70 @@ service_id</ColNames>
     </column>
     <column id="290" parent="250" name="password">
       <Position>5</Position>
-      <DataType>varchar(45)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="250" name="address">
+    <column id="291" parent="250" name="barangay">
       <Position>6</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="250" name="contact_no">
+    <column id="292" parent="250" name="housenumber">
       <Position>7</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="293" parent="250" name="contact_no">
+      <Position>8</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="250" name="email">
-      <Position>8</Position>
+    <column id="294" parent="250" name="email">
+      <Position>9</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="250" name="type">
-      <Position>9</Position>
+    <column id="295" parent="250" name="type">
+      <Position>10</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="250" name="status">
-      <Position>10</Position>
+    <column id="296" parent="250" name="status">
+      <Position>11</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="296" parent="250" name="PRIMARY">
+    <key id="297" parent="250" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="297" parent="251" name="work_id">
+    <column id="298" parent="251" name="work_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="251" name="service_id">
+    <column id="299" parent="251" name="service_id">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="251" name="description">
+    <column id="300" parent="251" name="description">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="300" parent="251" name="PRIMARY">
+    <key id="301" parent="251" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>work_id</ColNames>
       <Primary>1</Primary>

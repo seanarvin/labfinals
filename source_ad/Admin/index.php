@@ -185,7 +185,40 @@ if (isset($_SESSION['full'])) {
             <div class="header-body">
                 <!-- Card stats -->
                 <div class="row">
-                    <div class="col-xl-4 col-lg-6">
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Pending Accounts</h5>
+                                        <span class="h2 font-weight-bold mb-0">
+                                              <?php
+                                              $sql = "SELECT COUNT(user_id) FROM user WHERE status='pending'";
+                                              $res = $conn->query($sql);
+                                              $r = $res->fetch_row();
+
+                                              if ($res->num_rows > 0) {
+                                                  echo $r[0];
+                                              } else {
+                                                  echo "0";
+                                              }
+
+                                              ?>
+                                            </span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                                            <i class="fas fa-chart-pie"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-muted text-sm">
+                                    <span class="text-warning mr-2"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
                         <div class="card card-stats mb-4 mb-xl-0">
                             <div class="card-body">
                                 <div class="row">
@@ -218,7 +251,7 @@ if (isset($_SESSION['full'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-6">
+                    <div class="col-xl-3 col-lg-6">
                         <div class="card card-stats mb-4 mb-xl-0">
                             <div class="card-body">
                                 <div class="row">
@@ -251,7 +284,8 @@ if (isset($_SESSION['full'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-6">
+
+                    <div class="col-xl-3 col-lg-6">
                         <div class="card card-stats mb-4 mb-xl-0">
                             <div class="card-body">
                                 <div class="row">
@@ -320,7 +354,7 @@ if (isset($_SESSION['full'])) {
                             </thead>
                             <tbody>
                             <?php
-                            $qu = "SELECT spwork.price AS pr,specifics.specifics AS spe,services.service_name AS sn,requests.date_requested AS datee,requests.req_id AS ayyd,user.user_fname AS fname,user.user_lname AS lname,user.address AS address,user.contact_no AS num,user.email AS email,requests.status AS stat,work.description AS wo,services.service_name AS cat FROM requests JOIN user ON user.user_id = requests.client_id JOIN work on work.work_id = requests.work_id JOIN specifics on specifics.specifics_id = requests.specifics_id JOIN services on services.service_id = work.service_id JOIN spwork on spwork.work = work.work_id LIMIT 10";
+                            $qu = "SELECT spwork.price AS pr,specifics.specifics AS spe,services.service_name AS sn,requests.date_requested AS datee,requests.req_id AS ayyd,user.user_fname AS fname,user.user_lname AS lname,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,user.email AS email,requests.status AS stat,work.description AS wo,services.service_name AS cat FROM requests JOIN user ON user.user_id = requests.client_id JOIN work on work.work_id = requests.work_id JOIN specifics on specifics.specifics_id = requests.specifics_id JOIN services on services.service_id = work.service_id JOIN spwork on spwork.work = work.work_id LIMIT 10";
                             $res = $conn->query($qu);
 
                             if ($res->num_rows > 0) {
@@ -330,7 +364,7 @@ if (isset($_SESSION['full'])) {
                                     echo "<td>" . strtoupper($row['datee']) . "</td>";
                                     echo "<td>" . strtoupper($row['sn']) . "</td>";
                                     echo "<td>" . strtoupper($row['wo']) . "</td>";
-                                    echo "<td>" . strtoupper($row['address']) . "</td>";
+                                    echo "<td>" . strtoupper($row['bar']) . ",". strtoupper($row['hn']) . ", Baguio City ". "</td>";
                                     echo "<td>" . strtoupper($row['num']) . "</td>";
                                     echo "<td>" . strtoupper($row['spe']) . "</td>";
                                     echo "<td>" . strtoupper($row['pr']) . "</td>";

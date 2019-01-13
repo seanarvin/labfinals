@@ -78,8 +78,12 @@ if (isset($_SESSION['full'])) {
                             <input  name="last_name" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
-                            <label for="usernamesignup" class="uname" data-icon="u">Address</label>
-                            <input  name="address" required="required" type="text" placeholder=""/>
+                            <label for="usernamesignup" class="uname" data-icon="u">Barangay</label>
+                            <input  name="barangay" required="required" type="text" placeholder=""/>
+                        </p>
+                        <p>
+                            <label for="usernamesignup" class="uname" data-icon="u">House Number</label>
+                            <input  name="housenum" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Contact No</label>
