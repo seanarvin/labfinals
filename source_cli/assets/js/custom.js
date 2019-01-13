@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    $('#rate').on('show.bs.modal',function(e){
+        let sp_id = $(e.relatedTarget).data('id');
+        $('#sp_id').val(sp_id);
+    });
+
     // set current date as min
     const today = new Date();
     let currentDate = getDateToday();

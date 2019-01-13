@@ -55,7 +55,12 @@ app.get('/',(req,res) => {
 			inner join spservices sps on sps.sp_id = user.user_id
 			inner join services s on sps.category = s.service_id`, (error, results, fields) => {
 				if (error) throw error;
-				res.render('index', {data: results, userdata});
+				db.query(`SELECT sp_id,Format((SUM(rate)/count(sp_id))/5 *100,2) as rate 
+					FROM rate GROUP by sp_id`, 
+					(error, rate, num) => {
+						if (error) throw error;
+						res.render('index', {data: results, userdata,rate});
+					});
 			});
 
 	}else{
@@ -107,7 +112,7 @@ app.get('/transactions',(req,res) =>{
 	let userdata = req.session.userdata;
 	if(userdata){
 		let client_id = userdata.user_id;
-		db.query(`SELECT r.note,r.status,r.req_id, w.description, service_name, specifics,
+		db.query(`SELECT r.sp_id,r.note,r.status,r.req_id, w.description, service_name, specifics,
 			CONCAT(u.user_fname,' ',u.user_lname) as serviceprovider,
 			DATE_FORMAT(r.date_requested, "%a, %b %d %Y") as date_requested,
 			DATE_FORMAT(r.date, "%a, %b %d %Y") as date, 
@@ -188,6 +193,23 @@ app.post('/cancel',(req,res) => {
 		if(error) throw error;
 		res.redirect('/transactions');
 	});
+});
+//#rate and comment
+app.post('/rate',(req,res) => {
+	if(req.session.userdata){
+		let client_id = req.session.userdata.user_id; 
+		let {sp_id} = req.body;
+		let {rate} = req.body;
+		let {comment} = req.body;
+		db.query(`Insert into rate set 
+			rate =?, comment = ?, sp_id=?, client_id =?`,
+			[rate,comment,sp_id,client_id],(error,results)=>{
+				if(error) throw error;
+				res.redirect('/transactions');
+			});
+	}else{
+		res.redirect('/logout');
+	}
 });
 // #request
 app.post('/client/request',(req,res)=> {
