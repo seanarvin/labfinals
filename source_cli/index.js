@@ -51,15 +51,21 @@ app.get('/',(req,res) => {
 	let ip = req.get('host').split(":")[0];
 	let userdata = req.session.userdata;
 	if(userdata){
-		db.query(`SELECT sps.id,user.user_id,s.service_id,address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
+		db.query(`SELECT sps.id,sps.sp_id,user.user_id,s.service_id,address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
 			inner join spservices sps on sps.sp_id = user.user_id
 			inner join services s on sps.category = s.service_id`, (error, results, fields) => {
 				if (error) throw error;
-				db.query(`SELECT sp_id,Format((SUM(rate)/count(sp_id))/5 *100,2) as rate 
-					FROM rate GROUP by sp_id`, 
+				db.query(`SELECT sp_id, FORMAT(AVG(rate),0) as rate FROM rate GROUP by sp_id`, 
 					(error, rate, num) => {
+						let data = {};
+
 						if (error) throw error;
-						res.render('index', {data: results, userdata,rate});
+						for(let i = 0; i < rate.length; i++){
+							rating = rate[i]["rate"];
+							sp_id = rate[i]["sp_id"];
+							data[sp_id] = rating;
+						}
+						res.render('index', {data: results, userdata,rate: data});
 					});
 			});
 
@@ -95,16 +101,27 @@ app.get('/search/:value',(req,res) => {
 	if (req.params.value !== 'all'){
 		where = `where s.service_name = "`+req.params.value+`"`;
 	}
-	db.query(`SELECT sps.id,user.user_id,s.service_id,address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
+	db.query(`SELECT sps.sp_id,sps.id,user.user_id,s.service_id,address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
 		inner join spservices sps on sps.sp_id = user.user_id
 		inner join services s on sps.category = s.service_id ${where}`,
 		(error, results, fields) => {
 			if (error) throw error;
-			if(results.length > 0){
-				res.json(results);
-			}else{
-				res.json("No results found.");
-			}
+			db.query(`SELECT sp_id, FORMAT(AVG(rate),0) as rate FROM rate GROUP by sp_id`, 
+				(error, rate, num) => {
+					let data = {};
+
+					if (error) throw error;
+					for(let i = 0; i < rate.length; i++){
+						rating = rate[i]["rate"];
+						sp_id = rate[i]["sp_id"];
+						data[sp_id] = rating;
+					}
+					if(results.length > 0){
+						res.json({results,data});
+					}else{
+						res.json("No results found.");
+					}
+				});
 		});
 });
 // #transactions

@@ -2,9 +2,11 @@
   <% data.forEach(function(user){ %>
   <div class="card">
     <div class="card-header">
-      <%= user.user %>   
-      <%= rate[0].rate %>   
-      
+      <p><b><%= user.user %></b></p>   
+      <% spid =  user.sp_id %>   
+      <div class="text-left">
+        <small><i> Rating: <%= rate[spid] %> / 5 </i></small>
+      </div>
     </div>
     <div class="card-body">
       <h5 class="card-title"><%= user.service_name %></h5>
