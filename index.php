@@ -2,14 +2,15 @@
 session_start();
 
 if (isset($_SESSION['full'])) {
+    $ty = $_SESSION['userType'];
     if ($ty == "admin") {
         header('Location:source_ad/Admin/index.php');
     } elseif ($ty == "sp") {
         header('Location:source_ad/ServiceProvider/requests.php');
-    }elseif ($ty == "user") {
+    }elseif ($ty == "client") {
         header('Location:../user/delivery.php');
     } else {
-
+        var_dump("Who you!");
     }
 }
 

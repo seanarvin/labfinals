@@ -11,41 +11,28 @@ require 'db.php';
 
 
 $cat = $_POST['category'];
-$work = $_POST['work'];
-$price = $_POST['price'];
 
 
-$sp_services = "SELECT id FROM `spservices` WHERE category = '$cat' and sp_id = '$ayd'";
+$sp_services = "SELECT * FROM `spservices` WHERE category = '$cat' and sp_id = '$ayd'";
 $res = $conn->query($sp_services);
 
 if($res->num_rows == 0){
-    $sql = "INSERT INTO services(category) VALUES ('$cat')";
+    $sql = "INSERT INTO services(service_name,sp_id) VALUES ('$cat','$ayd')";
     $conn->query($sql);
+    $m = "Successfully Added!";
+    echo "<script type='text/javascript'>
 
+            alert('$m');
+            window.location.replace('../services.php');
+        </script>";
 
-}
-
-$sp_services = "SELECT id FROM `spservices` WHERE category = '$cat' and sp_id = '$ayd'";
-$res = $conn->query($sp_services);
-
-if ($res->num_rows > 0) {
-	$row = $res->fetch_assoc();
-	$lid = $row["id"];
 }else{
-	$sql = "INSERT INTO spservices(category, sp_id) VALUES ('$cat','$ayd')";
-	if($conn->query($sql)){
-		$lid = $conn->insert_id;
-	}else{
-		var_dump($conn->error);
-	}
+        $m = "Error! Category already exist!";
+    echo "<script type='text/javascript'>
+
+            alert('$m');
+            window.location.replace('../services.php');
+        </script>";
 }
 
 
-
-$sql = "INSERT INTO spwork(work, spservice_id, price,status) VALUES ('$work','$lid','$price','enabled')";
-
-if($conn->query($sql)){
-	header('Location:../services.php');
-}else {
-	var_dump($conn->error);
-}
