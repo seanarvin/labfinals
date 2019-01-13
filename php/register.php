@@ -4,7 +4,8 @@
 require 'db.php';
 $first = $_POST['first_name'];
 $last = $_POST['last_name'];
-$address = $_POST['address'];
+$barangay = $_POST['barangay'];
+$housenum = $_POST['housenum'];
 $num = $_POST['num'];
 $email = $_POST['email'];
 $username = $_POST['username'];
@@ -19,7 +20,7 @@ if ($password == $password2) {
     $p = password_hash($password,PASSWORD_DEFAULT);
 
 
-    $sql = "INSERT INTO user(password, user_fname, user_lname, contact_no, address, user_name, email, status, type) VALUES('$p','$first','$last','$num','$address','$username','$email','pending','$type')";
+    $sql = "INSERT INTO user(password, user_fname, user_lname, contact_no, barangay,housenumber, user_name, email, status, type) VALUES('$p','$first','$last','$num','$barangay','$housenum','$username','$email','pending','$type')";
     if ($conn->query($sql)) {
 
         header('Location:../index.php');

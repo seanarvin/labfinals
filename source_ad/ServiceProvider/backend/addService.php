@@ -18,6 +18,16 @@ $price = $_POST['price'];
 $sp_services = "SELECT id FROM `spservices` WHERE category = '$cat' and sp_id = '$ayd'";
 $res = $conn->query($sp_services);
 
+if($res->num_rows == 0){
+    $sql = "INSERT INTO services(category) VALUES ('$cat')";
+    $conn->query($sql);
+
+
+}
+
+$sp_services = "SELECT id FROM `spservices` WHERE category = '$cat' and sp_id = '$ayd'";
+$res = $conn->query($sp_services);
+
 if ($res->num_rows > 0) {
 	$row = $res->fetch_assoc();
 	$lid = $row["id"];

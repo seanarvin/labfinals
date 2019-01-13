@@ -325,6 +325,28 @@ if (isset($_SESSION['full'])) {
     </div>
 </div>
 
+<datalist id="cat">
+    <?php
+    $sql = "SELECT * FROM services";
+    $res = $conn->query($sql);
+
+    while ($row = $res->fetch_assoc()){
+        echo "<option>" . $row['service_name'] . "</option>";
+    }
+    ?>
+</datalist>
+
+<datalist id="work">
+    <?php
+    $sql = "SELECT * FROM work";
+    $res = $conn->query($sql);
+
+    while ($row = $res->fetch_assoc()){
+        echo "<option>" . $row['description'] . "</option>";
+    }
+    ?>
+</datalist>
+
 <div class="modal fade" id="exampleModal1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -345,21 +367,10 @@ if (isset($_SESSION['full'])) {
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <select name="category" id="cat" class="form-control">
-
-                                                <?php
-                                                $sql = "SELECT * FROM services";
-                                                $res = $conn->query($sql);
-
-                                                while ($row = $res->fetch_assoc()){
-                                                    echo "<option value=" . $row['service_id'] . ">" . $row['service_name'] . "</option>";
-                                                }
-                                                ?>
-                                            </select>
+                                            <input list="cat" class="form-control" name="category">
                                         </td>
                                         <td>
-                                            <select name="work" id="work" class="form-control">
-                                            </select>
+                                            <input list="work" class="form-control" name="category">
                                         </td>
                                         <td>
                                             <input required type="number" class="form-control" name="price" placeholder="Price">
@@ -458,6 +469,11 @@ if (isset($_SESSION['full'])) {
                 $('#work').html(a);
             }
         });
+    }
+    
+    
+    function getWork() {
+        
     }
 
 

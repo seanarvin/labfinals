@@ -179,7 +179,7 @@ window.location.replace('../../index.php');
                                 while ($row = $res->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
-                                    echo "<td>" . $row['address'] . "</td>";
+                                    echo "<td>" . $row['barangay'] . "," . $row['housenumber'] . ", Baguio City" . "</td>";
                                     echo "<td>" . $row['contact_no'] . "</td>";
                                     echo "<td>" . $row['email'] . "</td>";
                                     echo "<td>" . $row['type'] . "</td>";
@@ -231,7 +231,7 @@ window.location.replace('../../index.php');
                                 while ($row = $res->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
-                                    echo "<td>" . $row['address'] . "</td>";
+                                    echo "<td>" . $row['barangay'] . "," . $row['housenumber'] . ", Baguio City" . "</td>";
                                     echo "<td>" . $row['contact_no'] . "</td>";
                                     echo "<td>" . $row['email'] . "</td>";
                                     echo "<td>" . $row['type'] . "</td>";
@@ -283,7 +283,7 @@ window.location.replace('../../index.php');
                                 while ($row = $res->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
-                                    echo "<td>" . $row['address'] . "</td>";
+                                    echo "<td>" . $row['barangay'] . "," . $row['housenumber'] . ", Baguio City" . "</td>";
                                     echo "<td>" . $row['contact_no'] . "</td>";
                                     echo "<td>" . $row['email'] . "</td>";
                                     echo "<td>" . $row['type'] . "</td>";
