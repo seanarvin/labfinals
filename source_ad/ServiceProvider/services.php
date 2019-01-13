@@ -46,7 +46,7 @@ if (isset($_SESSION['full'])) {
     <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet"/>
 </head>
 
-<body class="">
+<body>
 <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
         <!--
@@ -85,6 +85,7 @@ if (isset($_SESSION['full'])) {
             </ul>
         </div>
     </div>
+
     <div class="main-panel">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
@@ -125,7 +126,9 @@ if (isset($_SESSION['full'])) {
                 </div>
             </div>
         </nav>
+
         <div class="content">
+
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -152,37 +155,40 @@ if (isset($_SESSION['full'])) {
                                                 <table class="table">
                                                     <thead>
                                                     <th><b>Category</b></th>
-                                                    <th><b>Work</b></th>
-                                                    <th><b>Price</b></th>
-                                                    <th ><b>Actions</b></th>
+                                                    <th class="text-center"><b>Actions</b></th>
                                                     </thead>
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $sql = "SELECT spwork.id AS pp,services.service_name,spwork.price,work.description FROM `spservices` JOIN services on spservices.category = services.service_id JOIN spwork on spservices.id = spwork.spservice_id JOIN work ON spwork.work = work.work_id WHERE spservices.sp_id = '$ayd' AND spwork.status = 'enabled'";
+                                                    $sql = "SELECT service_name,service_id AS pp FROM services WHERE sp_id = '$ayd'";
 
                                                     $res = $conn->query($sql);
 
 
-
-                                                    while ($row = $res->fetch_assoc()){
-                                                        echo "<tr>";
-                                                        echo "<td>" . $row['service_name']  . "</td>";
-                                                        echo "<td>" . $row['description'] . "</td>";
-                                                        echo "<td>" . $row['price'] . "</td>";
-                                                        echo "<td>" . "<a  rel='tooltip' title='Delete Work' href=" . 'backend/disableWork.php?num=' . $row['pp'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>maximize</i></a>" . "</td>";
-                                                        echo "</tr>";
+                                                    if ($res->num_rows > 0) {
+                                                        while ($row = $res->fetch_assoc()) {
+                                                            echo "<tr>";
+                                                            echo "<td>" . $row['service_name'] . "</td>";
+                                                            echo "<td class='text-center'>" . "<a  href='viewWork.php'  data-target='#work' data-toggle='modal' ><i class='material-icons'>edit</i></a>" . "<a  rel='tooltip' title='Delete Service' href=" . 'backend/disableWork.php?num=' . $row['pp'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
+                                                            echo "</tr>";
+                                                        }
+                                                    } else {
+                                                        echo "<tr><td>No Data</td></tr>";
                                                     }
 
                                                     ?>
                                                     </tbody>
 
                                                 </table>
+                                                <hr>
                                                 <div class="pull-right">
-                                                    <button id="addservice" class="btn btn-info" rel='tooltip' title='Add Service'
+                                                    <button id="addservice" class="btn btn-info" rel='tooltip'
+                                                            title='Add Service'
                                                             data-toggle="modal" data-target="#exampleModal1"><i
                                                                 class="material-icons">library_add</i></button>
                                                 </div>
+
+
                                             </div>
 
 
@@ -325,27 +331,6 @@ if (isset($_SESSION['full'])) {
     </div>
 </div>
 
-<datalist id="cat">
-    <?php
-    $sql = "SELECT * FROM services";
-    $res = $conn->query($sql);
-
-    while ($row = $res->fetch_assoc()){
-        echo "<option>" . $row['service_name'] . "</option>";
-    }
-    ?>
-</datalist>
-
-<datalist id="work">
-    <?php
-    $sql = "SELECT * FROM work";
-    $res = $conn->query($sql);
-
-    while ($row = $res->fetch_assoc()){
-        echo "<option>" . $row['description'] . "</option>";
-    }
-    ?>
-</datalist>
 
 <div class="modal fade" id="exampleModal1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -360,20 +345,24 @@ if (isset($_SESSION['full'])) {
                             <div class="row">
                                 <table class="table">
                                     <thead>
-                                    <th>Category</th>
-                                    <th>Work</th>
-                                    <th>Price</th>
+                                    <th align="center">Service</th>
                                     </thead>
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <input list="cat" class="form-control" name="category">
-                                        </td>
-                                        <td>
-                                            <input list="work" class="form-control" name="category">
-                                        </td>
-                                        <td>
-                                            <input required type="number" class="form-control" name="price" placeholder="Price">
+
+                                            <datalist id="cat">
+                                                <?php
+                                                $sql = "SELECT * FROM services";
+                                                $res = $conn->query($sql);
+
+                                                while ($row = $res->fetch_assoc()) {
+                                                    echo "<option>" . $row['service_name'] . "</option>";
+                                                }
+                                                ?>
+                                            </datalist>
+                                            <input list="cat" class="form-control" name="category" type="text"
+                                                   placeholder="category">
                                         </td>
                                     </tr>
                                     </tbody>
@@ -390,6 +379,27 @@ if (isset($_SESSION['full'])) {
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="work" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                asda
+            </div>
+            <div class="modal-body">
+                <?php
+                $a = $_GET['num'];
+                echo $a;
+                ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
@@ -429,7 +439,6 @@ if (isset($_SESSION['full'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 <!-- Library for adding dinamically elements -->
 <script src="assets/js/plugins/arrive.min.js"></script>
-<!--  Google Maps Plugin    -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!-- Chartist JS -->
 <script src="assets/js/plugins/chartist.min.js"></script>
@@ -437,9 +446,7 @@ if (isset($_SESSION['full'])) {
 <script src="assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
-
 <script>
-
 
 
     $(document).ready(function () {
@@ -449,7 +456,7 @@ if (isset($_SESSION['full'])) {
         });
 
         $('#cat').on("change", function () {
-           category();
+            category();
         });
     });
 
@@ -470,15 +477,15 @@ if (isset($_SESSION['full'])) {
             }
         });
     }
-    
-    
+
+
     function getWork() {
-        
+
     }
 
 
-
 </script>
+
 
 </body>
 
