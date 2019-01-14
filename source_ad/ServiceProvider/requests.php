@@ -158,7 +158,7 @@ if (isset($_SESSION['full'])) {
                                             <div class="tab-pane active" id="requests">
                                                 <table class="table">
                                                     <thead>
-                                                    <th><b>Service Provider</b></th>
+                                                    <th><b>Client</b></th>
                                                     <th><b>Date/Time</b></th>
                                                     <th><b>Category</b></th>
                                                     <th><b>Work</b></th>
@@ -171,20 +171,22 @@ if (isset($_SESSION['full'])) {
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $qu = "SELECT spwork.price AS pr,specifics.specifics AS spe,services.service_name AS sn,requests.date_requested AS datee,requests.req_id AS ayyd,user.user_fname AS fname,user.user_lname AS lname,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,user.email AS email,requests.status AS stat,work.description AS wo,services.service_name AS cat FROM requests JOIN user ON user.user_id = requests.client_id JOIN work on work.work_id = requests.work_id JOIN specifics on specifics.specifics_id = requests.specifics_id JOIN services on services.service_id = work.service_id JOIN spwork on spwork.work = work.work_id WHERE sp_id = '$ayd' AND requests.status = 'pending'";
+                                                    $qu = "SELECT requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
+JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
+WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                                                     $res = $conn->query($qu);
 
                                                     if ($res->num_rows > 0) {
                                                         while ($row = $res->fetch_assoc()) {
                                                             echo "<tr>";
-                                                            echo "<td>" . strtoupper($row['fname'] . " " . $row['lname']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['datee']) . "</td>";
+                                                            echo "<td>" . strtoupper($row['fn'] . " " . $row['ln']) . "</td>";
+                                                            echo "<td>" . strtoupper($row['d']) .":". strtoupper($row['f']) . "-" . strtoupper($row['t']) . "</td>";
                                                             echo "<td>" . strtoupper($row['sn']) . "</td>";
                                                             echo "<td>" . strtoupper($row['wo']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['bar']) . ",". strtoupper($row['hn']) . ", Baguio City ". "</td>";
+                                                            echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) . ", Baguio City " . "</td>";
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['pr']) . "</td>";
+                                                            echo "<td>" . strtoupper($row['pf']) . "-". strtoupper($row['pt']). "</td>";
                                                             echo "<td class='text-center'>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/acceptJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/rejectJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
                                                             echo "</tr>";
                                                         }
@@ -219,19 +221,18 @@ if (isset($_SESSION['full'])) {
                                                         while ($row = $res->fetch_assoc()) {
                                                             echo "<tr>";
                                                             echo "<td>" . strtoupper($row['fname'] . " " . $row['lname']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['datee']) . " " . strtoupper($row['fr']) ."-" . strtoupper($row['to']) . "</td>";
+                                                            echo "<td>" . strtoupper($row['datee']) . " " . strtoupper($row['fr']) . "-" . strtoupper($row['to']) . "</td>";
                                                             echo "<td>" . strtoupper($row['sn']) . "</td>";
                                                             echo "<td>" . strtoupper($row['wo']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['bar']) . ",". strtoupper($row['hn']) . ", Baguio City ". "</td>";
+                                                            echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) . ", Baguio City " . "</td>";
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
                                                             echo "<td>" . strtoupper($row['pr']) . "</td>";
-                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Complete Request' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Cancel Request' href='#' data-toggle='modal' data-id='" . $row['ayyd'] . "' data-target='#exampleModal1'
-                                 class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
+                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Complete Request' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Cancel Request' href='#' data-toggle='modal' data-id='" . $row['ayyd'] . "' data-target='#exampleModal1' class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {
-                                                        echo "<td>No active accounts</td>";
+                                                        echo "<td>No active Requests</td>";
                                                     }
 
                                                     ?>

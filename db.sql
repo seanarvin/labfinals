@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2019 at 01:12 PM
+-- Generation Time: Jan 14, 2019 at 06:23 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -27,6 +27,30 @@ USE `db`;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rate`
+--
+
+DROP TABLE IF EXISTS `rate`;
+CREATE TABLE `rate` (
+  `id` int(11) NOT NULL,
+  `rate` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `sp_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rate`
+--
+
+INSERT INTO `rate` (`id`, `rate`, `comment`, `sp_id`, `client_id`) VALUES
+(4, 5, 'bad', 36, 37),
+(5, 5, 'test', 36, 37),
+(6, 5, 'Weak', 36, 38);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `requests`
 --
 
@@ -41,9 +65,16 @@ CREATE TABLE `requests` (
   `to` time NOT NULL,
   `note` text,
   `client_id` int(11) NOT NULL,
-  `specifics_id` int(11) NOT NULL,
+  `specifics` varchar(11) NOT NULL,
   `status` enum('pending','rejected','ongoing','completed','cancelled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `requests`
+--
+
+INSERT INTO `requests` (`req_id`, `date_requested`, `work_id`, `sp_id`, `date`, `from`, `to`, `note`, `client_id`, `specifics`, `status`) VALUES
+(5, '2019-01-14 04:19:56', 32, 36, '2019-01-14', '13:19:00', '14:19:00', NULL, 38, '      akjwh', 'cancelled');
 
 -- --------------------------------------------------------
 
@@ -54,72 +85,20 @@ CREATE TABLE `requests` (
 DROP TABLE IF EXISTS `services`;
 CREATE TABLE `services` (
   `service_id` int(11) NOT NULL,
-  `service_name` varchar(45) NOT NULL
+  `service_name` varchar(45) NOT NULL,
+  `sp_id` int(50) NOT NULL,
+  `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `services`
 --
 
-INSERT INTO `services` (`service_id`, `service_name`) VALUES
-(1, 'Electrician '),
-(2, 'Plumbing'),
-(3, 'Carpentry'),
-(4, 'AC Repair');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `specifics`
---
-
-DROP TABLE IF EXISTS `specifics`;
-CREATE TABLE `specifics` (
-  `specifics_id` int(11) NOT NULL,
-  `specifics` varchar(45) NOT NULL,
-  `service_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `specifics`
---
-
-INSERT INTO `specifics` (`specifics_id`, `specifics`, `service_id`) VALUES
-(1, 'Lighting', 1),
-(2, 'Fan', 1),
-(3, 'Water Heater', 1),
-(4, 'Window Type', 4),
-(5, 'Tower/ Floor Standing Type', 4),
-(6, 'Split Type', 4),
-(7, 'Ceiling/ Cassette Type', 4);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `spservices`
---
-
-DROP TABLE IF EXISTS `spservices`;
-CREATE TABLE `spservices` (
-  `id` int(11) NOT NULL,
-  `category` varchar(20) NOT NULL,
-  `sp_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `spwork`
---
-
-DROP TABLE IF EXISTS `spwork`;
-CREATE TABLE `spwork` (
-  `id` int(11) NOT NULL,
-  `work` varchar(20) NOT NULL,
-  `spservice_id` int(20) NOT NULL,
-  `price` int(10) NOT NULL,
-  `status` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `services` (`service_id`, `service_name`, `sp_id`, `status`) VALUES
+(7, 'Test', 36, 'disabled'),
+(8, 'Test', 36, 'disabled'),
+(9, 'Plumbing', 36, 'disabled'),
+(10, 'Carpentry', 36, 'active');
 
 -- --------------------------------------------------------
 
@@ -148,7 +127,8 @@ CREATE TABLE `user` (
   `user_lname` varchar(45) NOT NULL,
   `user_name` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `address` varchar(45) NOT NULL,
+  `barangay` varchar(45) NOT NULL,
+  `housenumber` varchar(50) NOT NULL,
   `contact_no` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `type` varchar(10) NOT NULL,
@@ -159,8 +139,13 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `address`, `contact_no`, `email`, `type`, `status`) VALUES
-(30, 'Admin', 'Admin', 'admin', '$2y$10$jZdBqAsT2659OOyl5ZTTxu7IShNLWqXCieXIp3jLpzagj/ruUudha', 'Admin Boss, Admin', '09123456789', 'admin@gmail.com', 'admin', 'active');
+INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `barangay`, `housenumber`, `contact_no`, `email`, `type`, `status`) VALUES
+(30, 'Admin', 'Admin', 'admin', '$2y$10$jZdBqAsT2659OOyl5ZTTxu7IShNLWqXCieXIp3jLpzagj/ruUudha', 'Admin Boss, Admin', '', '09123456789', 'admin@gmail.com', 'admin', 'active'),
+(35, 'roger', 'roger', 'roger', '$2y$10$pDjoERMDePf0gFEtCnqQTeJuGgHiJOzBYBypnSNawxWGoGrEms3i6', 'asdasd', '', '123123', 'asdas@gmail.com', 'sp', 'active'),
+(34, 'Japper', 'Li', 'japper', '$2y$10$0e.tISPGnHrxI88xUZhj/.FtUkD16gujlZ8HspPLVR02JKhRWc.XS', 'pqoweoqwieq', '', '0912318491', 'yanalinso@gmail.com', 'sp', 'active'),
+(36, 'Ted', 'Zhang', 'ted', '$2y$10$wWhfe0/iWTtUo65alxt3TOspEIGYS27K239IlLzOZ.3ncF3g55uKS', 'Tanod', '123', '123123', 'asdasdf@mgail.com', 'sp', 'active'),
+(37, 'Roger', 'Li', 'rog', '$2y$10$9352Nm0eYnT.Za58MeaeIu1Lmn/xXtz/z5.sCEKgIvM.YASY.DRiK', 'asdas', '123', '123123', 'asdasd@gmail.com', 'client', 'active'),
+(38, 'Lambert ', 'Sun', 'lambert', '$2y$10$NVscRQ4Y9r2nLXrhjHqjVOVHMXDICgrWDrII12dc52C4dRMcFWmZ6', '1231', '19208301', '123123', 'lambert@gmail.com', 'client', 'active');
 
 -- --------------------------------------------------------
 
@@ -172,32 +157,28 @@ DROP TABLE IF EXISTS `work`;
 CREATE TABLE `work` (
   `work_id` int(11) NOT NULL,
   `service_id` varchar(45) NOT NULL,
-  `description` varchar(45) NOT NULL
+  `description` varchar(45) NOT NULL,
+  `priceFrom` int(50) NOT NULL,
+  `priceTo` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `work`
 --
 
-INSERT INTO `work` (`work_id`, `service_id`, `description`) VALUES
-(2, '1', 'Install'),
-(3, '1', 'Repair/ Replace'),
-(4, '1', 'Relocate/ Move'),
-(5, '1', 'Inspection'),
-(6, '2', 'Plumbing Repair'),
-(7, '2', 'Plumbing Installation'),
-(8, '2', 'Declogging'),
-(9, '3', 'Repair Furniture'),
-(10, '3', 'Door Installation'),
-(11, '3', 'Repair Door Hinges'),
-(12, '4', 'Not cold/ Not working optimally'),
-(13, '4', 'Air not blowing/ Not blowing optimallhy'),
-(14, '4', 'Leaking'),
-(15, '4', 'Control/ Sensor Problem');
+INSERT INTO `work` (`work_id`, `service_id`, `description`, `priceFrom`, `priceTo`) VALUES
+(31, '9', 'Install', 1000, 2000),
+(32, '10', 'Install yeah', 100, 200);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `rate`
+--
+ALTER TABLE `rate`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `requests`
@@ -210,24 +191,6 @@ ALTER TABLE `requests`
 --
 ALTER TABLE `services`
   ADD PRIMARY KEY (`service_id`);
-
---
--- Indexes for table `specifics`
---
-ALTER TABLE `specifics`
-  ADD PRIMARY KEY (`specifics_id`,`service_id`);
-
---
--- Indexes for table `spservices`
---
-ALTER TABLE `spservices`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `spwork`
---
-ALTER TABLE `spwork`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `transactions`
@@ -252,34 +215,22 @@ ALTER TABLE `work`
 --
 
 --
+-- AUTO_INCREMENT for table `rate`
+--
+ALTER TABLE `rate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `specifics`
---
-ALTER TABLE `specifics`
-  MODIFY `specifics_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `spservices`
---
-ALTER TABLE `spservices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `spwork`
---
-ALTER TABLE `spwork`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -291,13 +242,13 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `work`
 --
 ALTER TABLE `work`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

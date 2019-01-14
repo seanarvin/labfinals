@@ -58,7 +58,6 @@ if (isset($_SESSION['full'])) {
             <a href="requests.php" class="simple-text logo-normal">
                 <?php
                 echo strtoupper($_SESSION['userType']);
-                echo strtoupper($_SESSION['aw']);
                 ?>
             </a>
         </div>
