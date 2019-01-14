@@ -139,7 +139,7 @@ app.get('/viewprofile',(req,res) =>{
 	let userdata = req.session.userdata;
 	if(userdata){
 		let user_id = userdata.user_id;
-		db.query(`SELECT user_id,user_fname,user_lname,address,contact_no,email,user_name,password from user
+		db.query(`SELECT user_id,user_fname,user_lname,barangay,housenumber,contact_no,email,user_name,password from user
 			where user_id = ?`
 			,[user_id],(error, results, fields) => {
 				if (error) throw error;
@@ -259,7 +259,7 @@ app.get('/logout',(req,res)=>{
 
 	req.session.destroy(function(err) {
 		if (err) console.log(err);
-		res.redirect("http://"+ip+":80/labfinals/php/logout.php");
+		res.redirect("http://"+ip+":8080/labfinals/php/logout.php");
 	});
 });
 
