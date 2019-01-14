@@ -6,19 +6,18 @@
  */
 session_start();
 $ayd = $_SESSION['ayd'];
-
+$c = $_POST['waha'];
 require 'db.php';
 
 
-$cat = $_POST['category'];
+$work = $_POST['work'];
+$from = $_POST['from'];
+$to = $_POST['to'];
 
 
-$sp_services = "SELECT * FROM `spservices` WHERE category = '$cat' and sp_id = '$ayd'";
-$res = $conn->query($sp_services);
-
-if($res->num_rows == 0){
-    $sql = "INSERT INTO services(service_name,sp_id,status) VALUES ('$cat','$ayd','active')";
-    $conn->query($sql);
+$sql = "INSERT INTO work(service_id, description, priceFrom, priceTo) VALUES ('$c','$work','$from','$to')";
+$res = $conn->query($sql);
+if($res){
     $m = "Successfully Added!";
     echo "<script type='text/javascript'>
 
@@ -27,7 +26,7 @@ if($res->num_rows == 0){
         </script>";
 
 }else{
-        $m = "Error! Category already exist!";
+        $m = "Error! Work already exist!";
     echo "<script type='text/javascript'>
 
             alert('$m');

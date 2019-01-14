@@ -9,7 +9,7 @@ if (isset($_SESSION['full'])) {
         echo "
             <script type = 'text/javascript'>
                 alert('$m');
-                window.location.replace('../index.php');
+                window.location.replace('../../index.php');
             </script>
          ";
     }
@@ -58,6 +58,7 @@ if (isset($_SESSION['full'])) {
             <a href="requests.php" class="simple-text logo-normal">
                 <?php
                 echo strtoupper($_SESSION['userType']);
+                echo strtoupper($_SESSION['aw']);
                 ?>
             </a>
         </div>
@@ -103,7 +104,8 @@ if (isset($_SESSION['full'])) {
                         <li class="nav-item">
                             <a class="nav-link" href="#pablo">
                                 <?php
-                                echo $_SESSION['full']
+                                echo $_SESSION['full'];
+
                                 ?>
                             </a>
                         </li>
@@ -160,17 +162,19 @@ if (isset($_SESSION['full'])) {
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $sql = "SELECT service_name,service_id AS pp FROM services WHERE sp_id = '$ayd'";
+                                                    $sql = "SELECT service_name,service_id AS pp FROM services WHERE sp_id = '$ayd' AND status = 'active'";
 
                                                     $res = $conn->query($sql);
 
 
                                                     if ($res->num_rows > 0) {
+                                                        $ay = 1;
                                                         while ($row = $res->fetch_assoc()) {
                                                             echo "<tr>";
                                                             echo "<td>" . $row['service_name'] . "</td>";
-                                                            echo "<td class='text-center'>" . "<a  href='viewWork.php'  data-target='#work' data-toggle='modal' ><i class='material-icons'>edit</i></a>" . "<a  rel='tooltip' title='Delete Service' href=" . 'backend/disableWork.php?num=' . $row['pp'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
+                                                            echo "<td class='text-center'>" . "<a rel='tooltip' title='View Service'  onclick='getWork(this.id)' id=" . $row['pp'] . " " . " data-target='#workk' class='btn btn-primary btn-link btn-sm' data-toggle='modal'><i class='material-icons'>edit</i></a>" . "<a  rel='tooltip' title='Delete Service' href=" . 'backend/disableService.php?num=' . $row['pp'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
                                                             echo "</tr>";
+                                                            $ay =+ 1;
                                                         }
                                                     } else {
                                                         echo "<tr><td>No Data</td></tr>";
@@ -384,31 +388,60 @@ if (isset($_SESSION['full'])) {
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="work" >
-    <div class="modal-dialog">
+<div class="modal fade" id="workk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                asda
-            </div>
+            <h3 class="text-center">WORK</h3>
+            <hr>
             <div class="modal-body">
-                <?php
-                $a = $_GET['num'];
-                echo $a;
-                ?>
+                <table class="table">
+                    <thead>
+                    <th>Work Description</th>
+                    <th>Price Range</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody id="here">
+
+
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button class="btn btn-primary" id="btnn" data-toggle="modal" data-target="#addWork">Add Work</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <h3 class="text-center">WORK</h3>
+            <hr>
+            <form action="backend/addWork.php" method="post">
+                <div class="modal-body">
+                    <input type="text" name="work" class="form-control" placeholder="Work Description">
+                    <input type="number" name="from" class="form-control" placeholder="Minimum Price">
+                    <input type="number" name="to" class="form-control" placeholder="Maximum Price">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button name="waha" type="submit" id="waha" class="btn btn-primary">Add</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 
 <!--   Core JS Files   -->
-<script src="assets/js/core/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script src="assets/js/core/popper.min.js"></script>
-<script src="assets/js/jquery.min.js"></script>
+
 <script src="assets/js/core/bootstrap-material-design.min.js"></script>
 <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Plugin for the momentJs  -->
@@ -446,6 +479,7 @@ if (isset($_SESSION['full'])) {
 <script src="assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+
 <script>
 
 
@@ -460,28 +494,51 @@ if (isset($_SESSION['full'])) {
         });
     });
 
-    function category() {
-        $id = $('#cat').val();
+    // function category() {
+    //     $id = $('#cat').val();
+    //     $.ajax({
+    //         url: 'workGet.php',
+    //         data: {ayd: $id},
+    //         dataType: 'JSON',
+    //         success: function (data) {
+    //             console.log(data)
+    //             let a = '';
+    //
+    //             for (let i = 0; i < data.length; i++) {
+    //                 a += '<option value=' + data[i][1] + '>' + data[i][0] + '</option>';
+    //             }
+    //             $('#work').html(a);
+    //         }
+    //     });
+    // }
+
+    function getWork(x) {
+        $id = x;
+        $('#waha').val($id);
         $.ajax({
-            url: 'workGet.php',
+            url: 'backend/workGet.php',
             data: {ayd: $id},
             dataType: 'JSON',
             success: function (data) {
-                console.log(data)
+                console.log(data);
+
                 let a = '';
+                let x = '';
+
 
                 for (let i = 0; i < data.length; i++) {
-                    a += '<option value=' + data[i][1] + '>' + data[i][0] + '</option>';
+                    x += "<tr>" +
+                        "<td>"+data[i][1]+"</td>" +
+                        "<td>"+data[i][2]+"-"+data[i][3]+"</td>" +
+                        "<td><a href='backend/removework.php?num='"+data[i][0]+"'>Delete</a></td></tr>";
                 }
-                $('#work').html(a);
+                $('#here').html(x);
             }
         });
     }
 
 
-    function getWork() {
 
-    }
 
 
 </script>
