@@ -171,7 +171,7 @@ if (isset($_SESSION['full'])) {
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $qu = "SELECT user.streetnum AS stn,user.municipality AS mun,user.city AS ct,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
+                                                    $qu = "SELECT user.street AS stn,user.municipality AS mun,user.city AS ct,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
                                                             JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
                                                             WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                                                     $res = $conn->query($qu);
@@ -214,7 +214,7 @@ if (isset($_SESSION['full'])) {
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $qu = "SELECT user.streetnum AS stn,user.municipality AS mun,user.city AS ct,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
+                                                    $qu = "SELECT user.street AS stn,user.municipality AS mun,user.city AS ct,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
                                                             JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
                                                             WHERE requests.sp_id = '$ayd' AND requests.status = 'ongoing'";
                                                     $res = $conn->query($qu);
@@ -274,7 +274,6 @@ if (isset($_SESSION['full'])) {
                                         <label class="">Fist
                                             Name</label>
 
-
                                         <?php
                                         $ayd = $_SESSION['ayd'];
                                         $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
@@ -312,7 +311,7 @@ if (isset($_SESSION['full'])) {
                                         $res = $conn->query($sql);
                                         $r = $res->fetch_assoc();
 
-                                        echo "<input type='text' name='streetnum' class='form-control' placeholder='" . $r['streetnum'] . "'>";
+                                        echo "<input type='text' name='street' class='form-control' placeholder='" . $r['street'] . "'>";
 
                                         ?>
                                     </div>

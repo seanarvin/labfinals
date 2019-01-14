@@ -264,7 +264,7 @@ if (isset($_SESSION['full'])) {
                                         $res = $conn->query($sql);
                                         $r = $res->fetch_assoc();
 
-                                        echo "<input type='text' name='streetnum' class='form-control' placeholder='" . $r['streetnum'] . "'>";
+                                        echo "<input type='text' name='street' class='form-control' placeholder='" . $r['street'] . "'>";
 
                                         ?>
                                     </div>

@@ -87,7 +87,7 @@ if (isset($_SESSION['full'])) {
                             <input  name="housenum" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
-                            <label for="usernamesignup" class="uname" data-icon="u">Street Number</label>
+                            <label for="usernamesignup" class="uname" data-icon="u">Street</label>
                             <input  name="streetnum" required="required" type="text" placeholder=""/>
                         </p>
                         <p>

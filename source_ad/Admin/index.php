@@ -354,7 +354,7 @@ if (isset($_SESSION['full'])) {
                                 while ($row = $res->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
-                                    echo "<td>" . $row['barangay'] . "," . $row['housenumber'] .  "," . strtoupper($row['streetnum']) . "," . strtoupper($row['municipality']) . "," . strtoupper($row['city']) . "</td>";
+                                    echo "<td>" . $row['barangay'] . "," . $row['housenumber'] .  "," . strtoupper($row['street']) . "," . strtoupper($row['municipality']) . "," . strtoupper($row['city']) . "</td>";
                                     echo "<td>" . $row['contact_no'] . "</td>";
                                     echo "<td>" . $row['email'] . "</td>";
                                     echo "<td>" . $row['type'] . "</td>";

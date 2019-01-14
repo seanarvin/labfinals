@@ -23,7 +23,7 @@ if ($password == $password2) {
     $p = password_hash($password, PASSWORD_DEFAULT);
 
 
-    $sql = "INSERT INTO user(password, user_fname, user_lname, contact_no, barangay,housenumber,streetnum,municipality,city,user_name, email, status, type) VALUES('$p','$first','$last','$num','$barangay','$housenum','$streetnum','$mun','$city','$username','$email','pending','$type')";
+    $sql = "INSERT INTO user(password, user_fname, user_lname, contact_no, barangay,housenumber,street,municipality,city,user_name, email, status, type) VALUES('$p','$first','$last','$num','$barangay','$housenum','$streetnum','$mun','$city','$username','$email','pending','$type')";
     if ($conn->query($sql)) {
         $m = "Success! Waiting for approval.";
         echo "<script type='text/javascript'>

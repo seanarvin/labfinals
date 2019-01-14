@@ -174,7 +174,7 @@ window.location.replace('../../index.php');
                             <tbody>
                             <?php
                             $ayd = $_SESSION['ayd'];
-                            $qu = "SELECT requests.status AS st,requests.note AS nt,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.streetnum AS stn,user.municipality AS mun,user.city AS ct,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
+                            $qu = "SELECT requests.status AS st,requests.note AS nt,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.street AS stn,user.municipality AS mun,user.city AS ct,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
                                                 JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
                                                     WHERE requests.status != 'pending'";
                             $res = $conn->query($qu);
