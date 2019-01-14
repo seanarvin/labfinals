@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2019 at 06:31 PM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.11
+-- Generation Time: Jan 14, 2019 at 09:22 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -39,6 +39,11 @@ CREATE TABLE `rate` (
   `client_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `rate`
+--
+
+TRUNCATE TABLE `rate`;
 -- --------------------------------------------------------
 
 --
@@ -60,6 +65,11 @@ CREATE TABLE `requests` (
   `status` enum('pending','rejected','ongoing','completed','cancelled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `requests`
+--
+
+TRUNCATE TABLE `requests`;
 -- --------------------------------------------------------
 
 --
@@ -74,6 +84,11 @@ CREATE TABLE `services` (
   `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `services`
+--
+
+TRUNCATE TABLE `services`;
 -- --------------------------------------------------------
 
 --
@@ -87,7 +102,7 @@ CREATE TABLE `user` (
   `user_lname` varchar(45) NOT NULL,
   `user_name` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `streetnum` varchar(50) NOT NULL,
+  `street` varchar(50) NOT NULL,
   `barangay` varchar(45) NOT NULL,
   `housenumber` varchar(50) NOT NULL,
   `municipality` varchar(50) NOT NULL,
@@ -99,11 +114,16 @@ CREATE TABLE `user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
+-- Truncate table before insert `user`
+--
+
+TRUNCATE TABLE `user`;
+--
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `streetnum`, `barangay`, `housenumber`, `municipality`, `city`, `contact_no`, `email`, `type`, `status`) VALUES
-(42, 'Admin', 'Boss', 'admin', '$2y$10$cfS.CoS9HBeAlqkSTshPie4X39DvnZWpzjfqfKkV7fLfntD/LB6Uy', '290', 'Tanod', '1001', 'La Trinidad', 'Baguio', '0909123456', 'admin@gmail.com', 'admin', 'active');
+INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `street`, `barangay`, `housenumber`, `municipality`, `city`, `contact_no`, `email`, `type`, `status`) VALUES
+(42, 'Admin', 'Boss', 'admin', '$2y$10$cfS.CoS9HBeAlqkSTshPie4X39DvnZWpzjfqfKkV7fLfntD/LB6Uy', '13 North Carolina', 'Tanod', '1001', 'La Trinidad', 'Baguio', '0909123456', 'admin@gmail.com', 'admin', 'active');
 
 -- --------------------------------------------------------
 
@@ -121,13 +141,10 @@ CREATE TABLE `work` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `work`
+-- Truncate table before insert `work`
 --
 
-INSERT INTO `work` (`work_id`, `service_id`, `description`, `priceFrom`, `priceTo`) VALUES
-(1, '1', 'System Ad', 100, 200),
-(2, '2', 'Aha', 1000, 2000);
-
+TRUNCATE TABLE `work`;
 --
 -- Indexes for dumped tables
 --
@@ -170,31 +187,31 @@ ALTER TABLE `work`
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `work`
 --
 ALTER TABLE `work`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
