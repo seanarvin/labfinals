@@ -185,10 +185,17 @@ function search(){
         $.ajax({
             url: "/search/" + searchval,
             success: function (result) {
+                rate = result["data"];
+                result = result["results"];
                 if (result !== "No results found.") {
                     result.forEach(function (user) {
+                        sp_id = user.sp_id
                         tabs += `<div class="card">
-                        <div class="card-header">${user.user}</div><div class="card-body">
+                        <div class="card-header">${user.user}</div>
+                        <small><i> Rating: ${rate[sp_id]} / 5 </i></small>
+                        <div class="card-body">
+                        <div class="text-left">
+                        </div>
                         <h5 class="card-title">${user.service_name}</h5>
                         <p class="card-text">Address:  ${user.address}</p>
                         <p class="card-text">Contact Number:  ${user.contact_no}</p>
@@ -207,17 +214,23 @@ function search(){
         $.ajax({
             url: "/search/all",
             success: function (result) {
+                rate = result["data"];
+                result = result["results"];
                 result.forEach(function (user) {
-                    tabs += `<div class="card">
-                    <div class="card-header">${user.user}</div><div class="card-body">
-                    <h5 class="card-title">${user.service_name}</h5>
-                    <p class="card-text">Address:  ${user.address}</p>
-                    <p class="card-text">Contact Number:  ${user.contact_no}</p>
-                    <button data-uid = "${user.user_id}" data-servicename = "${user.service_name}"
-                    data-sid = "${user.id}" data-servid = "${user.service_id}" type="button" 
-                    class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
-                    </div></div>`;
-                });
+                   sp_id = user.sp_id
+                   console.log(rate)
+                   tabs += `<div class="card">
+                   <div class="card-header">${user.user}</div>
+                    <small><i> Rating: ${rate[sp_id]} / 5 </i></small>
+                    <div class="card-body">
+                   <h5 class="card-title">${user.service_name}</h5>
+                   <p class="card-text">Address:  ${user.address}</p>
+                   <p class="card-text">Contact Number:  ${user.contact_no}</p>
+                   <button data-uid = "${user.user_id}" data-servicename = "${user.service_name}"
+                   data-sid = "${user.id}" data-servid = "${user.service_id}" type="button" 
+                   class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
+                   </div></div>`;
+               });
                 $('#servicep-list').html(tabs);
             }
         });
