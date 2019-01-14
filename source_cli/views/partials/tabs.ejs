@@ -5,17 +5,17 @@
       <p><b><%= user.user %></b></p>   
       <% spid =  user.sp_id %>   
       <div class="text-left">
-        <small><i> Rating: <%= rate[spid] %> / 5 </i></small>
+        <% rate = rate[spid] %>
+        <% if (!rate){rate = 0 } %>
+        <small><i> Rating: <%= rate  %> / 5 </i></small>
       </div>
     </div>
     <div class="card-body">
       <h5 class="card-title"><%= user.service_name %></h5>
       <p class="card-text">Address:  <%= user.address %></p>
       <p class="card-text">Contact Number:  <%= user.contact_no %></p>
-
-
       <button data-uid = "<%= user.user_id %>" data-servicename = "<%= user.service_name %>"
-        data-sid = "<%= user.id %>" data-servid = "<%= user.service_id %>" type="button" class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
+        data-sid = "<%= user.service_id %>" data-servid = "<%= user.service_id %>" type="button" class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
       </div>
     </div>
     <% }); %>

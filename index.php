@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$ayp = gethostbyname($_SERVER['SERVER_NAME']);
 if (isset($_SESSION['full'])) {
     $ty = $_SESSION['userType'];
     if ($ty == "admin") {
@@ -8,7 +8,7 @@ if (isset($_SESSION['full'])) {
     } elseif ($ty == "sp") {
         header('Location:source_ad/ServiceProvider/requests.php');
     }elseif ($ty == "client") {
-        header('Location:../user/delivery.php');
+        header('Location: //' . $ayp . ':3000/index/' . $_SESSION['ayd']);
     } else {
         var_dump("Who you!");
     }

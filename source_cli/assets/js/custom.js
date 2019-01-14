@@ -34,45 +34,21 @@ $(document).ready(function () {
             url: "/serviceworks/" + sid,
             success: function (result) {
                 let html = "";
+                console.log(result);
                 result.forEach(function (work) {
                     html +=
                     `<div class="custom-control custom-radio">
                     <input id=work"${work.work_id}" value="${work.work_id}" type="radio" 
                     class="custom-control-input" name="work">
-                    <label for=work"${work.work_id}"  class="custom-control-label">${work.description}</label>
+                    <label for=work"${work.work_id}"  class="custom-control-label">${work.description} 
+                    (PHP ${work.priceFrom} - ${work.priceTo})</label>
                     </div>`;
                 });
                 $('#workitems').html(html);
                 step += '<span class="step"></span>';
             }
         });
-        //set work specifics
-        $.ajax({
-            url: "/specifics/" + servid,
-            success: function (result) {
-                let list = "";
-
-                if (result.length > 0) {
-                    result.forEach(function (specifics) {
-                        list +=
-                        `<div class="custom-control custom-radio">
-                        <input id=specifics"${specifics.specifics_id}" value="${specifics.specifics_id}" type="radio" 
-                        class="custom-control-input" name="specifics">
-                        <label for=specifics"${specifics.specifics_id}"  class="custom-control-label">${specifics.specifics}</label>
-                        </div>`;
-
-                    });
-
-                    $('#specifics').html(list);
-
-                    step += '<span class="step"></span>';
-
-                } else {
-                    $('#specificstab').remove();
-                }
-                $('#steps').html(step);
-            }
-        });
+    
     });
 
     $('#confirmation').on('show.bs.modal', function (e) {
@@ -146,7 +122,7 @@ function submitRequest() {
     let date = $('input[name=date]').val();
     let from = $('input[name=from]').val();
     let to = $('input[name=to]').val();
-    let specifics = $('input[name=specifics]:checked').val();
+    let specifics = $('textarea[name=specifics]').val();
     let sp = $('#nextBtn').data('uid');
 
     if (!specifics) {
@@ -158,7 +134,7 @@ function submitRequest() {
         "date": date,
         "from": from,
         "to": to,
-        "specifics_id": specifics,
+        "specifics": specifics,
         "sp_id": sp
     }
 
@@ -187,14 +163,14 @@ function search(){
             success: function (result) {
                 rate = result["data"];
                 result = result["results"];
-                if (result !== "No results found.") {
+                if (result) {
                     result.forEach(function (user) {
                         sp_id = user.sp_id
                         tabs += `<div class="card">
-                        <div class="card-header">${user.user}</div>
-                        <small><i> Rating: ${rate[sp_id]} / 5 </i></small>
-                        <div class="card-body">
+                        <div class="card-header">${user.user}
                         <div class="text-left">
+                        <small><i> Rating: ${rate[sp_id]} / 5 </i></small>
+                        </div>
                         </div>
                         <h5 class="card-title">${user.service_name}</h5>
                         <p class="card-text">Address:  ${user.address}</p>
@@ -220,8 +196,11 @@ function search(){
                    sp_id = user.sp_id
                    console.log(rate)
                    tabs += `<div class="card">
-                   <div class="card-header">${user.user}</div>
+                   <div class="card-header">${user.user}
+                   <div class="text-left">
                     <small><i> Rating: ${rate[sp_id]} / 5 </i></small>
+                    </div>
+                    </div>
                     <div class="card-body">
                    <h5 class="card-title">${user.service_name}</h5>
                    <p class="card-text">Address:  ${user.address}</p>

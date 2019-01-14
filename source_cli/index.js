@@ -51,14 +51,12 @@ app.get('/',(req,res) => {
 	let ip = req.get('host').split(":")[0];
 	let userdata = req.session.userdata;
 	if(userdata){
-		db.query(`SELECT sps.id,sps.sp_id,user.user_id,s.service_id,address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
-			inner join spservices sps on sps.sp_id = user.user_id
-			inner join services s on sps.category = s.service_id`, (error, results, fields) => {
+		db.query(`SELECT s.service_id,s.sp_id,user.user_id,s.service_id,CONCAT(housenumber," ",barangay) as address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
+			inner join services s on s.sp_id = user.user_id where s.status = "active"`, (error, results, fields) => {
 				if (error) throw error;
 				db.query(`SELECT sp_id, FORMAT(AVG(rate),0) as rate FROM rate GROUP by sp_id`, 
 					(error, rate, num) => {
 						let data = {};
-
 						if (error) throw error;
 						for(let i = 0; i < rate.length; i++){
 							rating = rate[i]["rate"];
@@ -77,33 +75,22 @@ app.get('/',(req,res) => {
 });
 // #serviceworks
 app.get('/serviceworks/:id',(req,res) =>{
-	db.query(`SELECT * FROM spwork 
-		inner join work on work.work_id = spwork.work
-		WHERE spservice_id = ? AND status != "disabled"`,
+	db.query(`SELECT * FROM work where service_id = ?`,
 		[req.params.id],(error, results, fields) => {
+			console.log(results);
 			if (error) throw error;
 			res.json(results)
 		});
 });
-// #specifics
-app.get('/specifics/:id',(req,res) =>{
-	db.query(`SELECT * FROM specifics
-		inner join services on services.service_id = specifics.service_id 
-		where services.service_id = ?`,
-		[req.params.id],(error, results, fields) => {
-			if (error) throw error;
-			res.json(results)
-		});
-});
+
 //#search
 app.get('/search/:value',(req,res) => {
 	let where = ``;
 	if (req.params.value !== 'all'){
-		where = `where s.service_name = "`+req.params.value+`"`;
+		where = `AND s.service_name = "`+req.params.value+`"`;
 	}
-	db.query(`SELECT sps.sp_id,sps.id,user.user_id,s.service_id,address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
-		inner join spservices sps on sps.sp_id = user.user_id
-		inner join services s on sps.category = s.service_id ${where}`,
+	db.query(`SELECT s.service_id,s.sp_id,user.user_id,s.service_id,CONCAT(housenumber," ",barangay) as address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
+			inner join services s on s.sp_id = user.user_id where s.status = "active" ${where}`,
 		(error, results, fields) => {
 			if (error) throw error;
 			db.query(`SELECT sp_id, FORMAT(AVG(rate),0) as rate FROM rate GROUP by sp_id`, 
@@ -137,7 +124,7 @@ app.get('/transactions',(req,res) =>{
 			FROM requests r inner join user u on u.user_id = r.sp_id
 			inner join work w on w.work_id = r.work_id
 			inner join services s on s.service_id = w.service_id
-			left join specifics spc on spc.specifics_id = r.specifics_id where client_id = ?`
+			where client_id = ?`
 			,[client_id],(error, results, fields) => {
 				if (error) throw error;
 				res.render('transaction', {data: results,userdata});
