@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2019 at 06:23 AM
+-- Generation Time: Jan 14, 2019 at 06:24 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -39,15 +39,6 @@ CREATE TABLE `rate` (
   `client_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `rate`
---
-
-INSERT INTO `rate` (`id`, `rate`, `comment`, `sp_id`, `client_id`) VALUES
-(4, 5, 'bad', 36, 37),
-(5, 5, 'test', 36, 37),
-(6, 5, 'Weak', 36, 38);
-
 -- --------------------------------------------------------
 
 --
@@ -69,13 +60,6 @@ CREATE TABLE `requests` (
   `status` enum('pending','rejected','ongoing','completed','cancelled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `requests`
---
-
-INSERT INTO `requests` (`req_id`, `date_requested`, `work_id`, `sp_id`, `date`, `from`, `to`, `note`, `client_id`, `specifics`, `status`) VALUES
-(5, '2019-01-14 04:19:56', 32, 36, '2019-01-14', '13:19:00', '14:19:00', NULL, 38, '      akjwh', 'cancelled');
-
 -- --------------------------------------------------------
 
 --
@@ -88,30 +72,6 @@ CREATE TABLE `services` (
   `service_name` varchar(45) NOT NULL,
   `sp_id` int(50) NOT NULL,
   `status` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `services`
---
-
-INSERT INTO `services` (`service_id`, `service_name`, `sp_id`, `status`) VALUES
-(7, 'Test', 36, 'disabled'),
-(8, 'Test', 36, 'disabled'),
-(9, 'Plumbing', 36, 'disabled'),
-(10, 'Carpentry', 36, 'active');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transactions`
---
-
-DROP TABLE IF EXISTS `transactions`;
-CREATE TABLE `transactions` (
-  `transactions_id` int(100) NOT NULL,
-  `sp_id` int(100) NOT NULL,
-  `client_id` int(100) NOT NULL,
-  `history` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -140,12 +100,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `barangay`, `housenumber`, `contact_no`, `email`, `type`, `status`) VALUES
-(30, 'Admin', 'Admin', 'admin', '$2y$10$jZdBqAsT2659OOyl5ZTTxu7IShNLWqXCieXIp3jLpzagj/ruUudha', 'Admin Boss, Admin', '', '09123456789', 'admin@gmail.com', 'admin', 'active'),
-(35, 'roger', 'roger', 'roger', '$2y$10$pDjoERMDePf0gFEtCnqQTeJuGgHiJOzBYBypnSNawxWGoGrEms3i6', 'asdasd', '', '123123', 'asdas@gmail.com', 'sp', 'active'),
-(34, 'Japper', 'Li', 'japper', '$2y$10$0e.tISPGnHrxI88xUZhj/.FtUkD16gujlZ8HspPLVR02JKhRWc.XS', 'pqoweoqwieq', '', '0912318491', 'yanalinso@gmail.com', 'sp', 'active'),
-(36, 'Ted', 'Zhang', 'ted', '$2y$10$wWhfe0/iWTtUo65alxt3TOspEIGYS27K239IlLzOZ.3ncF3g55uKS', 'Tanod', '123', '123123', 'asdasdf@mgail.com', 'sp', 'active'),
-(37, 'Roger', 'Li', 'rog', '$2y$10$9352Nm0eYnT.Za58MeaeIu1Lmn/xXtz/z5.sCEKgIvM.YASY.DRiK', 'asdas', '123', '123123', 'asdasd@gmail.com', 'client', 'active'),
-(38, 'Lambert ', 'Sun', 'lambert', '$2y$10$NVscRQ4Y9r2nLXrhjHqjVOVHMXDICgrWDrII12dc52C4dRMcFWmZ6', '1231', '19208301', '123123', 'lambert@gmail.com', 'client', 'active');
+(30, 'Admin', 'Admin', 'admin', '$2y$10$jZdBqAsT2659OOyl5ZTTxu7IShNLWqXCieXIp3jLpzagj/ruUudha', 'Admin Boss, Admin', '', '09123456789', 'admin@gmail.com', 'admin', 'active');
 
 -- --------------------------------------------------------
 
@@ -161,14 +116,6 @@ CREATE TABLE `work` (
   `priceFrom` int(50) NOT NULL,
   `priceTo` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `work`
---
-
-INSERT INTO `work` (`work_id`, `service_id`, `description`, `priceFrom`, `priceTo`) VALUES
-(31, '9', 'Install', 1000, 2000),
-(32, '10', 'Install yeah', 100, 200);
 
 --
 -- Indexes for dumped tables
@@ -191,12 +138,6 @@ ALTER TABLE `requests`
 --
 ALTER TABLE `services`
   ADD PRIMARY KEY (`service_id`);
-
---
--- Indexes for table `transactions`
---
-ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`transactions_id`);
 
 --
 -- Indexes for table `user`
@@ -231,12 +172,6 @@ ALTER TABLE `requests`
 --
 ALTER TABLE `services`
   MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `transactions`
---
-ALTER TABLE `transactions`
-  MODIFY `transactions_id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
