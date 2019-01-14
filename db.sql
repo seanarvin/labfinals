@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2019 at 09:22 PM
+-- Generation Time: Jan 14, 2019 at 09:24 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -39,11 +39,6 @@ CREATE TABLE `rate` (
   `client_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `rate`
---
-
-TRUNCATE TABLE `rate`;
 -- --------------------------------------------------------
 
 --
@@ -61,15 +56,10 @@ CREATE TABLE `requests` (
   `to` time NOT NULL,
   `note` text,
   `client_id` int(11) NOT NULL,
-  `specifics` varchar(11) NOT NULL,
+  `specifics` text NOT NULL,
   `status` enum('pending','rejected','ongoing','completed','cancelled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `requests`
---
-
-TRUNCATE TABLE `requests`;
 -- --------------------------------------------------------
 
 --
@@ -84,11 +74,6 @@ CREATE TABLE `services` (
   `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `services`
---
-
-TRUNCATE TABLE `services`;
 -- --------------------------------------------------------
 
 --
@@ -114,11 +99,6 @@ CREATE TABLE `user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `user`
---
-
-TRUNCATE TABLE `user`;
---
 -- Dumping data for table `user`
 --
 
@@ -140,11 +120,6 @@ CREATE TABLE `work` (
   `priceTo` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `work`
---
-
-TRUNCATE TABLE `work`;
 --
 -- Indexes for dumped tables
 --
