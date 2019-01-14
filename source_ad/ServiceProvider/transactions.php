@@ -238,16 +238,74 @@ if (isset($_SESSION['full'])) {
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="">Adress</label>
+                                                <label class="">Street Num</label>
                                                 <?php
                                                 $ayd = $_SESSION['ayd'];
                                                 $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
                                                 $res = $conn->query($sql);
                                                 $r = $res->fetch_assoc();
 
-                                                echo "<input type='text' name='addr' class='form-control' placeholder='" . $r['address'] . "'>";
+                                                echo "<input type='text' name='streetnum' class='form-control' placeholder='" . $r['streetnum'] . "'>";
+
+                                                ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="">House Number</label>
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='housenum' class='form-control' placeholder='" . $r['housenumber'] . "'>";
+
+                                                ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="">Barangay</label>
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='bar' class='form-control' placeholder='" . $r['barangay'] . "'>";
+
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="">Municipality</label>
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='mun' class='form-control' placeholder='" . $r['municipality'] . "'>";
+
+                                                ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="">City</label>
+                                                <?php
+                                                $ayd = $_SESSION['ayd'];
+                                                $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                                $res = $conn->query($sql);
+                                                $r = $res->fetch_assoc();
+
+                                                echo "<input type='text' name='city' class='form-control' placeholder='" . $r['city'] . "'>";
 
                                                 ?>
                                             </div>

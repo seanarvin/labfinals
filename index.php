@@ -87,6 +87,18 @@ if (isset($_SESSION['full'])) {
                             <input  name="housenum" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
+                            <label for="usernamesignup" class="uname" data-icon="u">Street Number</label>
+                            <input  name="streetnum" required="required" type="text" placeholder=""/>
+                        </p>
+                        <p>
+                            <label for="usernamesignup" class="uname" data-icon="u">Municipality</label>
+                            <input  name="mun" required="required" type="text" placeholder=""/>
+                        </p>
+                        <p>
+                            <label for="usernamesignup" class="uname" data-icon="u">City</label>
+                            <input  name="city" required="required" type="text" placeholder=""/>
+                        </p>
+                        <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Contact No</label>
                             <input  name="num" required="required" type="number" placeholder=""/>
                         </p>

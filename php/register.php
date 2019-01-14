@@ -6,6 +6,9 @@ $first = $_POST['first_name'];
 $last = $_POST['last_name'];
 $barangay = $_POST['barangay'];
 $housenum = $_POST['housenum'];
+$streetnum = $_POST['streetnum'];
+$mun = $_POST['mun'];
+$city = $_POST['city'];
 $num = $_POST['num'];
 $email = $_POST['email'];
 $username = $_POST['username'];
@@ -17,25 +20,24 @@ $type = $_POST['type'];
 if ($password == $password2) {
 
 
-    $p = password_hash($password,PASSWORD_DEFAULT);
+    $p = password_hash($password, PASSWORD_DEFAULT);
 
 
-    $sql = "INSERT INTO user(password, user_fname, user_lname, contact_no, barangay,housenumber, user_name, email, status, type) VALUES('$p','$first','$last','$num','$barangay','$housenum','$username','$email','pending','$type')";
+    $sql = "INSERT INTO user(password, user_fname, user_lname, contact_no, barangay,housenumber,streetnum,municipality,city,user_name, email, status, type) VALUES('$p','$first','$last','$num','$barangay','$housenum','$streetnum','$mun','$city','$username','$email','pending','$type')";
     if ($conn->query($sql)) {
+        $m = "Success! Waiting for approval.";
+        echo "<script type='text/javascript'>
 
-        header('Location:../index.php');
+            alert('$m');
+            window.location.replace('../index.php');
+        </script>";
     } else {
 
 
         var_dump($conn->error);
-//    $m = "Error! Contact Administrator!";
-//    echo "<script type='text/javascript'>
-//
-//            alert('$m');
-//            window.location.replace('../../admin/requests.php');
-//        </script>";
+
     }
-}else{
+} else {
     $m = "Error! Password dont match!";
     echo "<script type='text/javascript'>
 

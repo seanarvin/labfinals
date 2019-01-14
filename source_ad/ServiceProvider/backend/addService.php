@@ -13,7 +13,7 @@ require 'db.php';
 $cat = $_POST['category'];
 
 
-$sp_services = "SELECT * FROM `spservices` WHERE category = '$cat' and sp_id = '$ayd'";
+$sp_services = "SELECT * FROM services WHERE service_name = '$cat' and sp_id = '$ayd'";
 $res = $conn->query($sp_services);
 
 if($res->num_rows == 0){
