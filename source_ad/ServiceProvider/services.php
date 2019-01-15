@@ -255,16 +255,74 @@ if (isset($_SESSION['full'])) {
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="">Adress</label>
+                                        <label class="">Street Num</label>
                                         <?php
                                         $ayd = $_SESSION['ayd'];
                                         $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
                                         $res = $conn->query($sql);
                                         $r = $res->fetch_assoc();
 
-                                        echo "<input type='text' name='addr' class='form-control' placeholder='" . $r['address'] . "'>";
+                                        echo "<input type='text' name='street' class='form-control' placeholder='" . $r['street'] . "'>";
+
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="">House Number</label>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                        $res = $conn->query($sql);
+                                        $r = $res->fetch_assoc();
+
+                                        echo "<input type='text' name='housenum' class='form-control' placeholder='" . $r['housenumber'] . "'>";
+
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="">Barangay</label>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                        $res = $conn->query($sql);
+                                        $r = $res->fetch_assoc();
+
+                                        echo "<input type='text' name='bar' class='form-control' placeholder='" . $r['barangay'] . "'>";
+
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="">Municipality</label>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                        $res = $conn->query($sql);
+                                        $r = $res->fetch_assoc();
+
+                                        echo "<input type='text' name='mun' class='form-control' placeholder='" . $r['municipality'] . "'>";
+
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="">City</label>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                        $res = $conn->query($sql);
+                                        $r = $res->fetch_assoc();
+
+                                        echo "<input type='text' name='city' class='form-control' placeholder='" . $r['city'] . "'>";
 
                                         ?>
                                     </div>
@@ -422,9 +480,11 @@ if (isset($_SESSION['full'])) {
             <hr>
             <form action="backend/addWork.php" method="post">
                 <div class="modal-body">
-                    <input type="text" name="work" class="form-control" placeholder="Work Description">
-                    <input type="number" name="from" class="form-control" placeholder="Minimum Price">
-                    <input type="number" name="to" class="form-control" placeholder="Maximum Price">
+                    <input required type="text" name="work" class="form-control" placeholder="Work Description">
+                    <br>
+                    <input required type="number" name="from" class="form-control" placeholder="Minimum Price">
+                    <br>
+                    <input required type="number" name="to" class="form-control" placeholder="Maximum Price">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -519,19 +579,26 @@ if (isset($_SESSION['full'])) {
             data: {ayd: $id},
             dataType: 'JSON',
             success: function (data) {
-                console.log(data);
+                if (!Array.isArray(data) || !data.length) {
+                    // array does not exist, is not an array, or is empty
+                    c = "<tr><td>No Work Yet</td></tr>";
+                    $('#here').html(c);
+                }else {
+                    console.log(data);
 
-                let a = '';
-                let x = '';
+                    let a = '';
+                    let x = '';
 
 
-                for (let i = 0; i < data.length; i++) {
-                    x += "<tr>" +
-                        "<td>"+data[i][1]+"</td>" +
-                        "<td>"+data[i][2]+"-"+data[i][3]+"</td>" +
-                        "<td><a href='backend/removework.php?num='"+data[i][0]+"'>Delete</a></td></tr>";
+                    for (let i = 0; i < data.length; i++) {
+                        x += "<tr>" +
+                            "<td>"+data[i][1]+"</td>" +
+                            "<td>"+data[i][2]+"-"+data[i][3]+"</td>" +
+                            "<td><a href='backend/removework.php?num='"+data[i][0]+"'>Delete</a></td></tr>";
+                    }
+                    $('#here').html(x);
                 }
-                $('#here').html(x);
+
             }
         });
     }

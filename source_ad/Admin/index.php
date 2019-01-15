@@ -187,7 +187,7 @@ if (isset($_SESSION['full'])) {
                 <div class="row">
                     <div class="col-xl-3 col-lg-6">
                         <div class="card card-stats mb-4 mb-xl-0">
-                            <div class="card-body">
+                            <a href="users.php" class="card-body">
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-muted mb-0">Pending Accounts</h5>
@@ -215,12 +215,12 @@ if (isset($_SESSION['full'])) {
                                 <p class="mt-3 mb-0 text-muted text-sm">
                                     <span class="text-warning mr-2"></span>
                                 </p>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6">
                         <div class="card card-stats mb-4 mb-xl-0">
-                            <div class="card-body">
+                            <a href="users.php" class="card-body">
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-muted mb-0">Service Provider</h5>
@@ -248,12 +248,12 @@ if (isset($_SESSION['full'])) {
                                 <p class="mt-3 mb-0 text-muted text-sm">
                                     <span class="text-warning mr-2"></span>
                                 </p>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6">
                         <div class="card card-stats mb-4 mb-xl-0">
-                            <div class="card-body">
+                            <a href="users.php" class="card-body">
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-muted mb-0">Clients</h5>
@@ -281,13 +281,13 @@ if (isset($_SESSION['full'])) {
                                 <p class="mt-3 mb-0 text-muted text-sm">
                                     <span class="text-warning mr-2"></span>
                                 </p>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
                     <div class="col-xl-3 col-lg-6">
                         <div class="card card-stats mb-4 mb-xl-0">
-                            <div class="card-body">
+                            <a href="transactions.php" class="card-body">
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-muted mb-0">Transactions</h5>
@@ -315,7 +315,7 @@ if (isset($_SESSION['full'])) {
                                 <p class="mt-3 mb-0 text-muted text-sm">
                                     <span class="text-warning mr-2"></span>
                                 </p>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
@@ -326,69 +326,56 @@ if (isset($_SESSION['full'])) {
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--7">
-        <div class="row mt-5">
-            <div class="col-xl-12 mb-5 mb-xl-0">
+        <div class="row">
+            <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="mb-0">Latest Transactions</h3>
-                            </div>
-                            <div class="col text-right">
-                                <a href="transactions.php" class="btn btn-sm btn-primary">See all</a>
-                            </div>
-                        </div>
+                        <h3 class="mb-0 text-center">Pending Account Request</h3>
                     </div>
                     <div class="table-responsive">
-                        <!-- Projects table -->
                         <table class="table align-items-center table-flush">
-                            <thead>
-                            <th><b>Client</b></th>
-                            <th><b>Date/Time</b></th>
-                            <th><b>Category</b></th>
-                            <th><b>Work</b></th>
-                            <th><b>Address</b></th>
-                            <th><b>Number</b></th>
-                            <th><b>Specifics</b></th>
-                            <th><b>Price</b></th>
-                            <th><b>Note</b></th>
-                            <th><b>Status</b></th>
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Contact #</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
                             <tbody>
                             <?php
-                            $ayd = $_SESSION['ayd'];
-                            $qu = "SELECT requests.status AS st,requests.note AS nt,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
-                                                JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
-                                                    WHERE  requests.status != 'pending'";
-                            $res = $conn->query($qu);
+                            $sql = "SELECT * FROM user WHERE type != 'admin' AND status = 'pending'";
+                            $res = $conn->query($sql);
 
                             if ($res->num_rows > 0) {
                                 while ($row = $res->fetch_assoc()) {
                                     echo "<tr>";
-                                    echo "<td>" . strtoupper($row['fn'] . " " . $row['ln']) . "</td>";
-                                    echo "<td>" . strtoupper($row['d']) .":". strtoupper($row['f']) . "-" . strtoupper($row['t']) . "</td>";
-                                    echo "<td>" . strtoupper($row['sn']) . "</td>";
-                                    echo "<td>" . strtoupper($row['wo']) . "</td>";
-                                    echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) . ", Baguio City " . "</td>";
-                                    echo "<td>" . strtoupper($row['num']) . "</td>";
-                                    echo "<td>" . strtoupper($row['spe']) . "</td>";
-
-                                    echo "<td>" . strtoupper($row['pf']) . "-". strtoupper($row['pt']). "</td>";
-                                    echo "<td>" . strtoupper($row['nt']) . "</td>";
-                                    echo "<td>" . strtoupper($row['st']) . "</td>";
-
+                                    echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
+                                    echo "<td>" . $row['barangay'] . "," . $row['housenumber'] .  "," . strtoupper($row['street']) . "," . strtoupper($row['municipality']) . "," . strtoupper($row['city']) . "</td>";
+                                    echo "<td>" . $row['contact_no'] . "</td>";
+                                    echo "<td>" . $row['email'] . "</td>";
+                                    echo "<td>" . $row['type'] . "</td>";
+                                    echo "<td>" . $row['status'] . "</td>";
+                                    echo "<td>" . "<a  rel='tooltip' title='Accept Request' href=" . 'backend/acceptRequest.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'>Accept</a>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/rejectRequest.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'>Reject</a>" . "</td>";
                                     echo "</tr>";
                                 }
                             } else {
-                                echo "<td>No Transactions</td>";
+                                echo "<tr><td>No Requests</td></tr>";
                             }
-
                             ?>
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-footer py-4">
+                        <nav aria-label="...">
+
+                        </nav>
+                    </div>
                 </div>
             </div>
-
         </div>
         <!-- Footer -->
 

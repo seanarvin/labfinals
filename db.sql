@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2019 at 06:24 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.11
+-- Generation Time: Jan 14, 2019 at 09:24 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -56,7 +56,7 @@ CREATE TABLE `requests` (
   `to` time NOT NULL,
   `note` text,
   `client_id` int(11) NOT NULL,
-  `specifics` varchar(11) NOT NULL,
+  `specifics` text NOT NULL,
   `status` enum('pending','rejected','ongoing','completed','cancelled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -87,8 +87,11 @@ CREATE TABLE `user` (
   `user_lname` varchar(45) NOT NULL,
   `user_name` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `street` varchar(50) NOT NULL,
   `barangay` varchar(45) NOT NULL,
   `housenumber` varchar(50) NOT NULL,
+  `municipality` varchar(50) NOT NULL,
+  `city` varchar(60) NOT NULL,
   `contact_no` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `type` varchar(10) NOT NULL,
@@ -99,8 +102,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `barangay`, `housenumber`, `contact_no`, `email`, `type`, `status`) VALUES
-(30, 'Admin', 'Admin', 'admin', '$2y$10$jZdBqAsT2659OOyl5ZTTxu7IShNLWqXCieXIp3jLpzagj/ruUudha', 'Admin Boss, Admin', '', '09123456789', 'admin@gmail.com', 'admin', 'active');
+INSERT INTO `user` (`user_id`, `user_fname`, `user_lname`, `user_name`, `password`, `street`, `barangay`, `housenumber`, `municipality`, `city`, `contact_no`, `email`, `type`, `status`) VALUES
+(42, 'Admin', 'Boss', 'admin', '$2y$10$cfS.CoS9HBeAlqkSTshPie4X39DvnZWpzjfqfKkV7fLfntD/LB6Uy', '13 North Carolina', 'Tanod', '1001', 'La Trinidad', 'Baguio', '0909123456', 'admin@gmail.com', 'admin', 'active');
 
 -- --------------------------------------------------------
 
@@ -159,31 +162,31 @@ ALTER TABLE `work`
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `work`
 --
 ALTER TABLE `work`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

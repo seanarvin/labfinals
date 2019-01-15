@@ -51,7 +51,9 @@ app.get('/',(req,res) => {
 	let ip = req.get('host').split(":")[0];
 	let userdata = req.session.userdata;
 	if(userdata){
-		db.query(`SELECT s.service_id,s.sp_id,user.user_id,s.service_id,CONCAT(housenumber," ",barangay) as address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
+		db.query(`SELECT s.service_id,s.sp_id,user.user_id,s.service_id,CONCAT(housenumber," ",barangay,",",street,",",
+			city,",",municipality) as address,
+			contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
 			inner join services s on s.sp_id = user.user_id where s.status = "active"`, (error, results, fields) => {
 				if (error) throw error;
 				db.query(`SELECT sp_id, FORMAT(AVG(rate),0) as rate FROM rate GROUP by sp_id`, 
@@ -77,7 +79,6 @@ app.get('/',(req,res) => {
 app.get('/serviceworks/:id',(req,res) =>{
 	db.query(`SELECT * FROM work where service_id = ?`,
 		[req.params.id],(error, results, fields) => {
-			console.log(results);
 			if (error) throw error;
 			res.json(results)
 		});
@@ -89,7 +90,8 @@ app.get('/search/:value',(req,res) => {
 	if (req.params.value !== 'all'){
 		where = `AND s.service_name = "`+req.params.value+`"`;
 	}
-	db.query(`SELECT s.service_id,s.sp_id,user.user_id,s.service_id,CONCAT(housenumber," ",barangay) as address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
+	db.query(`SELECT s.service_id,s.sp_id,user.user_id,s.service_id,CONCAT(housenumber," ",barangay,",",street,",",
+			city,",",municipality) as address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
 			inner join services s on s.sp_id = user.user_id where s.status = "active" ${where}`,
 		(error, results, fields) => {
 			if (error) throw error;
@@ -139,8 +141,7 @@ app.get('/viewprofile',(req,res) =>{
 	let userdata = req.session.userdata;
 	if(userdata){
 		let user_id = userdata.user_id;
-		db.query(`SELECT user_id,user_fname,user_lname,address,contact_no,email,user_name,password from user
-			where user_id = ?`
+		db.query(`SELECT * from user where user_id = ?`
 			,[user_id],(error, results, fields) => {
 				if (error) throw error;
 				res.render('profile', {data:results[0],userdata});
@@ -167,7 +168,11 @@ app.post('/updateprofile',(req,res) => {
 			let {firstname} = req.body;
 			let {lastname} = req.body;
 			let {email} = req.body;
-			let {address} = req.body;
+			let {housenumber} = req.body;
+			let {barangay} = req.body;
+			let {street} = req.body;
+			let {city} = req.body;
+			let {municipality} = req.body;
 			let {contact} = req.body;
 			let {username} = req.body;
 
@@ -175,7 +180,11 @@ app.post('/updateprofile',(req,res) => {
 				"user_fname": firstname,
 				"user_lname": lastname,
 				"email": email,
-				"address": address,
+				"housenumber": housenumber,
+				"barangay": barangay,
+				"street": street,
+				"city": city,
+				"municipality": municipality,
 				"contact_no": contact,
 				"user_name": username,
 			}
@@ -221,7 +230,6 @@ app.post('/client/request',(req,res)=> {
 
 		let client_id = req.session.userdata.user_id; 
 		let data = req.body;
-		console.log(data);
  	// client will do request
  	db.query('INSERT INTO requests SET ? , client_id = ? ',[data,client_id], (error, results, fields) => {
  		if (error) throw error;

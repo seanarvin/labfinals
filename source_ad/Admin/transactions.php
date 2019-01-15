@@ -89,12 +89,12 @@ window.location.replace('../../index.php');
                         <i class="ni ni-tv-2 text-primary"></i> Dashboard
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="users.php">
                         <i class="ni ni-single-02 text-yellow"></i> Users
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active ">
                     <a class="nav-link" href="transactions.php">
                         <i class="ni ni-bullet-list-67 text-red"></i> Transactions
                     </a>
@@ -111,7 +111,7 @@ window.location.replace('../../index.php');
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div class="container-fluid">
             <!-- Brand -->
-            <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="users.php">USERS</a>
+            <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="users.php"></a>
             <!-- Form -->
             <!-- User -->
             <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -155,7 +155,7 @@ window.location.replace('../../index.php');
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
-                        <h3 class="mb-0 text-center">Pending Account Request</h3>
+                        <h3 class="mb-0 text-center">Transaction History</h3>
                     </div>
                     <div class="table-responsive">
                         <table class="table" id="example" width="100%">
@@ -174,7 +174,7 @@ window.location.replace('../../index.php');
                             <tbody>
                             <?php
                             $ayd = $_SESSION['ayd'];
-                            $qu = "SELECT requests.status AS st,requests.note AS nt,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
+                            $qu = "SELECT requests.status AS st,requests.note AS nt,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.street AS stn,user.municipality AS mun,user.city AS ct,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
                                                 JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
                                                     WHERE requests.status != 'pending'";
                             $res = $conn->query($qu);
@@ -186,7 +186,7 @@ window.location.replace('../../index.php');
                                     echo "<td>" . strtoupper($row['d']) .":". strtoupper($row['f']) . "-" . strtoupper($row['t']) . "</td>";
                                     echo "<td>" . strtoupper($row['sn']) . "</td>";
                                     echo "<td>" . strtoupper($row['wo']) . "</td>";
-                                    echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) . ", Baguio City " . "</td>";
+                                    echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) . "," . strtoupper($row['stn']) . "," . strtoupper($row['mun']) . "," . strtoupper($row['ct']) ."</td>";
                                     echo "<td>" . strtoupper($row['num']) . "</td>";
                                     echo "<td>" . strtoupper($row['spe']) . "</td>";
 

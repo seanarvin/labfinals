@@ -171,9 +171,9 @@ if (isset($_SESSION['full'])) {
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $qu = "SELECT requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
-JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
-WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
+                                                    $qu = "SELECT user.street AS stn,user.municipality AS mun,user.city AS ct,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
+                                                            JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
+                                                            WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                                                     $res = $conn->query($qu);
 
                                                     if ($res->num_rows > 0) {
@@ -183,7 +183,7 @@ WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                                                             echo "<td>" . strtoupper($row['d']) .":". strtoupper($row['f']) . "-" . strtoupper($row['t']) . "</td>";
                                                             echo "<td>" . strtoupper($row['sn']) . "</td>";
                                                             echo "<td>" . strtoupper($row['wo']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) . ", Baguio City " . "</td>";
+                                                            echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) .  "," . strtoupper($row['stn']) . "," . strtoupper($row['mun']) . "," . strtoupper($row['ct']). "</td>";
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
                                                             echo "<td>" . strtoupper($row['pf']) . "-". strtoupper($row['pt']). "</td>";
@@ -191,7 +191,7 @@ WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                                                             echo "</tr>";
                                                         }
                                                     } else {
-                                                        echo "<td>No active accounts</td>";
+                                                        echo "<td>No requests</td>";
                                                     }
 
                                                     ?>
@@ -214,31 +214,34 @@ WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $qu = "SELECT spwork.price AS pr,specifics.specifics AS spe,services.service_name AS sn,requests.date AS datee,requests.from AS fr,requests.to AS to,requests.req_id AS ayyd,user.user_fname AS fname,user.user_lname AS lname,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,user.email AS email,requests.status AS stat,work.description AS wo,services.service_name AS cat FROM requests JOIN user ON user.user_id = requests.client_id JOIN work on work.work_id = requests.work_id JOIN specifics on specifics.specifics_id = requests.specifics_id JOIN services on services.service_id = work.service_id JOIN spwork on spwork.work = work.work_id WHERE sp_id = '$ayd' AND requests.status = 'ongoing'";
+                                                    $qu = "SELECT user.street AS stn,user.municipality AS mun,user.city AS ct,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
+                                                            JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
+                                                            WHERE requests.sp_id = '$ayd' AND requests.status = 'ongoing'";
                                                     $res = $conn->query($qu);
 
                                                     if ($res->num_rows > 0) {
                                                         while ($row = $res->fetch_assoc()) {
                                                             echo "<tr>";
-                                                            echo "<td>" . strtoupper($row['fname'] . " " . $row['lname']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['datee']) . " " . strtoupper($row['fr']) . "-" . strtoupper($row['to']) . "</td>";
+                                                            echo "<td>" . strtoupper($row['fn'] . " " . $row['ln']) . "</td>";
+                                                            echo "<td>" . strtoupper($row['d']) .":". strtoupper($row['f']) . "-" . strtoupper($row['t']) . "</td>";
                                                             echo "<td>" . strtoupper($row['sn']) . "</td>";
                                                             echo "<td>" . strtoupper($row['wo']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) . ", Baguio City " . "</td>";
+                                                            echo "<td>" . strtoupper($row['bar']) . "," . strtoupper($row['hn']) .  "," . strtoupper($row['stn']) . "," . strtoupper($row['mun']) . "," . strtoupper($row['ct']) . "</td>";
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
-                                                            echo "<td>" . strtoupper($row['pr']) . "</td>";
+                                                            echo "<td>" . strtoupper($row['pf']) . "-". strtoupper($row['pt']). "</td>";
                                                             echo "<td class='text-center'>" . "<a  rel='tooltip' title='Complete Request' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Cancel Request' href='#' data-toggle='modal' data-id='" . $row['ayyd'] . "' data-target='#exampleModal1' class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {
-                                                        echo "<td>No active Requests</td>";
+                                                        echo "<td>No On-going requests</td>";
                                                     }
 
                                                     ?>
                                                     </tbody>
                                                 </table>
                                             </div>
+
 
                                         </div>
                                     </div>
@@ -271,7 +274,6 @@ WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                                         <label class="">Fist
                                             Name</label>
 
-
                                         <?php
                                         $ayd = $_SESSION['ayd'];
                                         $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
@@ -300,16 +302,74 @@ WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="">Adress</label>
+                                        <label class="">Street Num</label>
                                         <?php
                                         $ayd = $_SESSION['ayd'];
                                         $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
                                         $res = $conn->query($sql);
                                         $r = $res->fetch_assoc();
 
-                                        echo "<input type='text' name='addr' class='form-control' placeholder='" . $r['address'] . "'>";
+                                        echo "<input type='text' name='street' class='form-control' placeholder='" . $r['street'] . "'>";
+
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="">House Number</label>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                        $res = $conn->query($sql);
+                                        $r = $res->fetch_assoc();
+
+                                        echo "<input type='text' name='housenum' class='form-control' placeholder='" . $r['housenumber'] . "'>";
+
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="">Barangay</label>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                        $res = $conn->query($sql);
+                                        $r = $res->fetch_assoc();
+
+                                        echo "<input type='text' name='bar' class='form-control' placeholder='" . $r['barangay'] . "'>";
+
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="">Municipality</label>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                        $res = $conn->query($sql);
+                                        $r = $res->fetch_assoc();
+
+                                        echo "<input type='text' name='mun' class='form-control' placeholder='" . $r['municipality'] . "'>";
+
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="">City</label>
+                                        <?php
+                                        $ayd = $_SESSION['ayd'];
+                                        $sql = "SELECT * FROM user WHERE user_id = '$ayd'";
+                                        $res = $conn->query($sql);
+                                        $r = $res->fetch_assoc();
+
+                                        echo "<input type='text' name='city' class='form-control' placeholder='" . $r['city'] . "'>";
 
                                         ?>
                                     </div>
@@ -387,13 +447,13 @@ WHERE requests.sp_id = '$ayd' AND requests.status = 'pending'";
                 <div class="modal-body ">
                     <div class="card">
                         <div class="card-header card-header-primary text-center">
-                            <h4 class="card-title">Edit Profile</h4>
+                            <h4 class="card-title">Reason for canceling</h4>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="">Reason for canceling</label>
-                                    <input name="note" type='text' class='form-control'>
+                                    <input required name="note" type='text' class='form-control'>
                                 </div>
                             </div>
                             <div class="pull-right">
