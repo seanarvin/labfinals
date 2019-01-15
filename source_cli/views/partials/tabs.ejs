@@ -5,9 +5,9 @@
       <p><b><%= user.user %></b></p>   
       <% spid =  user.sp_id %>   
       <div class="text-left">
-        <% rate = rate[spid] %>
-        <% if (!rate){rate = 0 } %>
-        <small><i> Rating: <%= rate  %> / 5 </i></small>
+        <% rating = rate[spid] %>
+        <% if (!rate){rating = 0 } %>
+        <small><i> Rating: <%= rating  %> / 5 </i></small>
       </div>
     </div>
     <div class="card-body">
