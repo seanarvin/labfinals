@@ -32,7 +32,7 @@ if (isset($_SESSION['full'])) {
 <body>
 <div class="container">
     <header>
-        <h1>Traba<strong>Who</strong></span></h1>
+        <h1>Traba<strong>Who</strong></h1>
 
     </header>
     <br>
