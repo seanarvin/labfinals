@@ -71,7 +71,7 @@ app.get('/',(req,res) => {
 
 	}else{
 		req.session.destroy(function(err) {
-			res.redirect("http://"+ip+":8080/labfinals");
+			res.redirect("http://"+ip+":80/trabawho");
 		});
 	}
 });
@@ -267,7 +267,7 @@ app.get('/logout',(req,res)=>{
 
 	req.session.destroy(function(err) {
 		if (err) console.log(err);
-		res.redirect("http://"+ip+":8080/labfinals/php/logout.php");
+		res.redirect("http://"+ip+":80/trabawho/php/logout.php");
 	});
 });
 

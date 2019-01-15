@@ -165,13 +165,13 @@ function search(){
                 result = result["results"];
                 if (result) {
                     result.forEach(function (user) {
-                        rate = rate[user.sp_id];
-                        if (!rate){rate = 0 } 
+                        rating = rate[user.sp_id];
+                        if (!rating){rating = 0 } 
                             tabs += `<div class="card">
                         <div class="card-header">
                         <p><b>${user.user}</b></p>   
                         <div class="text-left">
-                        <small><i> Rating: ${rate} / 5 </i></small>
+                        <small><i> Rating: ${rating} / 5 </i></small>
                         </div>
                         </div>
                         <div class="card-body">
@@ -199,13 +199,13 @@ function search(){
                 rate = result["data"];
                 result = result["results"];
                 result.forEach(function (user) {
-                    rate = rate[user.sp_id]
-                    if (!rate){rate = 0 } 
+                    rating = rate[user.sp_id]
+                    if (!rating){rating = 0 } 
                         tabs += `<div class="card">
                     <div class="card-header">
                     <p><b>${user.user}</b></p>   
                     <div class="text-left">
-                    <small><i> Rating: ${rate} / 5 </i></small>
+                    <small><i> Rating: ${rating} / 5 </i></small>
                     </div>
                     </div>
                     <div class="card-body">
