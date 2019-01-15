@@ -160,6 +160,7 @@ window.location.replace('../../index.php');
                     <div class="table-responsive">
                         <table class="table" id="example" width="100%">
                             <thead class=" text-primary">
+                            <th><b>SP</b></th>
                             <th><b>Client</b></th>
                             <th><b>Date/Time</b></th>
                             <th><b>Category</b></th>
@@ -167,21 +168,32 @@ window.location.replace('../../index.php');
                             <th><b>Address</b></th>
                             <th><b>Number</b></th>
                             <th><b>Specifics</b></th>
-                            <th><b>Price</b></th>
+                            <th><b>Minimum Price</b></th>
                             <th><b>Note</b></th>
                             <th><b>Status</b></th>
                             </thead>
                             <tbody>
                             <?php
                             $ayd = $_SESSION['ayd'];
-                            $qu = "SELECT requests.status AS st,requests.note AS nt,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.street AS stn,user.municipality AS mun,user.city AS ct,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
+                            $qu = "SELECT requests.sp_id AS spid,requests.status AS st,requests.note AS nt,requests.req_id AS ayyd,user.user_fname AS fn,user_lname AS ln,requests.date AS d,requests.from AS f,requests.to as t,services.service_name AS sn,work.description AS wo,user.barangay AS bar,user.housenumber AS hn,user.street AS stn,user.municipality AS mun,user.city AS ct,user.contact_no AS num,requests.specifics AS spe,work.priceFrom AS pf,work.priceTo AS pt FROM requests 
                                                 JOIN work on requests.work_id = work.work_id JOIN services on work.service_id = services.service_id JOIN user on user.user_id = requests.client_id 
                                                     WHERE requests.status != 'pending'";
                             $res = $conn->query($qu);
 
+
+
                             if ($res->num_rows > 0) {
                                 while ($row = $res->fetch_assoc()) {
+                                    $spid = $row['spid'];
+
+                                    $q = "SELECT user.user_fname AS fna,user.user_lname AS lna FROM requests JOIN user ON requests.sp_id = user_id WHERE user_id = '$spid'";
+                                    $z = $conn->query($q);
+                                    $zz = $z->fetch_row();
+                                    $v = $zz[0];
+                                    $vv = $zz[1];
+
                                     echo "<tr>";
+                                    echo "<td>" . strtoupper($v . " " . $vv) . "</td>";
                                     echo "<td>" . strtoupper($row['fn'] . " " . $row['ln']) . "</td>";
                                     echo "<td>" . strtoupper($row['d']) .":". strtoupper($row['f']) . "-" . strtoupper($row['t']) . "</td>";
                                     echo "<td>" . strtoupper($row['sn']) . "</td>";
@@ -190,7 +202,7 @@ window.location.replace('../../index.php');
                                     echo "<td>" . strtoupper($row['num']) . "</td>";
                                     echo "<td>" . strtoupper($row['spe']) . "</td>";
 
-                                    echo "<td>" . strtoupper($row['pf']) . "-". strtoupper($row['pt']). "</td>";
+                                    echo "<td>" . strtoupper($row['pf']) . "</td>";
                                     echo "<td>" . strtoupper($row['nt']) . "</td>";
                                     echo "<td>" . strtoupper($row['st']) . "</td>";
 

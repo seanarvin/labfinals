@@ -230,7 +230,7 @@ if (isset($_SESSION['full'])) {
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
                                                             echo "<td>" . strtoupper($row['pf']) . "-". strtoupper($row['pt']). "</td>";
-                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Complete Request' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Cancel Request' href='#' data-toggle='modal' data-id='" . $row['ayyd'] . "' data-target='#exampleModal1' class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
+                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Mark as Done' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "<a  rel='tooltip' title='Cancel Request' href='#' data-toggle='modal' data-id='" . $row['ayyd'] . "' data-target='#exampleModal1' class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {

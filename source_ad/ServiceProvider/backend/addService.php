@@ -11,14 +11,22 @@ require 'db.php';
 
 
 $cat = $_POST['category'];
+$work = $_POST['work'];
+$price = $_POST['price'];
 
 
-$sp_services = "SELECT * FROM services WHERE service_name = '$cat' and sp_id = '$ayd'";
-$res = $conn->query($sp_services);
+$sql = "INSERT INTO services(service_name,sp_id,status) VALUES ('$cat','$ayd','active')";
+if($conn->query($sql)){
+    $lid = $conn->insert_id;
 
-if($res->num_rows == 0){
-    $sql = "INSERT INTO services(service_name,sp_id,status) VALUES ('$cat','$ayd','active')";
+    $sql = "INSERT INTO work(service_id,description, priceFrom, priceTo) VALUES ('$lid','$work','$price','0')";
     $conn->query($sql);
+
+    if(!$conn){
+        var_dump($conn->error);
+        die;
+    }
+
     $m = "Successfully Added!";
     echo "<script type='text/javascript'>
 

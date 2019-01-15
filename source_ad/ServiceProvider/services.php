@@ -156,12 +156,14 @@ if (isset($_SESSION['full'])) {
                                                 <table class="table">
                                                     <thead>
                                                     <th><b>Category</b></th>
+                                                    <th><b>Work</b></th>
+                                                    <th><b>Minimum Price</b></th>
                                                     <th class="text-center"><b>Actions</b></th>
                                                     </thead>
                                                     <tbody>
                                                     <?php
                                                     $ayd = $_SESSION['ayd'];
-                                                    $sql = "SELECT service_name,service_id AS pp FROM services WHERE sp_id = '$ayd' AND status = 'active'";
+                                                    $sql = "SELECT service_name,work.description AS des,work.priceFrom AS p,services.service_id AS pp FROM services JOIN work on services.service_id = work.service_id  WHERE sp_id = '$ayd' AND status = 'active'";
 
                                                     $res = $conn->query($sql);
 
@@ -171,9 +173,11 @@ if (isset($_SESSION['full'])) {
                                                         while ($row = $res->fetch_assoc()) {
                                                             echo "<tr>";
                                                             echo "<td>" . $row['service_name'] . "</td>";
-                                                            echo "<td class='text-center'>" . "<a rel='tooltip' title='View Service'  onclick='getWork(this.id)' id=" . $row['pp'] . " " . " data-target='#workk' class='btn btn-primary btn-link btn-sm' data-toggle='modal'><i class='material-icons'>edit</i></a>" . "<a  rel='tooltip' title='Delete Service' href=" . 'backend/disableService.php?num=' . $row['pp'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
+                                                            echo "<td>" . $row['des'] . "</td>";
+                                                            echo "<td>" . $row['p'] . "</td>";
+                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Delete Service' href=" . 'backend/disableService.php?num=' . $row['pp'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>close</i></a>" . "</td>";
                                                             echo "</tr>";
-                                                            $ay =+ 1;
+                                                            $ay = +1;
                                                         }
                                                     } else {
                                                         echo "<tr><td>No Data</td></tr>";
@@ -407,23 +411,22 @@ if (isset($_SESSION['full'])) {
                                 <table class="table">
                                     <thead>
                                     <th align="center">Service</th>
+                                    <th align="center">Work</th>
+                                    <th align="center">Minimum Price</th>
                                     </thead>
                                     <tbody>
                                     <tr>
                                         <td>
-
-                                            <datalist id="cat">
-                                                <?php
-                                                $sql = "SELECT * FROM services";
-                                                $res = $conn->query($sql);
-
-                                                while ($row = $res->fetch_assoc()) {
-                                                    echo "<option>" . $row['service_name'] . "</option>";
-                                                }
-                                                ?>
-                                            </datalist>
-                                            <input list="cat" class="form-control" name="category" type="text"
+                                            <input required class="form-control" name="category" type="text"
                                                    placeholder="category">
+                                        </td>
+                                        <td>
+                                            <input required  class="form-control" name="work" type="text"
+                                                   placeholder="work">
+                                        </td>
+                                        <td>
+                                            <input required  class="form-control" name="price" type="number"
+                                                   placeholder="price">
                                         </td>
                                     </tr>
                                     </tbody>
@@ -583,7 +586,7 @@ if (isset($_SESSION['full'])) {
                     // array does not exist, is not an array, or is empty
                     c = "<tr><td>No Work Yet</td></tr>";
                     $('#here').html(c);
-                }else {
+                } else {
                     console.log(data);
 
                     let a = '';
@@ -592,9 +595,9 @@ if (isset($_SESSION['full'])) {
 
                     for (let i = 0; i < data.length; i++) {
                         x += "<tr>" +
-                            "<td>"+data[i][1]+"</td>" +
-                            "<td>"+data[i][2]+"-"+data[i][3]+"</td>" +
-                            "<td><a href='backend/removework.php?num='"+data[i][0]+"'>Delete</a></td></tr>";
+                            "<td>" + data[i][1] + "</td>" +
+                            "<td>" + data[i][2] + "-" + data[i][3] + "</td>" +
+                            "<td><a href='backend/removework.php?num='" + data[i][0] + "'>Delete</a></td></tr>";
                     }
                     $('#here').html(x);
                 }
@@ -602,9 +605,6 @@ if (isset($_SESSION['full'])) {
             }
         });
     }
-
-
-
 
 
 </script>
