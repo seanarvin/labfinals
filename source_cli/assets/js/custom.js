@@ -6,8 +6,27 @@ $(document).ready(function () {
     });
 
     $('#services').DataTable();
-    $('.rating-modal').on('show.bs.modal',function(e){
 
+    let comments = "";
+    $('.rating-modal').on('show.bs.modal',function(e){
+        let spid = $(e.relatedTarget).data('spid');
+        $.ajax({
+            url: "/comments/" + spid,
+            dataType: "JSON",
+            success: function(data){
+                data.forEach(function(comment){
+                    comments += `   <div class="comment-box">
+                    <div class="comment-head">
+                    <h6 class="comment-name">${comment.name}</h6> <span class="float-right">${comment.rate}/5</span>
+                    </div>
+                    <div class="comment-content">
+                    ${comment.comment}
+                    </div>
+                    </div>`
+                });
+                $('#commentsection').html(comments);
+            }
+        });
     });
 
     
@@ -155,36 +174,36 @@ function search(){
         searchval = "all"
     }
 
-        $.ajax({
-            url: "/search/" + searchval,
-            success: function (result) {
-                rate = result["data"];
-                result = result["results"];
-                if (result) {
-                    result.forEach(function (user) {
-                        rating = rate[user.sp_id];
-                        if (!rating){rating = 0 } 
-                            tabs += ` 
-                        <tr>
-                        <td>${user.service_name}</td>
-                        <td>${user.user}</td>
-                        <td>${user.address}</td>
-                        <td><a data-spid = "${user.sp_id}" data-toggle="modal" 
-                        href=".rating-modal" title="View comments"><i>${rating }/ 5</i> </a></td>
-                        <td> <button data-uid = "${user.user_id}" 
-                        data-servicename = "${user.service_name}"
-                        data-sid = "${ user.service_id }" data-servid = "${ user.service_id }" 
-                        type="button" class="btn btn-primary inquire" data-toggle="modal" 
-                        data-target=".modal">Schedule an appointment</button>
-                        </td>
-                        </tr>`;
-                    });
-                    $('#servicep-list').html(tabs);
-                } else {
-                    $('#servicep-list').html(`<td valign="top" colspan="5" class="dataTables_empty">No matching records found</td>`);
-                }
+    $.ajax({
+        url: "/search/" + searchval,
+        success: function (result) {
+            rate = result["data"];
+            result = result["results"];
+            if (result) {
+                result.forEach(function (user) {
+                    rating = rate[user.sp_id];
+                    if (!rating){rating = 0 } 
+                        tabs += ` 
+                    <tr>
+                    <td>${user.service_name}</td>
+                    <td>${user.user}</td>
+                    <td>${user.address}</td>
+                    <td><a data-spid = "${user.sp_id}" data-toggle="modal" 
+                    href=".rating-modal" title="View comments"><i>${rating }/ 5</i> </a></td>
+                    <td> <button data-uid = "${user.user_id}" 
+                    data-servicename = "${user.service_name}"
+                    data-sid = "${ user.service_id }" data-servid = "${ user.service_id }" 
+                    type="button" class="btn btn-primary inquire" data-toggle="modal" 
+                    data-target=".modal">Schedule an appointment</button>
+                    </td>
+                    </tr>`;
+                });
+                $('#servicep-list').html(tabs);
+            } else {
+                $('#servicep-list').html(`<td valign="top" colspan="5" class="dataTables_empty">No matching records found</td>`);
             }
-        });
+        }
+    });
 }
 
 function validateSched(){
