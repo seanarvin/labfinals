@@ -5,17 +5,7 @@ $(document).ready(function () {
         $('#sp_id').val(sp_id);
     });
 
-    // set current date as min
-    const today = new Date();
-    let currentDate = getDateToday();
-    let maxdate = getDateinweek();
-    let hour = today.getHours();
-    let time = (hour + 1)  + ":" + today.getMinutes();
-    let to = (hour + 2)  + ":" + today.getMinutes();
-    $('#date').attr('max',maxdate).attr('min',currentDate).val(currentDate);
-    $('#from').attr('min',time)
-    $('#from').val(time);
-    $('#to').attr('min',to).val(to);
+    $('#services').DataTable();
 
 
     
@@ -24,15 +14,16 @@ $(document).ready(function () {
         let sid = $(e.relatedTarget).data('sid');
         let servid = $(e.relatedTarget).data('servid');
         let uid = $(e.relatedTarget).data('uid');
-        let step = '<span class="step"></span>';
         // set service name
-        $('#sname').text($(e.relatedTarget).data('servicename'));
+        $('#sname').text($(e.relatedTarget).data('servicename').toLowerCase());
 
         $('#nextBtn').attr('data-uid', uid);
+
         // set list for works
         $.ajax({
             url: "/serviceworks/" + sid,
             success: function (result) {
+
                 let html = "";
                 console.log(result);
                 result.forEach(function (work) {
@@ -41,11 +32,10 @@ $(document).ready(function () {
                     <input id=work"${work.work_id}" value="${work.work_id}" type="radio" 
                     class="custom-control-input" name="work">
                     <label for=work"${work.work_id}"  class="custom-control-label">${work.description} 
-                    (PHP ${work.priceFrom} - ${work.priceTo})</label>
+                    (Starting price:  PHP ${work.priceFrom})</label>
                     </div>`;
                 });
                 $('#workitems').html(html);
-                step += '<span class="step"></span>';
             }
         });
 
@@ -157,7 +147,10 @@ function search(){
 
     let tabs = "";
 
-    if (searchval) {
+    if (!searchval) {
+        searchval = "all"
+    }
+
         $.ajax({
             url: "/search/" + searchval,
             success: function (result) {
@@ -167,68 +160,31 @@ function search(){
                     result.forEach(function (user) {
                         rating = rate[user.sp_id];
                         if (!rating){rating = 0 } 
-                            tabs += `<div class="card">
-                        <div class="card-header">
-                        <p><b>${user.user}</b></p>   
-                        <div class="text-left">
-                        <small><i> Rating: ${rating} / 5 </i></small>
-                        </div>
-                        </div>
-                        <div class="card-body">
-                        <h5 class="card-title">${user.service_name}</h5>
-                        <p class="card-text">Address:${user.address}</p>
-                        <p class="card-text">Contact Number:${user.contact_no}</p>
-                        <button data-uid = "${user.user_id}" data-servicename = "${user.service_name}"
-                        data-sid = "${user.service_id}" data-servid = "${user.service_id}" type="button" 
-                        class="btn btn-primary inquire" 
-                        data-toggle="modal" data-target=".modal">
-                        Schedule an appointment</button>
-                        </div>
-                        </div>`;
+                            tabs += ` 
+                        <tr>
+                        <td>${user.service_name}</td>
+                        <td>${user.user}</td>
+                        <td>${user.address}</td>
+                        <td><a href="#" title="View comments"><i>${rating }/ 5</i> </a></td>
+                        <td> <button data-uid = "${user.user_id}" 
+                        data-servicename = "${user.service_name}"
+                        data-sid = "${ user.service_id }" data-servid = "${ user.service_id }" 
+                        type="button" class="btn btn-primary inquire" data-toggle="modal" 
+                        data-target=".modal">Schedule an appointment</button>
+                        </td>
+                        </tr>`;
                     });
                     $('#servicep-list').html(tabs);
                 } else {
-                    $('#servicep-list').html("No results found.");
+                    $('#servicep-list').html(`<td valign="top" colspan="5" class="dataTables_empty">No matching records found</td>`);
                 }
             }
         });
-    }else{
-        $.ajax({
-            url: "/search/all",
-            success: function (result) {
-                rate = result["data"];
-                result = result["results"];
-                result.forEach(function (user) {
-                    rating = rate[user.sp_id]
-                    if (!rating){rating = 0 } 
-                        tabs += `<div class="card">
-                    <div class="card-header">
-                    <p><b>${user.user}</b></p>   
-                    <div class="text-left">
-                    <small><i> Rating: ${rating} / 5 </i></small>
-                    </div>
-                    </div>
-                    <div class="card-body">
-                    <h5 class="card-title">${user.service_name}</h5>
-                    <p class="card-text">Address:${user.address}</p>
-                    <p class="card-text">Contact Number:${user.contact_no}</p>
-                    <button data-uid = "${user.user_id}" data-servicename = "${user.service_name}"
-                    data-sid = "${user.service_id}" data-servid = "${user.service_id}" type="button" 
-                    class="btn btn-primary inquire" 
-                    data-toggle="modal" data-target=".modal">
-                    Schedule an appointment</button>
-                    </div>
-                    </div>`;
-                });
-                $('#servicep-list').html(tabs);
-            }
-        });
-    }
 }
 
-function getDateToday(){
+function validateSched(){
+    // get date today
     var today = new Date();
-    var time = today.getHours()
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
@@ -240,27 +196,60 @@ function getDateToday(){
     if(mm<10) {
         mm = '0'+mm
     } 
-    if(time > 18){
-        dd = dd + 1;
-    }
 
     today = yyyy + '-' + mm + '-' + dd;
-    return today
-}
-function getDateinweek(){
-    var today = new Date();
-    var dd = today.getDate() + 6;
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
+    week = yyyy + '-' + mm + '-' + (dd+7);
 
-    if(dd<10) {
-        dd = '0'+dd
-    } 
+    let sched = $('#date');
+    let from = $('#from');
+    let to = $('#to');
 
-    if(mm<10) {
-        mm = '0'+mm
-    } 
+    let dateValidate = false;
+    let fromValidate = false;
+    let toValidate = false;
 
-    week = yyyy + '-' + mm + '-' + dd;
-    return week
+    if (!sched.val() || !from.val() || !to.val()){
+        alert("Please provide all the appointment info.");
+    }
+    if(sched.val()){
+        if(sched.val() < today){
+            sched.val(today);
+            alert("Date must not be less than today's date.");
+        }else if(sched.val() > week){
+            sched.val(week);
+            alert("Appointments can only be done 1 week in advance.");
+        }else{
+            dateValidate = true;
+        }
+    }
+    if(from.val()){
+        if(from.val() > "17:00"){
+            from.val("17:00")
+            alert("Maximum time for start time is 5:00 PM");
+        }else if(from.val() < "08:00"){
+            from.val("08:00")
+            alert("Operating hours is at 8:00 AM. ");
+        }
+        fromValidate = true;
+
+    }
+
+
+    if(to.val()){
+        if(to.val() > "18:00"){
+            to.val("18:00")
+            alert("Maximum time for end time is 6:00 PM");
+        }else if(to.val() < "09:00"){
+            to.val("09:00")
+            alert("Operating hours is at 8:00 AM. End time must be greater than 8:00 AM ");
+        }else{
+            toValidate = true;
+        }
+
+    }
+
+
+    if(dateValidate && fromValidate && toValidate){
+        submitRequest();
+    }
 }

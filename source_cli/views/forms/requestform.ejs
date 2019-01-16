@@ -3,17 +3,15 @@
 <form id="regForm" action="" class="p-5 bg-white">
 
   <div class="tab">
-    <h1>What <span id='sname'></span> services do you need?</h1>
+    <h4>What <span id='sname'></span> services do you need?</h4>
     <div id='workitems'>
 
     </div>
   </div>
   <div class="tab">
-    <h1>Please provide the specifics: </h1>
-    <div>
-    <textarea class="form-control" name="specifics">
-      
-    </textarea>
+    <div class="row"> 
+    <h4>Please provide the specifics: </h4>
+    <textarea class="form-control" name="specifics"></textarea>
   </div>
   </div>
   <div class="tab">
@@ -29,7 +27,7 @@
     <div class="row">
       <div class="form-group col">
         <label class="font-weight-bold" for="fullname">Preffered Date</label>
-        <input name="date" min="getDateToday()" id="date" type="date" class="form-control" required>
+        <input name="date" min="" id="date" type="date" class="form-control" required>
       </div>
       <div class="form-group col">
         <label class="font-weight-bold" for="email">Start Time</label>
@@ -48,9 +46,11 @@
       <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
     </div>
   </div>
-
   <!-- Circles which indicates the steps of the form: -->
-  <div id="steps" style="text-align:center;margin-top:40px;">
+  <div id="steps" style="text-align:center;margin-top:50px;">
+    <span class="step active"></span>
+    <span class="step"></span>
+    <span class="step"></span>
   </div>
 
 </form> 
