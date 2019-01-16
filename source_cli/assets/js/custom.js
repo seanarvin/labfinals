@@ -6,7 +6,9 @@ $(document).ready(function () {
     });
 
     $('#services').DataTable();
+    $('.rating-modal').on('show.bs.modal',function(e){
 
+    });
 
     
     // on show bootstrap modal
@@ -15,7 +17,10 @@ $(document).ready(function () {
         let servid = $(e.relatedTarget).data('servid');
         let uid = $(e.relatedTarget).data('uid');
         // set service name
-        $('#sname').text($(e.relatedTarget).data('servicename').toLowerCase());
+
+        if($(e.relatedTarget).data('servicename')){
+            $('#sname').text($(e.relatedTarget).data('servicename').toLowerCase());
+        }
 
         $('#nextBtn').attr('data-uid', uid);
 
@@ -25,7 +30,6 @@ $(document).ready(function () {
             success: function (result) {
 
                 let html = "";
-                console.log(result);
                 result.forEach(function (work) {
                     html +=
                     `<div class="custom-control custom-radio">
@@ -165,7 +169,8 @@ function search(){
                         <td>${user.service_name}</td>
                         <td>${user.user}</td>
                         <td>${user.address}</td>
-                        <td><a href="#" title="View comments"><i>${rating }/ 5</i> </a></td>
+                        <td><a data-spid = "${user.sp_id}" data-toggle="modal" 
+                        href=".rating-modal" title="View comments"><i>${rating }/ 5</i> </a></td>
                         <td> <button data-uid = "${user.user_id}" 
                         data-servicename = "${user.service_name}"
                         data-sid = "${ user.service_id }" data-servid = "${ user.service_id }" 

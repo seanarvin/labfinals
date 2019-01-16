@@ -3,7 +3,6 @@
   <div class="card">
     <div class="card-header">
       <p><b></b></p>   
-      <% spid =  user.sp_id %>   
       <div class="text-left">
        
         <small><i> Rating:  </i></small>
@@ -33,13 +32,14 @@
     <tbody id="servicep-list">
       <% if(data){ %>
       <% data.forEach(function(user){ %>
+       <% spid =  user.sp_id %>   
        <% rating = rate[spid] %>
         <% if (!rating){rating = 0 } %>
       <tr>
        <td><%= user.service_name %></td>
        <td><%= user.user %></td>
        <td><%= user.address %></td>
-       <td><a href="#" title="View comments"><i><%= rating  %> / 5</i> </a></td>
+       <td><a data-spid = "<%= sp_id %> " data-toggle="modal" href=".rating-modal" title="View comments"><i><%= rating  %> / 5</i> </a></td>
        <td> <button data-uid = "<%= user.user_id %>" data-servicename = "<%= user.service_name %>"
         data-sid = "<%= user.service_id %>" data-servid = "<%= user.service_id %>" type="button" class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
       

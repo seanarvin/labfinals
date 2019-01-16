@@ -260,6 +260,21 @@ app.post('/validatepassword',(req,res)=> {
 	}
 
 });
+//#validate password
+app.get('/comments/:sp_id',(req,res)=> {
+	if(req.session.userdata){
+
+		db.query(`SELECT CONCAT(user_fname," ",user_lname) as name,comment,rate 
+					FROM rate inner join user on user_id = sp_id where sp_id = ?`,
+					[req.params.sp_id],(error, results, fields) => {
+				if (error) throw error;
+				res.json(results);
+			});
+	}else{
+		res.redirect('/logout');
+	}
+
+});
 
 //#logout
 app.get('/logout',(req,res)=>{
