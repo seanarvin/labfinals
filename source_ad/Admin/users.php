@@ -224,7 +224,7 @@ window.location.replace('../../index.php');
                             </thead>
                             <tbody>
                             <?php
-                            $sql = "SELECT * FROM user WHERE type = 'admin' AND status = 'active'";
+                            $sql = "SELECT * FROM user WHERE type = 'client' AND status = 'active'";
                             $res = $conn->query($sql);
 
                             if ($res->num_rows > 0) {
