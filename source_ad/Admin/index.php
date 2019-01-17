@@ -293,7 +293,7 @@ if (isset($_SESSION['full'])) {
                                         <h5 class="card-title text-uppercase text-muted mb-0">Transactions</h5>
                                         <span class="h2 font-weight-bold mb-0">
                                               <?php
-                                              $sql = "SELECT COUNT(req_id) FROM requests";
+                                              $sql = "SELECT COUNT(req_id) FROM requests WHERE status = 'ongoing' OR status = 'cancelled' OR status = 'completed'";
                                               $res = $conn->query($sql);
                                               $r = $res->fetch_row();
 
