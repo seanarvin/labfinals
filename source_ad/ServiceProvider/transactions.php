@@ -146,7 +146,7 @@ if (isset($_SESSION['full'])) {
                                         <th><b>Address</b></th>
                                         <th><b>Number</b></th>
                                         <th><b>Specifics</b></th>
-                                        <th><b>Price</b></th>
+                                        <th><b>Minimum Price</b></th>
                                         <th><b>Note</b></th>
                                         <th><b>Status</b></th>
                                         </thead>
@@ -169,7 +169,7 @@ if (isset($_SESSION['full'])) {
                                                 echo "<td>" . strtoupper($row['num']) . "</td>";
                                                 echo "<td>" . strtoupper($row['spe']) . "</td>";
 
-                                                echo "<td>" . strtoupper($row['pf']) . "-". strtoupper($row['pt']). "</td>";
+                                                echo "<td>" . strtoupper($row['pf']) . "</td>";
                                                 echo "<td>" . strtoupper($row['nt']) . "</td>";
                                                 echo "<td>" . strtoupper($row['st']) . "</td>";
 
