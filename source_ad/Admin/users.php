@@ -207,7 +207,7 @@ window.location.replace('../../index.php');
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
-                        <h3 class="mb-0 text-center" id="dito">Active Users</h3>
+                        <h3 class="mb-0 text-center" id="dito">Active Client Users</h3>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
@@ -224,7 +224,59 @@ window.location.replace('../../index.php');
                             </thead>
                             <tbody>
                             <?php
-                            $sql = "SELECT * FROM user WHERE type != 'admin' AND status = 'active'";
+                            $sql = "SELECT * FROM user WHERE type = 'admin' AND status = 'active'";
+                            $res = $conn->query($sql);
+
+                            if ($res->num_rows > 0) {
+                                while ($row = $res->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row['user_fname'] . " " . $row['user_lname'] . "</td>";
+                                    echo "<td>" . $row['barangay'] . "," . $row['housenumber'] . "," . strtoupper($row['street']) . "," . strtoupper($row['municipality']) . "," . strtoupper($row['city']) . "</td>";
+                                    echo "<td>" . $row['contact_no'] . "</td>";
+                                    echo "<td>" . $row['email'] . "</td>";
+                                    echo "<td>" . $row['type'] . "</td>";
+                                    echo "<td>" . $row['status'] . "</td>";
+                                    echo "<td>" . "<a  rel='tooltip' title='Reject Request' href=" . 'backend/disableUser.php?num=' . $row['user_id'] . " " . " class='btn btn-primary btn-link btn-sm'>Disable</a>" . "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td>No Requests</td></tr>";
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer py-4">
+                        <nav aria-label="...">
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <h3 class="mb-0 text-center" id="dito">Active Service Providers</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Contact #</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $sql = "SELECT * FROM user WHERE type = 'sp' AND status = 'active'";
                             $res = $conn->query($sql);
 
                             if ($res->num_rows > 0) {

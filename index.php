@@ -100,7 +100,7 @@ if (isset($_SESSION['full'])) {
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Contact No</label>
-                            <input min=0  name="num" required="required" type="number" placeholder=""/>
+                            <input min=0 max="99999999999" name="num" required="required" type="number" placeholder=""/>
                         </p>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Email</label>
