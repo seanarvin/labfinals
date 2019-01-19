@@ -70,7 +70,7 @@ $(document).ready(function () {
     // on close of modal go to service provider list
     $('.modal').on('hidden.bs.modal', function () {
         window.location.hash = '#spdiv';
-        $(this).removeData('bs.modal');
+        location.reload();
     });
 
     //search for service provider
