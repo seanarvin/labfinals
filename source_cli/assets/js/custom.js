@@ -1,9 +1,13 @@
 $(document).ready(function () {
 
+    search('all');
+
     $('#rate').on('show.bs.modal',function(e){
         let sp_id = $(e.relatedTarget).data('id');
         $('#sp_id').val(sp_id);
     });
+
+
 
     $('#services').DataTable();
 
@@ -31,37 +35,31 @@ $(document).ready(function () {
 
     
     // on show bootstrap modal
-    $('.modal').on('show.bs.modal', function (e) {
-        let sid = $(e.relatedTarget).data('sid');
-        let servid = $(e.relatedTarget).data('servid');
-        let uid = $(e.relatedTarget).data('uid');
-        // set service name
+    $('#requestModal').on('show.bs.modal', function (e) {
+        let sp_id = $(e.relatedTarget).data('uid');
 
-        if($(e.relatedTarget).data('servicename')){
-            $('#sname').text($(e.relatedTarget).data('servicename').toLowerCase());
-        }
+        $('#nextBtn').attr('data-uid', sp_id);
 
-        $('#nextBtn').attr('data-uid', uid);
-
-        // set list for works
         $.ajax({
-            url: "/serviceworks/" + sid,
+            url: "/services/" + sp_id,
             success: function (result) {
-
                 let html = "";
-                result.forEach(function (work) {
+                result.forEach(function (services) {
                     html +=
                     `<div class="custom-control custom-radio">
-                    <input id=work"${work.work_id}" value="${work.work_id}" type="radio" 
-                    class="custom-control-input" name="work">
-                    <label for=work"${work.work_id}"  class="custom-control-label">${work.description} 
-                    (Starting price:  PHP ${work.priceFrom})</label>
+                    <input id="service${services.service_id}" value="${services.service_id}" type="radio" 
+                    class="custom-control-input" name="service">
+                    <label for="service${services.service_id}"  class="custom-control-label">${services.service_name} 
+                    </label>
                     </div>`;
                 });
-                $('#workitems').html(html);
+                $('#serviceitems').html(html);
+
+
             }
         });
 
+        
     });
 
     $('#confirmation').on('show.bs.modal', function (e) {
@@ -72,14 +70,18 @@ $(document).ready(function () {
     // on close of modal go to service provider list
     $('.modal').on('hidden.bs.modal', function () {
         window.location.hash = '#spdiv';
-        window.location.reload(true);
+        $(this).removeData('bs.modal');
     });
 
     //search for service provider
 
     $('#searchsp').on("submit",function (event) {
         event.preventDefault();
-        search();
+        let searchval = $('#searchinput').val();
+        
+        window.location.href = "#spdiv";
+
+        search(searchval);
     });
 
     $('#passwordsubmit').on("click",function(event){
@@ -120,11 +122,9 @@ $(document).ready(function () {
     });
     });
 
-    $('#dataTables-example').DataTable({
+     $('#transactionsTable').DataTable({
         "order": [[ 5, "desc" ]],
     });
-
-
 
 });
 
@@ -163,47 +163,73 @@ function submitRequest() {
 }
 
 //search
-function search(){
-    let searchval = $('#searchinput').val();
+function search(searchval){
 
-    window.location.href = "#spdiv";
-
-    let tabs = "";
 
     if (!searchval) {
         searchval = "all"
     }
+    $('#servicesTable').DataTable().destroy();
 
-    $.ajax({
-        url: "/search/" + searchval,
-        success: function (result) {
-            rate = result["data"];
-            result = result["results"];
-            if (result) {
-                result.forEach(function (user) {
-                    rating = rate[user.sp_id];
-                    if (!rating){rating = 0 } 
-                        tabs += ` 
-                    <tr>
-                    <td>${user.service_name}</td>
-                    <td>${user.user}</td>
-                    <td>${user.address}</td>
-                    <td><a data-spid = "${user.sp_id}" data-toggle="modal" 
-                    href=".rating-modal" title="View comments"><i>${rating }/ 5</i> </a></td>
-                    <td> <button data-uid = "${user.user_id}" 
-                    data-servicename = "${user.service_name}"
-                    data-sid = "${ user.service_id }" data-servid = "${ user.service_id }" 
-                    type="button" class="btn btn-primary inquire" data-toggle="modal" 
-                    data-target=".modal">Schedule an appointment</button>
-                    </td>
-                    </tr>`;
-                });
-                $('#servicep-list').html(tabs);
-            } else {
-                $('#servicep-list').html(`<td valign="top" colspan="5" class="dataTables_empty">No matching records found</td>`);
+    $('#servicesTable').DataTable( {
+        "processing": true,
+        "ajax": "/search/" + searchval,
+        "columns":  [
+        { "data": "user" },
+        { "data": function(data){
+            let arr = "";
+            service_name = data.service_name.split(',');
+            service_name.forEach(function(list){
+                arr += `<li>${list}</li>`;
+            });
+            return `<ul>${arr}</ul>`
+        } },
+        { "data": "address" },
+        { "data": function(data){
+            if(!data.rate){
+                data.rate = 0;
             }
+            return `<a data-spid = "${data.sp_id}" data-toggle="modal" 
         }
-    });
+        href=".rating-modal" title="View comments"><i>${data.rate }/ 5</i> </a>`;
+    } },
+    { "data": function(data){
+        return `<button data-uid = "${data.sp_id}" type="button" 
+        class="btn btn-primary inquire" data-toggle="modal" 
+        data-target="#requestModal">Schedule an appointment</button>`;
+    } } 
+    ],
+
+} );
+}
+
+function tabs(result) {
+
+
+
+
+    let tabs = "";
+
+    rate = result["data"];
+    result = result["results"];
+    if (result) {
+        result.forEach(function (user) {
+            rating = rate[user.sp_id];
+            if (!rating){rating = 0 } 
+                tabs += ` 
+            <tr>
+            <td>${user.service_name}</td>
+            <td>${user.user}</td>
+            <td>${user.address}</td>
+            <td></td>
+            <td> 
+            </td>
+            </tr>`;
+        });
+        $('#servicep-list').html(tabs);
+    } else {
+        $('#servicep-list').html(`<td valign="top" colspan="5" class="dataTables_empty">No matching records found</td>`);
+    }
 }
 
 function validateSched(){
@@ -276,4 +302,33 @@ function validateSched(){
     if(dateValidate && fromValidate && toValidate){
         submitRequest();
     }
+}
+
+function getWorks(){
+    let service_id = $('input[name=service]').filter(":checked").val();
+                    // // set list for works
+
+    if(service_id){
+       $.ajax({
+         url: "/serviceworks/" + service_id,
+         success: function (result) {
+         let html = "";
+         result.forEach(function (work) {
+         html +=
+         `<div class="custom-control custom-radio">
+         <input id=work"${work.work_id}" value="${work.work_id}" type="radio" 
+         class="custom-control-input" name="work">
+         <label for=work"${work.work_id}"  class="custom-control-label">${work.description} 
+         (Starting price:  PHP ${work.priceFrom})</label>
+          </div>`;
+          });
+          $('#workitems').html(html);
+          }
+      }); 
+       return true;
+    }else{
+        alert("Please select a service.");
+        return false;
+    }
+                    
 }

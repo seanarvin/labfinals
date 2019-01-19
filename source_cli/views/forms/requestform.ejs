@@ -3,7 +3,13 @@
 <form id="regForm" action="" class="p-5 bg-white">
 
   <div class="tab">
-    <h4>What <span id='sname'></span> services do you need?</h4>
+    <h4>What service do you need?</h4>
+    <div id='serviceitems'>
+
+    </div>
+  </div>
+   <div class="tab">
+    <h4>What work do we need to do?</h4>
     <div id='workitems'>
 
     </div>
@@ -27,28 +33,29 @@
     <div class="row">
       <div class="form-group col">
         <label class="font-weight-bold" for="fullname">Preffered Date</label>
-        <input name="date" min="" id="date" type="date" class="form-control" required>
+        <input novalidate name="date" min="" id="date" type="date" class="form-control">
       </div>
       <div class="form-group col">
         <label class="font-weight-bold" for="email">Start Time</label>
-        <input name="from" id="from" max="17:00" type="time" class="form-control" required>
+        <input novalidate name="from" id="from" max="17:00" type="time" class="form-control">
       </div>
       <div class="form-group col">
         <label class="font-weight-bold" for="email">End Time</label>
-        <input name="to" id="to" max="18:00" type="time" class="form-control" required>
+        <input novalidate name="to" id="to" max="18:00" type="time" class="form-control">
       </div>
     </div>
   </div>
  
   <div style="overflow:auto;">
     <div style="float:right;">
-      <button  class="btn btn-primary" ype="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+      <button  class="btn btn-primary" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
       <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
     </div>
   </div>
   <!-- Circles which indicates the steps of the form: -->
   <div id="steps" style="text-align:center;margin-top:50px;">
     <span class="step active"></span>
+    <span class="step"></span>
     <span class="step"></span>
     <span class="step"></span>
   </div>

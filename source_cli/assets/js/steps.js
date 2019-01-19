@@ -2,7 +2,7 @@
   let currentTab = 0; // Current tab is set to be the first tab (0)
   showTab(currentTab); // Display the current tab
 
-        function showTab(n) {
+function showTab(n) {
   // This function will display the specified tab of the form ...
   var x = document.getElementsByClassName("tab");
   x[n].style.display = "block";
@@ -30,14 +30,21 @@ function nextPrev(n) {
   x[currentTab].style.display = "none";
   // Increase or decrease the current tab by 1:
   currentTab = currentTab + n;
+
+  let validate = true;
+
+  if((currentTab - 1) === 0){
+    validate = getWorks();
+  }
   // if you have reached the end of the form... :
   if (currentTab >= x.length) {
     currentTab -= 1;
     //...the form gets submitted:
     validateSched();
   }
-  // Otherwise, display the correct tab:
-  showTab(currentTab);
+
+
+    showTab(currentTab);
 }
 
 

@@ -1,57 +1,22 @@
-<!-- 
-  <% data.forEach(function(user){ %>
-  <div class="card">
-    <div class="card-header">
-      <p><b></b></p>   
-      <div class="text-left">
-       
-        <small><i> Rating:  </i></small>
-      </div>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"></h5>
-      <p class="card-text">Address:  </p>
-      <p class="card-text">Contact Number:  <%= user.contact_no %></p>
-     
-      </div>
-    </div>
-    <% }); %>
-  -->
 
 
-  <table id="services" class="display">
-    <thead>
-      <tr>
-        <th scope="col">Category</th>
-        <th scope="col">Name</th>
-        <th scope="col">Address</th>
-        <th scope="col">Rating</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody id="servicep-list">
-      <% if(data){ %>
-      <% data.forEach(function(user){ %>
-       <% spid =  user.sp_id %>   
-       <% rating = rate[spid] %>
-        <% if (!rating){rating = 0 } %>
-      <tr>
-       <td><%= user.service_name %></td>
-       <td><%= user.user %></td>
-       <td><%= user.address %></td>
-       <td><a data-spid = "<%= user.sp_id %> " data-toggle="modal" href=".rating-modal" title="View comments"><i><%= rating  %> / 5</i> </a></td>
-       <td> <button data-uid = "<%= user.user_id %>" data-servicename = "<%= user.service_name %>"
-        data-sid = "<%= user.service_id %>" data-servid = "<%= user.service_id %>" type="button" class="btn btn-primary inquire" data-toggle="modal" data-target=".modal">Schedule an appointment</button>
-      
-      </td>
-     </tr>
-      <% }); %>
-      <% }else{ %>
-      <tr>
-        <td valign="top" colspan="5" class="dataTables_empty">No matching records found</td>
-     </tr>
-    <%  } %>
-
- </tbody>
-</table>
-
+<table id="servicesTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Services</th>
+                <th>Address</th>
+                <th>Rating</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Services</th>
+                <th>Address</th>
+                <th>Rating</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>

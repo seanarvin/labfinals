@@ -51,22 +51,10 @@ app.get('/',(req,res) => {
 	let ip = req.get('host').split(":")[0];
 	let userdata = req.session.userdata;
 	if(userdata){
-		db.query(`SELECT s.service_id,s.sp_id,user.user_id,s.service_id,CONCAT(housenumber," ",barangay,",",street,",",
-			city,",",municipality) as address,
-			contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
-			inner join services s on s.sp_id = user.user_id where s.status = "active"`, (error, results, fields) => {
+		db.query(`SELECT sp_id, FORMAT(AVG(rate),0) as rate FROM rate GROUP by sp_id`, 
+			(error, rate, num) => {
 				if (error) throw error;
-				db.query(`SELECT sp_id, FORMAT(AVG(rate),0) as rate FROM rate GROUP by sp_id`, 
-					(error, rate, num) => {
-						let data = {};
-						if (error) throw error;
-						for(let i = 0; i < rate.length; i++){
-							rating = rate[i]["rate"];
-							sp_id = rate[i]["sp_id"];
-							data[sp_id] = rating;
-						}
-						res.render('index', {data: results, userdata,rate: data});
-					});
+				res.render('index', {userdata});
 			});
 
 	}else{
@@ -86,32 +74,47 @@ app.get('/serviceworks/:id',(req,res) =>{
 
 //#search
 app.get('/search/:value',(req,res) => {
-	let where = ``;
+	let having = ``;
 	if (req.params.value !== 'all'){
-		where = `AND s.service_name = "`+req.params.value+`"`;
+		having = `Having (service_name like "%`+req.params.value+`%" OR user like "%`+req.params.value+`%")`;
 	}
-	db.query(`SELECT s.service_id,s.sp_id,user.user_id,s.service_id,CONCAT(housenumber," ",barangay,",",street,",",
-			city,",",municipality) as address,contact_no,service_name,CONCAT(user_fname,' ',user_lname) as user from user
-			inner join services s on s.sp_id = user.user_id where s.status = "active" ${where}`,
+	db.query(`SELECT s.sp_id,user.user_id,CONCAT(housenumber," ",barangay,",",street,",",
+		city,",",municipality) as address,contact_no,GROUP_CONCAT(service_name) as service_name,CONCAT(user_fname,' ',user_lname) as user from user
+		inner join services s on s.sp_id = user.user_id where s.status = "active" GROUP by s.sp_id ${having} `,
 		(error, results, fields) => {
 			if (error) throw error;
 			db.query(`SELECT sp_id, FORMAT(AVG(rate),0) as rate FROM rate GROUP by sp_id`, 
-				(error, rate, num) => {
-					let data = {};
+				(error, rate, fields1) => {
+					let rating = {};
+					let data = [];
 
-					if (error) throw error;
-					for(let i = 0; i < rate.length; i++){
-						rating = rate[i]["rate"];
-						sp_id = rate[i]["sp_id"];
-						data[sp_id] = rating;
-					}
-					if(results.length > 0){
-						res.json({results,data});
-					}else{
-						res.json("No results found.");
-					}
+					rate.forEach(function(row){
+						rating[row.sp_id] = row.rate;
+					});			
+					results.forEach(function(row){
+						data.push({
+							"service_id": row.service_id,
+							"sp_id": row.sp_id,
+							"user_id": row.sp_id,
+							"address": row.address,
+							"contact_no": row.contact_no,
+							"service_name": row.service_name,
+							"user": row.user ,
+							"rate": rating[row.sp_id]
+						});
+					});
+					res.json({data});
 				});
 		});
+});
+
+//# services
+app.get('/services/:id',(req,res) => {
+	let id = req.params.id;
+	db.query(`SELECT * FROM services WHERE sp_id = ?`,[id],(error, results, fields) => {
+		if (error) throw error;
+		res.json(results);
+	});
 });
 // #transactions
 app.get('/transactions',(req,res) =>{
@@ -265,8 +268,8 @@ app.get('/comments/:sp_id',(req,res)=> {
 	if(req.session.userdata){
 
 		db.query(`SELECT CONCAT(user_fname," ",user_lname) as name,comment,rate 
-					FROM rate inner join user on user_id = sp_id where sp_id = ?`,
-					[req.params.sp_id],(error, results, fields) => {
+			FROM rate inner join user on user_id = sp_id where sp_id = ?`,
+			[req.params.sp_id],(error, results, fields) => {
 				if (error) throw error;
 				res.json(results);
 			});
