@@ -436,6 +436,9 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <div class="pull-left">
+                        <button type="button" class="btn btn-primary" >Add Work</button>
+                    </div>
                     <div class="pull-right">
                         <button id="serviceAddID" class="btn btn-info" title='Add Service' type="submit">Add
                         </button>
@@ -489,6 +492,7 @@ aria-hidden="true">
                 <input required type="number" name="to" class="form-control" placeholder="Maximum Price">
             </div>
             <div class="modal-footer">
+
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button name="waha" type="submit" id="waha" class="btn btn-primary">Add</button>
             </div>
