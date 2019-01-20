@@ -414,14 +414,14 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <th align="center">Work</th>
                                         <th align="center">Minimum Price</th>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="catbody">
                                         <tr>
                                             <td>
                                                 <input id="cat" required class="form-control" name="category" type="text"
                                                 placeholder="category">
                                             </td>
                                             <td>
-                                                <input required  class="form-control" name="work" type="text"
+                                                <input required  class="form-control" name="work[]" type="text"
                                                 placeholder="work">
                                             </td>
                                             <td>
@@ -437,7 +437,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 </div>
                 <div class="modal-footer">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-primary" >Add Work</button>
+                        <button id="addworkBtn" type="button" class="btn btn-primary" >Add Work</button>
                     </div>
                     <div class="pull-right">
                         <button id="serviceAddID" class="btn btn-info" title='Add Service' type="submit">Add
@@ -550,6 +550,13 @@ aria-hidden="true">
 
     $(document).ready(function () {
 
+        $('#addworkBtn').on("click",function(){
+            table = `<tr><td></td><td><input required  class="form-control" name="work[]" type="text"
+            placeholder="work"></td><td></td></tr>`
+            $('#catbody').append(table);
+
+        });
+
         $('#cat').on('blur',function(e){
             let category = $(this);
 
@@ -559,13 +566,13 @@ aria-hidden="true">
                 typpe: "POST",
                 dataType: 'JSON',
                 success: function (result) {
-                 if(result === false){
+                   if(result === false){
                     category.val('');
                     alert("This is a duplicate category.");
 
                 }
             }
-         });
+        });
 
         });
         // $('#addservice').click(function () {
