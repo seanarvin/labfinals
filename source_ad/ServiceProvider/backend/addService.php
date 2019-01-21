@@ -12,15 +12,26 @@ require 'db.php';
 
 $cat = $_POST['category'];
 $work = $_POST['work'];
+$w = [];
+foreach ($work as $a){
+    array_push($w,$a);
+}
 $price = $_POST['price'];
+$p = [];
+foreach ($price as $a){
+    array_push($p,$a);
+}
 
 
 $sql = "INSERT INTO services(service_name,sp_id,status) VALUES ('$cat','$ayd','active')";
 if($conn->query($sql)){
     $lid = $conn->insert_id;
 
-    $sql = "INSERT INTO work(service_id,description, priceFrom, priceTo) VALUES ('$lid','$work','$price','0')";
-    $conn->query($sql);
+    for($i = 0;count($work) > $i;$i++){
+        $sql = "INSERT INTO work(service_id,description, priceFrom, priceTo) VALUES ('$lid','$work[$i]','$price[$i]','0')";
+        $conn->query($sql);
+    }
+
 
     if(!$conn){
         var_dump($conn->error);
