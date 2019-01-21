@@ -13,7 +13,7 @@ $num = $_GET['num'];
 $sql = "UPDATE user SET status = 'rejected' WHERE user_id = '$num'";
 
 if($conn->query($sql)){
-    header('Location:../requests.php');
+    header('Location:../index.php');
 }else {
 
 

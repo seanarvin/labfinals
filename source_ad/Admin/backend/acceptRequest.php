@@ -13,7 +13,7 @@ $num = $_GET['num'];
 $sql = "UPDATE user SET status = 'active' WHERE user_id = '$num'";
 
 if($conn->query($sql)){
-    header('Location:../users.php');
+    header('Location:../index.php');
 }else {
 
 
