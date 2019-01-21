@@ -230,7 +230,7 @@ if (isset($_SESSION['full'])) {
                                                             echo "<td>" . strtoupper($row['num']) . "</td>";
                                                             echo "<td>" . strtoupper($row['spe']) . "</td>";
                                                             echo "<td>" . strtoupper($row['pf']) .  "</td>";
-                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Mark as Done' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'><i class='material-icons'>check</i></a>" . "</td>";
+                                                            echo "<td class='text-center'>" . "<a  rel='tooltip' title='Mark as Done' href=" . 'backend/completeJob.php?num=' . $row['ayyd'] . " " . " class='btn btn-primary btn-link btn-sm'>Mark as done.</a>" . "</td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {

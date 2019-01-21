@@ -189,9 +189,9 @@ function search(searchval){
             if(!data.rate){
                 data.rate = 0;
             }
-            return `<a data-spid = "${data.sp_id}" data-toggle="modal" 
+            return `<i>${data.rate }/ 5 </i><button class="btn-default" <a data-spid = "${data.sp_id}" data-toggle="modal" 
         }
-        href=".rating-modal" title="View comments"><i>${data.rate }/ 5</i> </a>`;
+        href=".rating-modal" title="View comments">Reviews</a></button>`;
     } },
     { "data": function(data){
         return `<button data-uid = "${data.sp_id}" type="button" 
