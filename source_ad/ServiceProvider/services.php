@@ -183,6 +183,10 @@ if (isset($_SESSION['full'])) {
                                                             echo $row['description'] .' : ' . $row['priceFrom'] . "<br>";
 
                                                         }
+
+
+
+
                                                     }
 
 
