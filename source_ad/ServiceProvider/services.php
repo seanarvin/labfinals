@@ -176,13 +176,16 @@ if (isset($_SESSION['full'])) {
                                                         $nn = $n->fetch_row();
                                                         $nnn = $nn[0];
 
-                                                        $sql = "SELECT description,priceFrom FROM work WHERE service_id = '$nnn'";
+                                                        $sql = "SELECT work_id,description,priceFrom FROM work WHERE service_id = '$nnn' AND status = 'active'";
                                                         $g = $conn->query($sql);
 
                                                         while ($row = $g->fetch_assoc()) {
-                                                            echo $row['description'] .' : ' . $row['priceFrom'] . ".0<br>";
+                                                            echo $row['description'] .' : ' . $row['priceFrom'] . ". 0 ."  . '<a href="backend/disableWork.php?num='. $row['work_id'] .'">Delete</a><br>';
 
                                                         }
+                                                            echo '<button id="addwork" data-id="' . $nnn  . '" class="btn btn-sm" rel=\'tooltip\'
+                                                            title="Add Work"
+                                                            data-toggle="modal" data-target="#addWork">Add Work</button>';
 
                                                         echo '</td><td  class="text-center"><a  href="backend/disableService.php?num='. $nnn .'">Remove</a>';
 
@@ -493,8 +496,7 @@ if (isset($_SESSION['full'])) {
                     <input required type="text" name="work" class="form-control" placeholder="Work Description">
                     <br>
                     <input required type="number" name="from" class="form-control" placeholder="Minimum Price">
-                    <br>
-                    <input required type="number" name="to" class="form-control" placeholder="Maximum Price">
+                    <input required type="hidden" id="spid" name="spid" class="form-control" placeholder="Minimum Price">
                 </div>
                 <div class="modal-footer">
 
@@ -554,6 +556,14 @@ if (isset($_SESSION['full'])) {
 
 
     $(document).ready(function () {
+
+        $(document).ready(function () {
+            $('#addWork').on("show.bs.modal", function (ev) {
+                let id = $(ev.relatedTarget).data('id');
+                $('#spid').val(id);
+
+            })
+        });
 
         $('#addworkBtn').on("click", function () {
             table = `<tr><td></td><td><input required  class="form-control" name="work[]" type="text"

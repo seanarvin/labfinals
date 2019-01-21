@@ -10,10 +10,10 @@ require 'db.php';
 
 $num = $_GET['num'];
 
-$sql = "UPDATE spwork SET status = 'disabled' WHERE id = '$num'";
+$sql = "UPDATE work SET status = 'disabled' WHERE work_id = '$num'";
 
 if($conn->query($sql)){
-    header('Location:../requests.php');
+    header('Location:../services.php');
 }else {
 
 

@@ -6,16 +6,15 @@
  */
 session_start();
 $ayd = $_SESSION['ayd'];
-$c = $_POST['waha'];
 require 'db.php';
 
 
 $work = $_POST['work'];
 $from = $_POST['from'];
-$to = $_POST['to'];
+$spid = $_POST['spid'];
 
 
-$sql = "INSERT INTO work(service_id, description, priceFrom, priceTo) VALUES ('$c','$work','$from','$to')";
+$sql = "INSERT INTO work(service_id, description, priceFrom, priceTo,status) VALUES ('$spid','$work','$from','0','active')";
 $res = $conn->query($sql);
 if($res){
     $m = "Successfully Added!";

@@ -28,7 +28,7 @@ if($conn->query($sql)){
     $lid = $conn->insert_id;
 
     for($i = 0;count($work) > $i;$i++){
-        $sql = "INSERT INTO work(service_id,description, priceFrom, priceTo) VALUES ('$lid','$work[$i]','$price[$i]','0')";
+        $sql = "INSERT INTO work(service_id,description, priceFrom, priceTo,status) VALUES ('$lid','$work[$i]','$price[$i]','0','active')";
         $conn->query($sql);
     }
 
