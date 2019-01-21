@@ -57,7 +57,7 @@ if (isset($_SESSION['full'])) {
         <div class="logo">
             <a href="requests.php" class="simple-text logo-normal">
                 <?php
-                echo strtoupper($_SESSION['userType'] . " h");
+                echo strtoupper($_SESSION['userType']);
                 ?>
             </a>
         </div>
@@ -180,16 +180,13 @@ if (isset($_SESSION['full'])) {
                                                         $g = $conn->query($sql);
 
                                                         while ($row = $g->fetch_assoc()) {
-                                                            echo $row['description'] .' : ' . $row['priceFrom'] . "<br>";
+                                                            echo $row['description'] .' : ' . $row['priceFrom'] . ".0<br>";
 
                                                         }
 
-
-
+                                                        echo '</td><td  class="text-center"><a  href="backend/disableService.php?num='. $nnn .'">Remove</a>';
 
                                                     }
-
-
                                                     echo '</td></tr>';
                                                     ?>
                                                     </tbody>
