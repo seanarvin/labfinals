@@ -262,6 +262,7 @@ function validateSched(){
 
     if (!sched.val() || !from.val() || !to.val()){
         alert("Please provide all the appointment info.");
+
     }
     if(sched.val()){
         if(sched.val() < today){
@@ -274,13 +275,15 @@ function validateSched(){
             dateValidate = true;
         }
     }
-    if(currentTime >= from && currentTime <= to && from < to){
+    if(currentTime >= from.val() && currentTime <= to.val() && from.val() < to.val()){
     if(from.val()){
         if(from.val() > "17:00"){
             from.val("17:00")
+            fromValidate = false;
             alert("Maximum time for start time is 5:00 PM");
         }else if(from.val() < "08:00"){
             from.val("08:00")
+            fromValidate = false;
             alert("Operating hours is at 8:00 AM. ");
         }
         fromValidate = true;
@@ -291,9 +294,11 @@ function validateSched(){
     if(to.val()){
         if(to.val() > "18:00"){
             to.val("18:00")
+            toValidate = false;
             alert("Maximum time for end time is 6:00 PM");
         }else if(to.val() < "09:00"){
             to.val("09:00")
+            toValidate = false;
             alert("Operating hours is at 8:00 AM. End time must be greater than 8:00 AM ");
         }else{
             toValidate = true;
@@ -301,6 +306,7 @@ function validateSched(){
 
     }
     }else{
+
         alert("Please enter appropriate time.");
         fromValidate = false;
         toValidate = false;
