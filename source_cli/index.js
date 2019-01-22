@@ -65,7 +65,7 @@ app.get('/',(req,res) => {
 });
 // #serviceworks
 app.get('/serviceworks/:id',(req,res) =>{
-	db.query(`SELECT * FROM work where service_id = ?`,
+	db.query(`SELECT * FROM work where status = "active" AND service_id = ?`,
 		[req.params.id],(error, results, fields) => {
 			if (error) throw error;
 			res.json(results)
