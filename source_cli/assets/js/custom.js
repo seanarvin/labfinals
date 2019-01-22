@@ -122,7 +122,7 @@ $(document).ready(function () {
     });
     });
 
-     $('#transactionsTable').DataTable({
+    $('#transactionsTable').DataTable({
         "order": [[ 5, "desc" ]],
     });
 
@@ -189,9 +189,9 @@ function search(searchval){
             if(!data.rate){
                 data.rate = 0;
             }
-            return `<i>${data.rate }/ 5 </i><button class="btn-default" <a data-spid = "${data.sp_id}" data-toggle="modal" 
+            return `<i>${data.rate }/ 5 </i><a data-spid = "${data.sp_id}" data-toggle="modal" 
         }
-        href=".rating-modal" title="View comments">Reviews</a></button>`;
+        href=".rating-modal" title="View comments"><img src="/assets/images/review.png"></img></a>`;
     } },
     { "data": function(data){
         return `<button data-uid = "${data.sp_id}" type="button" 
@@ -239,6 +239,8 @@ function validateSched(){
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
 
+    let currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
     if(dd<10) {
         dd = '0'+dd
     } 
@@ -272,6 +274,7 @@ function validateSched(){
             dateValidate = true;
         }
     }
+    if(currentTime >= from && currentTime <= to && from < to){
     if(from.val()){
         if(from.val() > "17:00"){
             from.val("17:00")
@@ -297,6 +300,14 @@ function validateSched(){
         }
 
     }
+    }else{
+        alert("Please enter appropriate time.");
+        fromValidate = false;
+        toValidate = false;
+        from.val(currentTime);
+        to.val(currentTime);
+
+    }
 
 
     if(dateValidate && fromValidate && toValidate){
@@ -308,27 +319,27 @@ function getWorks(){
     let service_id = $('input[name=service]').filter(":checked").val();
                     // // set list for works
 
-    if(service_id){
-       $.ajax({
-         url: "/serviceworks/" + service_id,
-         success: function (result) {
-         let html = "";
-         result.forEach(function (work) {
-         html +=
-         `<div class="custom-control custom-radio">
-         <input id=work"${work.work_id}" value="${work.work_id}" type="radio" 
-         class="custom-control-input" name="work">
-         <label for=work"${work.work_id}"  class="custom-control-label">${work.description} 
-         (Starting price:  PHP ${work.priceFrom})</label>
-          </div>`;
-          });
-          $('#workitems').html(html);
-          }
-      }); 
-       return true;
-    }else{
-        alert("Please select a service.");
-        return false;
-    }
-                    
-}
+                    if(service_id){
+                     $.ajax({
+                       url: "/serviceworks/" + service_id,
+                       success: function (result) {
+                           let html = "";
+                           result.forEach(function (work) {
+                               html +=
+                               `<div class="custom-control custom-radio">
+                               <input id=work"${work.work_id}" value="${work.work_id}" type="radio" 
+                               class="custom-control-input" name="work">
+                               <label for=work"${work.work_id}"  class="custom-control-label">${work.description} 
+                               (Starting price:  PHP ${work.priceFrom})</label>
+                               </div>`;
+                           });
+                           $('#workitems').html(html);
+                       }
+                   }); 
+                     return true;
+                 }else{
+                    alert("Please select a service.");
+                    return false;
+                }
+
+            }
