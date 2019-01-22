@@ -239,7 +239,6 @@ function validateSched(){
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
 
-    let currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     if(dd<10) {
         dd = '0'+dd
@@ -275,7 +274,6 @@ function validateSched(){
             dateValidate = true;
         }
     }
-    if(currentTime >= from.val() && currentTime <= to.val() && from.val() < to.val()){
     if(from.val()){
         if(from.val() > "17:00"){
             from.val("17:00")
@@ -305,15 +303,7 @@ function validateSched(){
         }
 
     }
-    }else{
-
-        alert("Please enter appropriate time.");
-        fromValidate = false;
-        toValidate = false;
-        from.val(currentTime);
-        to.val(currentTime);
-
-    }
+   
 
 
     if(dateValidate && fromValidate && toValidate){
